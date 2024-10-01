@@ -1,0 +1,326 @@
+[1/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/IPAddress.cpp.obj
+[2/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/Esp.cpp.obj
+[3/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/MD5Builder.cpp.obj
+[4/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/HEXBuilder.cpp.obj
+[5/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/main.cpp.obj
+[6/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/FunctionalInterrupt.cpp.obj
+[7/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/HardwareSerial.cpp.obj
+[8/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/base64.cpp.obj
+[9/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/Print.cpp.obj
+[10/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/SHA1Builder.cpp.obj
+[11/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/HWCDC.cpp.obj
+[12/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/Tone.cpp.obj
+[13/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/Stream.cpp.obj
+[14/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/StreamString.cpp.obj
+[15/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/WString.cpp.obj
+[16/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/ArduinoOTA/src/ArduinoOTA.cpp.obj
+[17/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/AsyncUDP/src/AsyncUDP.cpp.obj
+[18/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/EEPROM/src/EEPROM.cpp.obj
+[19/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/BLE/src/GeneralUtils.cpp.obj
+[20/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/BLE/src/FreeRTOS.cpp.obj
+[21/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/ESP_I2S/src/ESP_I2S.cpp.obj
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/ESP_I2S/src/ESP_I2S.cpp: In member function 'bool I2SClass::initSTD(uint32_t, i2s_data_bit_width_t, i2s_slot_mode_t, int8_t)':
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/ESP_I2S/src/ESP_I2S.cpp:36:3: warning: missing initializer for member 'i2s_std_clk_config_t::ext_clk_freq_hz' [-Wmissing-field-initializers]
+   36 |   }
+      |   ^
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/ESP_I2S/src/ESP_I2S.cpp:345:33: note: in expansion of macro 'I2S_STD_CHAN_CFG'
+  345 |   i2s_std_config_t i2s_config = I2S_STD_CHAN_CFG(rate, bits_cfg, ch);
+      |                                 ^~~~~~~~~~~~~~~~
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/ESP_I2S/src/ESP_I2S.cpp: In member function 'bool I2SClass::initTDM(uint32_t, i2s_data_bit_width_t, i2s_slot_mode_t, int8_t)':
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/ESP_I2S/src/ESP_I2S.cpp:55:3: warning: missing initializer for member 'i2s_tdm_clk_config_t::ext_clk_freq_hz' [-Wmissing-field-initializers]
+   55 |   }
+      |   ^
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/ESP_I2S/src/ESP_I2S.cpp:454:37: note: in expansion of macro 'I2S_TDM_CHAN_CFG'
+  454 |   i2s_tdm_config_t i2s_tdm_config = I2S_TDM_CHAN_CFG(rate, bits_cfg, ch, (i2s_tdm_slot_mask_t)slot_mask);
+      |                                     ^~~~~~~~~~~~~~~~
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/ESP_I2S/src/ESP_I2S.cpp: In member function 'bool I2SClass::configureTX(uint32_t, i2s_data_bit_width_t, i2s_slot_mode_t, int8_t)':
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/ESP_I2S/src/ESP_I2S.cpp:36:3: warning: missing initializer for member 'i2s_std_clk_config_t::ext_clk_freq_hz' [-Wmissing-field-initializers]
+   36 |   }
+      |   ^
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/ESP_I2S/src/ESP_I2S.cpp:769:35: note: in expansion of macro 'I2S_STD_CHAN_CFG'
+  769 |     i2s_std_config_t i2s_config = I2S_STD_CHAN_CFG(rate, bits_cfg, ch);
+      |                                   ^~~~~~~~~~~~~~~~
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/ESP_I2S/src/ESP_I2S.cpp: In member function 'bool I2SClass::configureRX(uint32_t, i2s_data_bit_width_t, i2s_slot_mode_t, i2s_rx_transform_t)':
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/ESP_I2S/src/ESP_I2S.cpp:36:3: warning: missing initializer for member 'i2s_std_clk_config_t::ext_clk_freq_hz' [-Wmissing-field-initializers]
+   36 |   }
+      |   ^
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/ESP_I2S/src/ESP_I2S.cpp:789:37: note: in expansion of macro 'I2S_STD_CHAN_CFG'
+  789 |       i2s_std_config_t i2s_config = I2S_STD_CHAN_CFG(rate, bits_cfg, ch);
+      |                                     ^~~~~~~~~~~~~~~~
+[22/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/DNSServer/src/DNSServer.cpp.obj
+[23/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/ESPmDNS/src/ESPmDNS.cpp.obj
+[24/94] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/ESP_NOW/src/ESP32_NOW_Serial.cpp.obj
+[25/94] Performing build step for 'bootloader'
+[1/1] cmd.exe /C "cd /D "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\bootloader\esp-idf\esptool_py" && C:\Users\joshk\.espressif\python_env\idf5.3_py3.11_env\Scripts\python.exe C:/Users/joshk/esp/v5.3.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin""
+Bootloader binary size 0x5460 bytes. 0x2ba0 bytes (34%) free.
+[26/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/Ethernet/src/ETH.cpp.obj
+[27/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/FS/src/vfs_api.cpp.obj
+[28/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/FS/src/FS.cpp.obj
+[29/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/FFat/src/FFat.cpp.obj
+[30/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/LittleFS/src/LittleFS.cpp.obj
+[31/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/NetBIOS/src/NetBIOS.cpp.obj
+[32/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/HTTPUpdate/src/HTTPUpdate.cpp.obj
+[33/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/HTTPClient/src/HTTPClient.cpp.obj
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/HTTPClient/src/HTTPClient.cpp: In member function 'void HTTPClient::disconnect(bool)':
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/HTTPClient/src/HTTPClient.cpp:374:21: warning: 'virtual void NetworkClient::flush()' is deprecated: Use clear() instead. [-Wdeprecated-declarations]
+  374 |       _client->flush();
+      |       ~~~~~~~~~~~~~~^~
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/HTTPClient/src/HTTPClient.h:36,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/HTTPClient/src/HTTPClient.cpp:33:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/Network/src/NetworkClient.h:58:8: note: declared here
+   58 |   void flush();  // Print::flush tx
+      |        ^~~~~
+[34/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/Network/src/NetworkInterface.cpp.obj
+[35/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/Network/src/NetworkManager.cpp.obj
+[36/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/Network/src/NetworkEvents.cpp.obj
+[37/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/Preferences/src/Preferences.cpp.obj
+[38/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/RainMaker/src/RMakerQR.cpp.obj
+[39/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/Network/src/NetworkServer.cpp.obj
+[40/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/Network/src/NetworkClient.cpp.obj
+[41/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/SD_MMC/src/SD_MMC.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/SD_MMC/src/SD_MMC.cpp:20:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/SD_MMC/src/SD_MMC.h:21:2: warning: #warning The SDMMC library requires a device with an SDIO Host [-Wcpp]
+   21 | #warning The SDMMC library requires a device with an SDIO Host
+      |  ^~~~~~~
+[42/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/Network/src/NetworkUdp.cpp.obj
+[43/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/SD/src/SD.cpp.obj
+[44/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/RainMaker/src/RMakerUtils.cpp.obj
+[45/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/RainMaker/src/RMaker.cpp.obj
+[46/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/SD/src/sd_diskio.cpp.obj
+[47/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/SPIFFS/src/SPIFFS.cpp.obj
+[48/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/SPI/src/SPI.cpp.obj
+[49/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WebServer/src/WebServer.cpp.obj
+[50/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/Update/src/Updater.cpp.obj
+[51/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WebServer/src/Parsing.cpp.obj
+[52/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WebSockets/src/SocketIOclient.cpp.obj
+[53/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WebSockets/src/WebSockets.cpp.obj
+[54/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WebSockets/src/WebSocketsServer.cpp.obj
+[55/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WebSockets/src/WebSocketsClient.cpp.obj
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/WebSockets/src/WebSocketsClient.cpp: In member function 'virtual void WebSocketsClient::clientDisconnect(WSclient_t*)':
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/WebSockets/src/WebSocketsClient.cpp:544:31: warning: 'virtual void NetworkClient::flush()' is deprecated: Use clear() instead. [-Wdeprecated-declarations]
+  544 |             client->tcp->flush();
+      |             ~~~~~~~~~~~~~~~~~~^~
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/Network/src/Network.h:12,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/WiFi/src/WiFiGeneric.h:39,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/WiFi/src/WiFiSTA.h:29,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/WiFi/src/WiFi.h:33,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/WebSockets/src/WebSockets.h:235,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/WebSockets/src/WebSocketsClient.cpp:25:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/Network/src/NetworkClient.h:58:8: note: declared here
+   58 |   void flush();  // Print::flush tx
+      |        ^~~~~
+[56/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WiFi/src/WiFiAP.cpp.obj
+[57/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/NetworkClientSecure/src/ssl_client.cpp.obj
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/NetworkClientSecure/src/ssl_client.cpp:23:2: warning: #warning "Please call `idf.py menuconfig` then go to Component config -> mbedTLS -> TLS Key Exchange Methods -> Enable pre-shared-key ciphersuites and then check `Enable PSK based ciphersuite modes`. Save and Quit." [-Wcpp]
+   23 | #warning \
+      |  ^~~~~~~
+[58/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/NetworkClientSecure/src/NetworkClientSecure.cpp.obj
+[59/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WiFi/src/WiFi.cpp.obj
+[60/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WiFi/src/WiFiMulti.cpp.obj
+[61/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WiFi/src/WiFiGeneric.cpp.obj
+[62/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WiFi/src/WiFiSTA.cpp.obj
+[63/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WiFi/src/WiFiScan.cpp.obj
+[64/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/Wire/src/Wire.cpp.obj
+[65/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WiFi/src/AP.cpp.obj
+[66/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WiFi/src/STA.cpp.obj
+[67/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WiFiProv/src/WiFiProv.cpp.obj
+[68/92] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/realTimePacing.cpp.obj
+[69/92] Building CXX object esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/colorpalettes.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:42,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/colorpalettes.cpp:8:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+[70/92] Building CXX object esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/colorutils.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:42,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/colorutils.cpp:10:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+[71/92] Building CXX object esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/five_bit_hd_gamma.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:42,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/five_bit_hd_gamma.cpp:5:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+[72/92] Building CXX object esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/hsv2rgb.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:42,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/hsv2rgb.cpp:8:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+[73/92] Building CXX object esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/lib8tion.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:42,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion.cpp:9:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+[74/92] Building CXX object esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/noise.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:42,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/noise.cpp:6:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+[75/92] Building CXX object esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/rgbw.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:42,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/rgbw.cpp:3:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+[76/92] Building CXX object esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/power_mgt.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:42,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/power_mgt.cpp:6:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+[77/92] Building CXX object esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/simplex.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:42,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/simplex.cpp:2:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+[78/92] Building CXX object esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/wiring.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:42,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/wiring.cpp:2:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+[79/92] cmd.exe /C "cd /D "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\esp-idf\main" && C:\Users\joshk\.espressif\python_env\idf5.3_py3.11_env\Scripts\python.exe C:/Users/joshk/esp/v5.3.1/esp-idf/components/spiffs/spiffsgen.py 0x300000 "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/partition" "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/storage.bin" --page-size=256 --obj-name-len=32 --meta-len=4 --use-magic --use-magic-len"
+[80/92] Building CXX object esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/platforms/esp/32/idf4_rmt_impl.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:42,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/idf4_rmt_impl.cpp:14:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+[81/92] Building CXX object esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/platforms/esp/32/idf4_rmt.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:42,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/idf4_rmt.cpp:10:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+[82/92] Building CXX object esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/FastLED.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:42,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.cpp:2:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+[83/92] Building CXX object esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/chip-debug-report.cpp.obj
+[84/92] Linking C static library esp-idf\espressif__arduino-esp32\libespressif__arduino-esp32.a
+[85/92] Linking C static library esp-idf\FastLED\libFastLED.a
+[86/92] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj
+[87/92] Linking C static library esp-idf\main\libmain.a
+[88/92] Generating ld/sections.ld
+[89/92] Linking CXX executable BlockLights_VSCode.elf
+[90/92] Generating binary image from built executable
+esptool.py v4.8.1
+Creating esp32c6 image...
+Merged 1 ELF section
+Successfully created esp32c6 image.
+Generated C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/BlockLights_VSCode.bin
+[91/92] cmd.exe /C "cd /D "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\esp-idf\esptool_py" && C:\Users\joshk\.espressif\python_env\idf5.3_py3.11_env\Scripts\python.exe C:/Users/joshk/esp/v5.3.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/partition_table/partition-table.bin" "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/BlockLights_VSCode.bin""
+BlockLights_VSCode.bin binary size 0x10a430 bytes. Smallest app partition is 0x300000 bytes. 0x1f5bd0 bytes (65%) free.
+[91/92] cmd.exe /C "cd /D C:\Users\joshk\esp\v5.3.1\esp-idf\components\esptool_py && C:\Users\joshk\.espressif\tools\cmake\3.24.0\bin\cmake.exe -D IDF_PATH=C:/Users/joshk/esp/v5.3.1/esp-idf -D SERIAL_TOOL=C:/Users/joshk/.espressif/python_env/idf5.3_py3.11_env/Scripts/python.exe;;C:/Users/joshk/esp/v5.3.1/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32c6 -D SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args -D "WORKING_DIRECTORY=C:/Users/joshk/Documents/Arduinoesptool.py --chip esp32c6 -p COM8 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 bootloader/bootloader.bin 0x10000 BlockLights_VSCode.bin 0x8000 partition_table/partition-table.bin 0x310000 storage.bin
+esptool.py v4.8.1
+Serial port COM8
+Connecting...
+Chip is ESP32-C6 (QFN40) (revision v0.1)
+Features: WiFi 6, BT 5, IEEE802.15.4
+Crystal is 40MHz
+MAC: f0:f5:bd:ff:fe:0e:5d:40
+BASE MAC: f0:f5:bd:0e:5d:40
+MAC_EXT: ff:fe
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00000000 to 0x00005fff...
+Flash will be erased from 0x00010000 to 0x0011afff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+Flash will be erased from 0x00310000 to 0x0060ffff...
+SHA digest in image updated
+Compressed 21600 bytes to 12988...
+Writing at 0x00000000... (100 %)
+Wrote 21600 bytes (12988 compressed) at 0x00000000 in 0.3 seconds (effective 545.3 kbit/s)...
+Hash of data verified.
+Compressed 1090608 bytes to 629086...
+Writing at 0x00010000... (2 %)
+Writing at 0x0001d5a4... (5 %)
+Writing at 0x00028edb... (7 %)
+Writing at 0x0002ef6e... (10 %)
+Writing at 0x00034741... (12 %)
+Writing at 0x0003ddb5... (15 %)
+Writing at 0x000447ab... (17 %)
+Writing at 0x0004c8b8... (20 %)
+Writing at 0x00053f1e... (23 %)
+Writing at 0x0005abc1... (25 %)
+Writing at 0x00061abe... (28 %)
+Writing at 0x00068353... (30 %)
+Writing at 0x0006ef94... (33 %)
+Writing at 0x00076930... (35 %)
+Writing at 0x0007d86b... (38 %)
+Writing at 0x000844e2... (41 %)
+Writing at 0x0008b82b... (43 %)
+Writing at 0x00092841... (46 %)
+Writing at 0x000996ad... (48 %)
+Writing at 0x0009fb57... (51 %)
+Writing at 0x000a5da1... (53 %)
+Writing at 0x000ac439... (56 %)
+Writing at 0x000b2c98... (58 %)
+Writing at 0x000b950e... (61 %)
+Writing at 0x000bfad8... (64 %)
+Writing at 0x000c5f2c... (66 %)
+Writing at 0x000cbac9... (69 %)
+Writing at 0x000d1bfa... (71 %)
+Writing at 0x000d7a76... (74 %)
+Writing at 0x000ddca3... (76 %)
+Writing at 0x000e3d69... (79 %)
+Writing at 0x000e9fcd... (82 %)
+Writing at 0x000efdbe... (84 %)
+Writing at 0x000f648a... (87 %)
+Writing at 0x000fc247... (89 %)
+Writing at 0x0010321e... (92 %)
+Writing at 0x0010a56f... (94 %)
+Writing at 0x0010fd7a... (97 %)
+Writing at 0x00115e32... (100 %)
+Wrote 1090608 bytes (629086 compressed) at 0x00010000 in 6.0 seconds (effective 1444.0 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 119...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (119 compressed) at 0x00008000 in 0.1 seconds (effective 490.8 kbit/s)...
+Hash of data verified.
+Compressed 3145728 bytes to 8824...
+Writing at 0x00310000... (100 %)
+Wrote 3145728 bytes (8824 compressed) at 0x00310000 in 10.6 seconds (effective 2367.5 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
+/Block Lights/BlockLights_VSCode/build" -P C:/Users/joshk/esp/v5.3.1/esp-idf/components/esptool_py/run_serial_tool.cmake"

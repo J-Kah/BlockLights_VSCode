@@ -1,0 +1,84 @@
+[1/6] cmd.exe /C "cd /D "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\esp-idf\esptool_py" && C:\Users\joshk\.espressif\python_env\idf5.3_py3.11_env\Scripts\python.exe C:/Users/joshk/esp/v5.3.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/partition_table/partition-table.bin" "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/BlockLights_VSCode.bin""
+BlockLights_VSCode.bin binary size 0x1069d0 bytes. Smallest app partition is 0x300000 bytes. 0x1f9630 bytes (66%) free.
+[2/6] Performing build step for 'bootloader'
+[1/1] cmd.exe /C "cd /D "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\bootloader\esp-idf\esptool_py" && C:\Users\joshk\.espressif\python_env\idf5.3_py3.11_env\Scripts\python.exe C:/Users/joshk/esp/v5.3.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin""
+Bootloader binary size 0x5460 bytes. 0x2ba0 bytes (34%) free.
+[3/4] cmd.exe /C "cd /D "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\esp-idf\main" && C:\Users\joshk\.espressif\python_env\idf5.3_py3.11_env\Scripts\python.exe C:/Users/joshk/esp/v5.3.1/esp-idf/components/spiffs/spiffsgen.py 0x300000 "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/partition" "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/storage.bin" --page-size=256 --obj-name-len=32 --meta-len=4 --use-magic --use-magic-len"
+[3/4] cmd.exe /C "cd /D C:\Users\joshk\esp\v5.3.1\esp-idf\components\esptool_py && C:\Users\joshk\.espressif\tools\cmake\3.24.0\bin\cmake.exe -D IDF_PATH=C:/Users/joshk/esp/v5.3.1/esp-idf -D SERIAL_TOOL=C:/Users/joshk/.espressif/python_env/idf5.3_py3.11_env/Scripts/python.exe;;C:/Users/joshk/esp/v5.3.1/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32c6 -D SERIAL_TOOL_ARGS=--beforesptool.py --chip esp32c6 -p COM8 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 bootloader/bootloader.bin 0x10000 BlockLights_VSCode.bin 0x8000 partition_table/partition-table.bin 0x310000 storage.bin
+esptool.py v4.8.1
+Serial port COM8
+Connecting...
+Chip is ESP32-C6 (QFN40) (revision v0.1)
+Features: WiFi 6, BT 5, IEEE802.15.4
+Crystal is 40MHz
+MAC: f0:f5:bd:ff:fe:0e:5d:40
+BASE MAC: f0:f5:bd:0e:5d:40
+MAC_EXT: ff:fe
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00000000 to 0x00005fff...
+Flash will be erased from 0x00010000 to 0x00116fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+Flash will be erased from 0x00310000 to 0x0060ffff...
+SHA digest in image updated
+Compressed 21600 bytes to 12988...
+Writing at 0x00000000... (100 %)
+Wrote 21600 bytes (12988 compressed) at 0x00000000 in 0.3 seconds (effective 553.9 kbit/s)...
+Hash of data verified.
+Compressed 1075664 bytes to 621105...
+Writing at 0x00010000... (2 %)
+Writing at 0x0001d6ee... (5 %)
+Writing at 0x00029038... (7 %)
+Writing at 0x0002ec52... (10 %)
+Writing at 0x000346be... (13 %)
+Writing at 0x0003da06... (15 %)
+Writing at 0x0004440a... (18 %)
+Writing at 0x0004c2f6... (21 %)
+Writing at 0x00053742... (23 %)
+Writing at 0x0005a6e5... (26 %)
+Writing at 0x00061194... (28 %)
+Writing at 0x00067e7a... (31 %)
+Writing at 0x0006f0a4... (34 %)
+Writing at 0x000762fe... (36 %)
+Writing at 0x0007d2ce... (39 %)
+Writing at 0x0008419b... (42 %)
+Writing at 0x0008b269... (44 %)
+Writing at 0x00092452... (47 %)
+Writing at 0x00098f1c... (50 %)
+Writing at 0x0009f091... (52 %)
+Writing at 0x000a5501... (55 %)
+Writing at 0x000abc53... (57 %)
+Writing at 0x000b29d2... (60 %)
+Writing at 0x000b890c... (63 %)
+Writing at 0x000bf0c4... (65 %)
+Writing at 0x000c516c... (68 %)
+Writing at 0x000cae00... (71 %)
+Writing at 0x000d0f2e... (73 %)
+Writing at 0x000d701f... (76 %)
+Writing at 0x000dd0f6... (78 %)
+Writing at 0x000e3389... (81 %)
+Writing at 0x000e9118... (84 %)
+Writing at 0x000ef611... (86 %)
+Writing at 0x000f56de... (89 %)
+Writing at 0x000fbf84... (92 %)
+Writing at 0x00102cb1... (94 %)
+Writing at 0x0010948f... (97 %)
+Writing at 0x0010efb2... (100 %)
+Wrote 1075664 bytes (621105 compressed) at 0x00010000 in 5.8 seconds (effective 1493.1 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 119...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (119 compressed) at 0x00008000 in 0.0 seconds (effective 528.3 kbit/s)...
+Hash of data verified.
+Compressed 3145728 bytes to 7268...
+Writing at 0x00310000... (100 %)
+Wrote 3145728 bytes (7268 compressed) at 0x00310000 in 6.3 seconds (effective 3991.2 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
+e=default_reset;--after=hard_reset;write_flash;@flash_args -D "WORKING_DIRECTORY=C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build" -P C:/Users/joshk/esp/v5.3.1/esp-idf/components/esptool_py/run_serial_tool.cmake"

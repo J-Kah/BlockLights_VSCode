@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Pacing</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/realTimePacing.js" defer></script>
+</head>
+<body>
+    <p><a href="/">Back to Home</a></p>
+
+    <h2>Real-Time Pacing</h2>
+
+    <!-- Start/Stop System -->
+    <p>System: <span id="status"></span></p> 
+    <button onclick="toggleSystem()">Start/Stop</button>
+    <button onclick="resetRealTimePacing()">Reset</button>
+
+    <!-- Integer Display with Increment/Decrement -->
+    <p>Lap(s): <span id="lapValue"></span></p>
+    <button onclick="incrementLap()">Increment</button>
+    <button onclick="decrementLap()">Decrement</button>
+
+    <!-- Float Display (you can add similar control for float values) -->
+    <p>Lap Time: <span id="lapTimeValue"></span></p>
+    <button onclick="incrementLapTime()">Increment</button>
+    <button onclick="decrementLapTime()">Decrement</button>
+    
+</body>
+</html>

@@ -1,0 +1,9 @@
+[1/1] cmd.exe /C "cd /D "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\esp-idf\partition_table" && C:\Users\joshk\.espressif\tools\cmake\3.24.0\bin\cmake.exe -E echo "Partition table binary generated. Contents:" && C:\Users\joshk\.espressif\tools\cmake\3.24.0\bin\cmake.exe -E echo ******************************************************************************* && C:\Users\joshk\.espressif\python_env\idf5.3_py3.11_env\Scripts\python.exe C:/Users/joshk/esp/v5.3.1/esp-idf/components/partition_table/gen_esp32part.py -q --offset 0x8000 --flash-size 2MB -- "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/partition_table/partition-table.bin" && C:\Users\joshk\.espressif\tools\cmake\3.24.0\bin\cmake.exe -E echo *******************************************************************************"
+Partition table binary generated. Contents:
+*******************************************************************************
+# ESP-IDF Partition Table
+# Name, Type, SubType, Offset, Size, Flags
+nvs,data,nvs,0x9000,24K,
+phy_init,data,phy,0xf000,4K,
+factory,app,factory,0x10000,1M,
+*******************************************************************************

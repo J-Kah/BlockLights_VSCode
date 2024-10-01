@@ -1,0 +1,19 @@
+# For more information about build system see
+# https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html
+# The following five lines of boilerplate have to be in your project's
+# CMakeLists in this exact order for cmake to work correctly
+cmake_minimum_required(VERSION 3.16)
+
+add_definitions(
+-DARDUINO_USB_MODE
+-DARDUINO_USB_CDC_ON_BOOT
+)
+
+include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+project(BlockLights_VSCode)
+
+set(EXTRA_COMPONENT_DIRS components)
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Os")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os")
+
