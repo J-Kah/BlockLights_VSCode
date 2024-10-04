@@ -21,13 +21,16 @@ extern void serveFile(const char *filename, const char *contentType);
 // Declare redirect function
 extern int ensureRedirect(String path);
 
+// Declare the real-time pacing fucnction
+extern void startRealTimePacingTask();
+
 // Declare the initialization function for routes
 void initRealTimePacingRoutes(WebServer &server);
 
 // Function to reset the realTimePacing struct to initial values
 void resetRealTimePacing();
 
-// Functino to update realTimePacing values in real time
+// Function to update realTimePacing values in real time
 void sendRealTimePacingUpdates();
 
 #endif

@@ -44,10 +44,12 @@ void initRealTimePacingRoutes(WebServer &server) {
         // Turn on or off the running status
         realTimePacing.is_running = !realTimePacing.is_running;
         if(realTimePacing.is_running) {
+            startRealTimePacingTask();
             realTimePacing.status = "Running";
         } else {
             realTimePacing.status = "Stopped";
         }
+
         server.send(200, "text/plain", realTimePacing.status);
     });
 

@@ -104,4 +104,3 @@ $<TARGET_FILE:__idf_joltwallet__littlefs>
 $<TARGET_FILE:__idf_espressif__arduino-esp32>
 $<TARGET_FILE:__idf_espressif__esp_websocket_client>
 $<TARGET_FILE:__idf_main>
-$<TARGET_FILE:__idf_FastLED>
