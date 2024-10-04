@@ -59,12 +59,12 @@
 17960	18417	7495158930781593	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/esp_dpa_protection.c.obj	3ecafd812409c086
 3259	3624	7495158783424937	esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/pkparse.c.obj	d323262a14b9586a
 39754	40869	7495159151297797	esp-idf/wpa_supplicant/CMakeFiles/__idf_wpa_supplicant.dir/src/crypto/sha1-tlsprf.c.obj	32c4846fc311fccd
-850	1019	7495158757934671	esp-idf/mbedtls/mbedtls/3rdparty/everest/CMakeFiles/everest.dir/library/Hacl_Curve25519_joined.c.obj	a18258210fc37739
-7319	7589	7495158823623270	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32c6/esp_efuse_table.c.obj	72639308f27f071b
 19603	20087	7495158947036368	esp-idf/freertos/CMakeFiles/__idf_freertos.dir/FreeRTOS-Kernel/portable/riscv/portasm.S.obj	54df401d36170b33
-27149	28433	7495159024473427	esp-idf/esp_driver_sdm/CMakeFiles/__idf_esp_driver_sdm.dir/src/sdm.c.obj	22793cbc832c10d1
-3689	4253	7495158789609872	esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_ffdh.c.obj	fd9cf11e8dc5d1eb
+7319	7589	7495158823623270	esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32c6/esp_efuse_table.c.obj	72639308f27f071b
+850	1019	7495158757934671	esp-idf/mbedtls/mbedtls/3rdparty/everest/CMakeFiles/everest.dir/library/Hacl_Curve25519_joined.c.obj	a18258210fc37739
 2752	3086	7495158778892534	esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/lmots.c.obj	dbae26c54920f1ca
+3689	4253	7495158789609872	esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_ffdh.c.obj	fd9cf11e8dc5d1eb
+27149	28433	7495159024473427	esp-idf/esp_driver_sdm/CMakeFiles/__idf_esp_driver_sdm.dir/src/sdm.c.obj	22793cbc832c10d1
 38358	38932	7495159136385471	esp-idf/esp_netif/CMakeFiles/__idf_esp_netif.dir/lwip/netif/esp_pbuf_ref.c.obj	48b7600a350f52e5
 837	1004	7495158757989045	esp-idf/mbedtls/mbedtls/3rdparty/everest/CMakeFiles/everest.dir/library/x25519.c.obj	56eb45a73850734d
 17497	18110	7495158928673326	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/deprecated/gdma_legacy.c.obj	58befce840ba897b
@@ -142,7 +142,7 @@
 2930	3352	7495158780980614	esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/oid.c.obj	90591a66cd4155f8
 2811	3194	7495158779782769	esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/md.c.obj	a6cff82ec79f111
 133759	134492	7495160092636470	esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/power_mgt.cpp.obj	b64db4e7ee6b3603
-249	637	7495166968844936	esp-idf/esp_app_format/CMakeFiles/__idf_esp_app_format.dir/esp_app_desc.c.obj	fa758e0848f7952b
+828	3975	7497245040698129	esp-idf/esp_app_format/CMakeFiles/__idf_esp_app_format.dir/esp_app_desc.c.obj	d2b5dd51000b3089
 2204	2576	7495158773559587	esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/ecjpake.c.obj	4967cc852d99ce65
 99673	99964	7495159747126312	esp-idf/json/CMakeFiles/__idf_json.dir/cJSON/cJSON.c.obj	78146f8bab1944ba
 11754	12181	7495158869430504	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_efuse.c.obj	a53c29cbf8db2e2f
@@ -361,7 +361,7 @@
 6367	7030	7495158816176732	esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_ciphersuites.c.obj	127ddc90c5dca556
 36655	37434	7495159119741677	esp-idf/lwip/CMakeFiles/__idf_lwip.dir/port/freertos/sys_arch.c.obj	ff0bfb8ed95f947a
 6397	6778	7495158815314527	esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_cookie.c.obj	cd517eb39d553ed7
-232	464	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
+452	958	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
 6381	6938	7495158815502521	esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_client.c.obj	640a63f9094eba29
 96229	96579	7495159712119459	esp-idf/unity/CMakeFiles/__idf_unity.dir/unity_port_esp32.c.obj	c9fe30f1cee5b848
 44952	46088	7495159206197467	esp-idf/wpa_supplicant/CMakeFiles/__idf_wpa_supplicant.dir/src/wps/wps_dev_attr.c.obj	e993c877f535b769
@@ -381,7 +381,7 @@
 11645	11977	7495158866535623	esp-idf/esp_system/CMakeFiles/__idf_esp_system.dir/port/soc/esp32c6/system_internal.c.obj	b4d02486c17492d1
 45720	46182	7495159208588680	esp-idf/wpa_supplicant/CMakeFiles/__idf_wpa_supplicant.dir/esp_supplicant/src/esp_wpa2_api_port.c.obj	4e6ce8b758c6f147
 35385	35816	7495159105749488	esp-idf/lwip/CMakeFiles/__idf_lwip.dir/lwip/src/netif/ppp/ipv6cp.c.obj	b9ad0bf34cd99d51
-232	464	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
+452	958	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
 6779	7130	7495158818835409	esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_tls13_server.c.obj	11be72d1dddcdccc
 124011	124201	7495159989512234	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/BLE/src/BLE2901.cpp.obj	45ff7df427865bf6
 23191	23826	7495158985235732	esp-idf/nvs_flash/CMakeFiles/__idf_nvs_flash.dir/src/nvs_page.cpp.obj	e09f3e779d461c7f
@@ -510,10 +510,10 @@
 104826	106937	7495159815713543	esp-idf/espressif__esp-modbus/libespressif__esp-modbus.a	6eff66e0da3ef37b
 18624	19058	7495158938079709	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32c6/pmu_param.c.obj	d8fcbb88fb8bfb75
 10244	10689	7495158854536499	esp-idf/spi_flash/CMakeFiles/__idf_spi_flash.dir/esp_flash_api.c.obj	49976afb5cc22afc
-36423	36878	7495159116807177	esp-idf/lwip/CMakeFiles/__idf_lwip.dir/lwip/src/netif/ppp/utils.c.obj	93162924aac51b1a
 111695	112060	7495159868601494	esp-idf/espressif__esp-dsp/CMakeFiles/__idf_espressif__esp-dsp.dir/modules/support/snr/float/dsps_snr_f32.cpp.obj	3dc720fc40d3bdd8
+36423	36878	7495159116807177	esp-idf/lwip/CMakeFiles/__idf_lwip.dir/lwip/src/netif/ppp/utils.c.obj	93162924aac51b1a
 10336	10638	7495158854052578	esp-idf/esp_system/CMakeFiles/__idf_esp_system.dir/esp_err.c.obj	a93a38f0cbcefecb
-232	464	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
+452	958	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
 114977	115454	7495159902029724	esp-idf/espressif__esp_modem/CMakeFiles/__idf_espressif__esp_modem.dir/src/esp_modem_dce.cpp.obj	1179e0df704e78d7
 49365	49929	7495159246529719	esp-idf/esp_adc/CMakeFiles/__idf_esp_adc.dir/adc_continuous.c.obj	1cdacac8d8ec2aa3
 88544	89108	7493380765922829	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_box/crypto_box.c.obj	1cb2dc8d454e647d
@@ -539,7 +539,7 @@
 10769	11153	7495158858332285	esp-idf/esp_system/CMakeFiles/__idf_esp_system.dir/stack_check.c.obj	732d3d1867e71aa0
 10690	11001	7495158857505297	esp-idf/esp_system/CMakeFiles/__idf_esp_system.dir/system_time.c.obj	bcc92694447dc97c
 28981	30076	7495159048025089	esp-idf/driver/CMakeFiles/__idf_driver.dir/deprecated/rmt_legacy.c.obj	cf3aa594a570b5e5
-232	464	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
+452	958	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
 42204	43885	7495159180029546	esp-idf/wpa_supplicant/CMakeFiles/__idf_wpa_supplicant.dir/src/rsn_supp/wpa.c.obj	368ff74a98b6ee06
 98869	99217	7495159740112438	esp-idf/wear_levelling/CMakeFiles/__idf_wear_levelling.dir/WL_Ext_Perf.cpp.obj	a6e18e1936473c7
 10828	11037	7495158858497052	esp-idf/esp_system/CMakeFiles/__idf_esp_system.dir/ubsan.c.obj	922dfdcff56101e1
@@ -578,7 +578,7 @@
 11494	11676	7495158864854617	esp-idf/esp_system/CMakeFiles/__idf_esp_system.dir/port/soc/esp32c6/reset_reason.c.obj	c4686d742d456da7
 19287	19648	7495158944013913	esp-idf/freertos/CMakeFiles/__idf_freertos.dir/port_common.c.obj	b4f68617adb5de7b
 18864	19368	7495158941185812	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32c6/ocode_init.c.obj	2552401bf16504c8
-638	736	7495166970031025	esp-idf/esp_app_format/libesp_app_format.a	61ab0ba44ef9d0fb
+3976	4394	7497245046746925	esp-idf/esp_app_format/libesp_app_format.a	61ab0ba44ef9d0fb
 99183	99468	7495159742718643	esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/port/freertos/ffsystem.c.obj	bed7e169cb04b6eb
 114539	115437	7495159901307617	esp-idf/espressif__esp_modem/CMakeFiles/__idf_espressif__esp_modem.dir/src/esp_modem_term_uart.cpp.obj	66b9ed22afd4ebf2
 13289	13622	7493380012020995	esp-idf/esp_rom/CMakeFiles/__idf_esp_rom.dir/patches/esp_rom_crc.c.obj	6fb7d896645d781c
@@ -624,13 +624,13 @@
 13060	13460	7495158881023395	esp-idf/hal/CMakeFiles/__idf_hal.dir/mcpwm_hal.c.obj	e3b2c8b645f359d2
 117574	117733	7495159925257804	esp-idf/espressif__qrcode/CMakeFiles/__idf_espressif__qrcode.dir/qrcodegen.c.obj	ef627042c8bb58eb
 13077	13476	7495158882089196	esp-idf/hal/CMakeFiles/__idf_hal.dir/twai_hal.c.obj	32982dbea11ec55
-241	377	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
+50820	51450	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
 13111	13492	7495158882219410	esp-idf/hal/CMakeFiles/__idf_hal.dir/gdma_hal_top.c.obj	a9d5f160d8046283
 13094	13521	7495158882976414	esp-idf/hal/CMakeFiles/__idf_hal.dir/twai_hal_iram.c.obj	2791247aa0c9ba46
 23652	24683	7495158993054025	esp-idf/nvs_flash/CMakeFiles/__idf_nvs_flash.dir/src/nvs_types.cpp.obj	d45a05b25533e847
 106937	107308	7495159819561917	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_sign/ed25519/ref10/obsolete.c.obj	3d50a3b4e0a64372
 13238	13771	7495158883208933	esp-idf/hal/CMakeFiles/__idf_hal.dir/sdm_hal.c.obj	821ccf37a6a16070
-232	464	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
+452	958	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
 109892	110219	7495159849491818	esp-idf/espressif__esp-dsp/CMakeFiles/__idf_espressif__esp-dsp.dir/modules/matrix/sub/float/dspm_sub_f32_ae32.S.obj	2ec8cc340b2a53cb
 13320	14085	7495158885701218	esp-idf/hal/CMakeFiles/__idf_hal.dir/etm_hal.c.obj	c113d63446bd5f9
 120847	121278	7495159958415001	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/esp32-hal-bt.c.obj	61e69483912008e7
@@ -657,7 +657,7 @@
 100368	100732	7495159755012069	esp-idf/wifi_provisioning/CMakeFiles/__idf_wifi_provisioning.dir/src/wifi_ctrl.c.obj	6252ef1b383c1370
 14212	14651	7495158892537175	esp-idf/hal/CMakeFiles/__idf_hal.dir/spi_slave_hal_iram.c.obj	c60a432a1fde708b
 14306	14897	7495158896078225	esp-idf/hal/CMakeFiles/__idf_hal.dir/sdio_slave_hal.c.obj	98bffab2843ecebd
-478	21100	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
+51451	74747	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
 38514	38978	7495159137004119	esp-idf/wpa_supplicant/CMakeFiles/__idf_wpa_supplicant.dir/src/ap/ieee802_1x.c.obj	ba7ed482fc7747c2
 14636	14863	7495158895982245	esp-idf/hal/CMakeFiles/__idf_hal.dir/ds_hal.c.obj	a124d0b16414239
 14706	15049	7495158897786349	esp-idf/log/CMakeFiles/__idf_log.dir/log.c.obj	22cc854ea71d9e5f
@@ -665,7 +665,7 @@
 16710	16960	7493380044720991	esp-idf/soc/CMakeFiles/__idf_soc.dir/lldesc.c.obj	9e53334f3f5893ce
 17563	17838	7493380053907999	esp-idf/soc/CMakeFiles/__idf_soc.dir/esp32c6/twai_periph.c.obj	4940e7a8bc5a5adf
 14897	15292	7495158900364980	esp-idf/heap/CMakeFiles/__idf_heap.dir/port/memory_layout_utils.c.obj	b72b2d4cc7469aa
-6184	6297	7497015563442934	esp-idf/main/libmain.a	5bf8cb8f5b7fabb
+10728	10904	7497292293515214	esp-idf/main/libmain.a	6cf6b55ddd0695f9
 107066	107352	7495159820328556	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_stream/chacha20/dolbeau/chacha20_dolbeau-ssse3.c.obj	ba4ca3d6d2e39a66
 19027	19334	7495158940840704	esp-idf/esp_hw_support/CMakeFiles/__idf_esp_hw_support.dir/port/esp32c6/esp_crypto_lock.c.obj	421cf80c807c52e
 48007	49364	7495159236256994	esp-idf/esp_wifi/CMakeFiles/__idf_esp_wifi.dir/src/wifi_default_ap.c.obj	171badfb67610ba4
@@ -872,6 +872,7 @@
 25646	26120	7495159008144881	esp-idf/esp_driver_i2s/CMakeFiles/__idf_esp_driver_i2s.dir/i2s_tdm.c.obj	200785ce8bb59173
 50836	51618	7495159261862341	esp-idf/esp_http_server/CMakeFiles/__idf_esp_http_server.dir/src/httpd_main.c.obj	9f19dcc0a1866d08
 73855	74129	7495159489924514	esp-idf/esp_driver_sdspi/libesp_driver_sdspi.a	912834bf83227491
+322	7814	7497053704361569	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
 25665	26527	7495159012597839	esp-idf/sdmmc/CMakeFiles/__idf_sdmmc.dir/sdmmc_cmd.c.obj	7b1fb0e1413e7f9d
 95506	95985	7495159706853694	esp-idf/esp_driver_gpio/CMakeFiles/__idf_esp_driver_gpio.dir/src/rtc_io.c.obj	a0935a7d6ac7bf
 25728	26595	7495159013186783	esp-idf/sdmmc/CMakeFiles/__idf_sdmmc.dir/sdmmc_common.c.obj	282e5c7ae71945af
@@ -929,10 +930,10 @@
 131626	132456	7495160072120325	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WiFi/src/WiFi.cpp.obj	ad3f8eaaa6f1e248
 30844	31453	7495159062510925	esp-idf/lwip/CMakeFiles/__idf_lwip.dir/lwip/src/apps/sntp/sntp.c.obj	7cc2f1050595358c
 30593	31605	7495159061680805	esp-idf/lwip/CMakeFiles/__idf_lwip.dir/lwip/src/api/sockets.c.obj	2f8b0312bc3f2a29
-232	464	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-232	464	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
+452	958	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
+452	958	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
 47587	48464	7495159228337582	esp-idf/esp_wifi/CMakeFiles/__idf_esp_wifi.dir/src/mesh_event.c.obj	f5517e8467bdecd5
-232	464	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
+452	958	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
 30862	31216	7495159059716707	esp-idf/lwip/CMakeFiles/__idf_lwip.dir/lwip/src/apps/netbiosns/netbiosns.c.obj	715aed5064910211
 30878	31431	7495159062021539	esp-idf/lwip/CMakeFiles/__idf_lwip.dir/lwip/src/core/def.c.obj	669a5894fd873ca1
 126294	127314	7495160020155756	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/BLE/src/FreeRTOS.cpp.obj	aaf683160b03e40e
@@ -1092,7 +1093,7 @@
 46620	47562	7495159220435812	esp-idf/wpa_supplicant/CMakeFiles/__idf_wpa_supplicant.dir/esp_supplicant/src/crypto/crypto_mbedtls-rsa.c.obj	94a54f38076a7951
 96303	96591	7495159713498262	esp-idf/cmock/CMakeFiles/__idf_cmock.dir/CMock/src/cmock.c.obj	eda7ab951572595a
 47326	47948	7495159224367930	esp-idf/esp_coex/CMakeFiles/__idf_esp_coex.dir/src/lib_printf.c.obj	590fb32b754029b0
-18538	19062	7497015691075915	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
+47991	50819	7497292692533000	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
 46687	47756	7495159222790520	esp-idf/wpa_supplicant/CMakeFiles/__idf_wpa_supplicant.dir/esp_supplicant/src/crypto/crypto_mbedtls-ec.c.obj	c3f34368a1c26cc3
 129202	129441	7495160041486329	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/OpenThread/src/OThreadCLI_Util.cpp.obj	42c44e5298f79d1b
 51082	51712	7495159263781568	esp-idf/esp_https_ota/CMakeFiles/__idf_esp_https_ota.dir/src/esp_https_ota.c.obj	9139938fcb6313d3
@@ -1383,7 +1384,7 @@
 92826	93389	7493380808616413	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_shorthash/crypto_shorthash.c.obj	153c8787433fb5d2
 106900	107167	7495159819226392	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_sign/crypto_sign.c.obj	8d3676cd99c48bf9
 106709	106952	7495159817192096	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_secretbox/xsalsa20poly1305/secretbox_xsalsa20poly1305.c.obj	d032d20af601ed5b
-478	21100	0	CMakeFiles/flash	8d34b2a00c322441
+51451	74747	0	CMakeFiles/flash	8d34b2a00c322441
 106787	107112	7495159818853351	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_shorthash/siphash24/ref/shorthash_siphash24_ref.c.obj	91c9dc93f598150
 92943	93421	7493380809135068	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_shorthash/siphash24/shorthash_siphash24.c.obj	acc116d955acd2f6
 92955	93328	7493380808897574	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_shorthash/siphash24/shorthash_siphashx24.c.obj	594db8a5d7f591f
@@ -1393,7 +1394,7 @@
 106984	107323	7495159819711915	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_sign/ed25519/sign_ed25519.c.obj	da2b9c44d8e2d984
 116641	116930	7495159916527636	esp-idf/espressif__esp_insights/CMakeFiles/__idf_espressif__esp_insights.dir/src/esp_insights_transport.c.obj	abec0580723f098c
 93627	93958	7493380814536577	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_stream/crypto_stream.c.obj	411aaafd0c71cded
-241	377	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
+50820	51450	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
 107011	107366	7495159821591364	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_stream/chacha20/dolbeau/chacha20_dolbeau-avx2.c.obj	410034b3a08c437b
 107167	107414	7495159821581329	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_stream/chacha20/stream_chacha20.c.obj	6aeff9a95f516731
 93685	93909	7493380815020035	esp-idf/espressif__libsodium/CMakeFiles/__idf_espressif__libsodium.dir/libsodium/src/libsodium/crypto_stream/salsa20/xmm6/salsa20_xmm6-asm.S.obj	22fd3361a5f0dd61
@@ -1600,7 +1601,7 @@
 121243	121864	7495159965780115	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/esp32-hal-matrix.c.obj	f893e6a64de2b58d
 121297	121681	7495159964054002	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/esp32-hal-psram.c.obj	43249afe01b89702
 9278	10307	7494527673230007	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/esp32-hal-tinyusb.c.obj	d14942392aee5834
-6297	16355	7497015663716101	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
+10904	40795	7497292591774246	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
 121261	121841	7495159965007836	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/esp32-hal-misc.c.obj	2548df3dcdfaf3d5
 9334	10656	7494527676030144	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/esp32-hal-touch.c.obj	a51a96f97dc841c8
 121591	122332	7495159969739009	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/esp32-hal-spi.c.obj	82e41e7182e91c39
@@ -1623,7 +1624,7 @@
 124093	124838	7495159993856798	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/BLE/src/BLEAddress.cpp.obj	96d5e9d60bd256c5
 123070	123954	7495159986441651	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/HWCDC.cpp.obj	b62afadb7c3f167e
 124391	125017	7495159995952884	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/BLE/src/BLEBeacon.cpp.obj	4eef4cfb1dd09bf9
-16356	18537	7497015685382316	BlockLights_VSCode.elf	2259ed3ebd2d02ba
+40795	47990	7497292662561303	BlockLights_VSCode.elf	2259ed3ebd2d02ba
 123029	124010	7495159987604911	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/cores/esp32/Tone.cpp.obj	7576e4272c9c17e3
 124822	124999	7495159997492026	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/BLE/src/BLEClient.cpp.obj	f8b01084ca389810
 124838	125562	7495159997860478	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/BLE/src/BLEDescriptor.cpp.obj	a4853e8360f0f3f0
@@ -1683,554 +1684,30 @@
 133777	134581	7495160093510066	esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/rgbw.cpp.obj	c49357fb58c32516
 133960	134687	7495160094674394	esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/wiring.cpp.obj	9d1a2a2fa50c17ba
 134415	134757	7495160095711294	esp-idf/FastLED/CMakeFiles/__idf_FastLED.dir/src/platforms/esp/32/idf4_rmt.cpp.obj	994b97626ed94799
-6297	16355	7497015663716101	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
+10904	40795	7497292591774246	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
 16444	16559	7495167128140320	CMakeFiles/BlockLights_VSCode.elf.dir/project_elf_src_esp32c6.c.obj	24387077ba7aec3f
-18538	19062	7497015691075915	.bin_timestamp	f5bd76b40b47b9a2
-224	41664	7497023031493786	build.ninja	68dfb7730bd445c7
-229	5684	7497010998362212	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
+47991	50819	7497292692533000	.bin_timestamp	f5bd76b40b47b9a2
+160	67038	7497293715384129	build.ninja	68dfb7730bd445c7
+631	13758	7497262203132593	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
 108	288	0	esp-idf/partition_table/CMakeFiles/partition-table	e648352d96c97f52
-250	478	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-250	478	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
+481	999	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
+481	999	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
 131228	132056	7495160067571406	esp-idf/espressif__arduino-esp32/CMakeFiles/__idf_espressif__arduino-esp32.dir/libraries/WebSockets/src/WebSocketsServer.cpp.obj	c4a9f9db064918
 118276	118811	7495159936371881	esp-idf/espressif__esp_websocket_client/libespressif__esp_websocket_client.a	b3eae12686c6a146
 240	6184	7497015561810782	esp-idf/main/CMakeFiles/__idf_main.dir/settings.cpp.obj	780ca90216d75466
-140	35721	7497023031493786	build.ninja	68dfb7730bd445c7
-313	641	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-313	641	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-313	641	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-313	641	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-313	641	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-313	641	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-313	641	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-313	641	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-348	668	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-348	668	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-335	8176	7497023114378292	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
-291	604	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-291	604	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-291	604	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-291	604	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-291	604	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-291	604	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-291	604	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-291	604	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-313	628	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-313	628	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-302	7646	7497023895361614	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
-7647	7795	7497023897516852	esp-idf/main/libmain.a	d37284420477a775
-7795	22473	7497024043867361	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-7795	22473	7497024043867361	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-22473	25151	7497024070606581	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-25152	25717	7497024076725827	.bin_timestamp	f5bd76b40b47b9a2
-25152	25717	7497024076725827	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-25717	25860	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-25717	25860	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-25860	46692	0	CMakeFiles/flash	8d34b2a00c322441
-25860	46692	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-321	494	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-321	494	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-309	610	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-309	610	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-309	610	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-309	610	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-309	610	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-309	610	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-309	610	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-309	610	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-332	644	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-332	644	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-644	21492	0	CMakeFiles/flash	8d34b2a00c322441
-644	21492	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-237	438	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-237	438	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-220	439	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-220	439	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-220	439	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-220	439	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-220	439	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-220	439	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-220	439	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-220	439	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-229	6544	7497025414407985	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
-6545	6676	7497025416386140	esp-idf/main/libmain.a	d37284420477a775
-6676	18137	7497025530687121	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-6676	18137	7497025530687121	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-18137	20310	7497025552300030	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-20311	20833	7497025557982569	.bin_timestamp	f5bd76b40b47b9a2
-20311	20833	7497025557982569	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-20834	20970	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-20834	20970	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-20970	41690	0	CMakeFiles/flash	8d34b2a00c322441
-20970	41690	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-337	623	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-337	623	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-320	848	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-320	848	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-320	848	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-320	848	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-320	848	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-320	848	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-320	848	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-320	848	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-353	921	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-353	921	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-922	21777	0	CMakeFiles/flash	8d34b2a00c322441
-922	21777	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-328	679	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-328	679	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-328	679	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-328	679	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-328	679	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-328	679	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-328	679	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-328	679	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-350	701	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-350	701	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-340	9667	7497031381304442	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
-9668	9872	7497031384220453	esp-idf/main/libmain.a	d37284420477a775
-9872	24975	7497031534902530	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-9872	24975	7497031534902530	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-24975	27808	7497031563140792	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-27808	28416	7497031569692661	.bin_timestamp	f5bd76b40b47b9a2
-27808	28416	7497031569692661	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-28417	28552	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-28417	28552	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-28552	49376	0	CMakeFiles/flash	8d34b2a00c322441
-28552	49376	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-300	598	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-300	598	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-300	598	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-300	598	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-300	598	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-300	598	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-300	598	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-300	598	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-318	624	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-318	624	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-310	8558	7497033468271589	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
-8558	8705	7497033470350821	esp-idf/main/libmain.a	d37284420477a775
-8705	22558	7497033608522310	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-8705	22558	7497033608522310	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-22558	25403	7497033636752644	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-25404	26105	7497033644341713	.bin_timestamp	f5bd76b40b47b9a2
-25404	26105	7497033644341713	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-26106	26267	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-26106	26267	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-420	716	7497033724034251	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
-405	844	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-405	844	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-405	844	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-405	844	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-405	844	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-405	844	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-405	844	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-405	844	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-433	877	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-433	877	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-717	916	7497033726235202	esp-idf/main/libmain.a	d37284420477a775
-916	17125	7497033887886014	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-916	17125	7497033887886014	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-17126	20302	7497033919608635	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-20303	20945	7497033926548526	.bin_timestamp	f5bd76b40b47b9a2
-20303	20945	7497033926548526	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-20945	21124	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-20945	21124	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-321	512	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-321	512	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-307	640	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-307	640	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-307	640	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-307	640	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-307	640	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-307	640	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-307	640	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-307	640	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-334	658	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-334	658	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-658	21551	0	CMakeFiles/flash	8d34b2a00c322441
-658	21551	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-296	462	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-296	462	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-285	557	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-285	557	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-285	557	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-285	557	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-285	557	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-285	557	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-285	557	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-285	557	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-307	572	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-307	572	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-573	21304	0	CMakeFiles/flash	8d34b2a00c322441
-573	21304	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-238	395	7497036789469589	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
-246	444	7497036789991994	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
-229	547	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-229	547	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-229	547	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-229	547	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-229	547	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-229	547	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-229	547	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-229	547	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-257	587	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-257	587	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-444	604	7497036791676902	esp-idf/main/libmain.a	d37284420477a775
-604	15209	7497036937180048	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-604	15209	7497036937180048	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-15209	18338	7497036968565110	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-18338	18995	7497036975637416	.bin_timestamp	f5bd76b40b47b9a2
-18338	18995	7497036975637416	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-18995	19174	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-18995	19174	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-19174	39971	0	CMakeFiles/flash	8d34b2a00c322441
-19174	39971	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-272	536	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-272	536	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-272	536	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-272	536	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-272	536	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-272	536	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-272	536	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-272	536	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-291	545	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-291	545	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-282	6050	7497038272751209	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
-6050	6177	7497038274508203	esp-idf/main/libmain.a	d37284420477a775
-6177	18084	7497038393243137	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-6177	18084	7497038393243137	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-18084	20358	7497038415862508	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-20359	20915	7497038421876487	.bin_timestamp	f5bd76b40b47b9a2
-20359	20915	7497038421876487	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-20916	21060	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-20916	21060	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21060	41667	0	CMakeFiles/flash	8d34b2a00c322441
-21060	41667	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-209	451	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-209	451	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-209	451	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-209	451	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-209	451	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-209	451	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-209	451	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-209	451	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-224	464	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-224	464	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-217	5623	7497041627819274	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
-5624	5739	7497041629413351	esp-idf/main/libmain.a	d37284420477a775
-5739	18459	7497041756276730	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-5739	18459	7497041756276730	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-18460	20758	7497041779147876	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-20758	21287	7497041784879621	.bin_timestamp	f5bd76b40b47b9a2
-20758	21287	7497041784879621	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-21287	21442	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21287	21442	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21442	42158	0	CMakeFiles/flash	8d34b2a00c322441
-21442	42158	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-291	610	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-291	610	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-291	610	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-291	610	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-291	610	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-291	610	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-291	610	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-291	610	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-311	684	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-311	684	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-301	7501	7497043708488533	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
-7502	7633	7497043710421393	esp-idf/main/libmain.a	d37284420477a775
-7634	20224	7497043835957875	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-7634	20224	7497043835957875	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-20224	22989	7497043863432317	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-22989	23623	7497043870318734	.bin_timestamp	f5bd76b40b47b9a2
-22989	23623	7497043870318734	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-23623	23810	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-23623	23810	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-23810	44815	0	CMakeFiles/flash	8d34b2a00c322441
-23810	44815	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-409	800	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-409	800	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-409	800	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-409	800	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-409	800	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-409	800	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-409	800	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-409	800	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-439	839	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-439	839	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-427	8227	7497047986558617	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
-8227	8366	7497047988598156	esp-idf/main/libmain.a	d37284420477a775
-8367	20966	7497048114179235	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-8367	20966	7497048114179235	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-20967	23654	7497048140998080	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-23655	24247	7497048147407381	.bin_timestamp	f5bd76b40b47b9a2
-23655	24247	7497048147407381	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-24247	24400	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-24247	24400	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-24400	45055	0	CMakeFiles/flash	8d34b2a00c322441
-24400	45055	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-259	414	7497049284697608	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
-248	501	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-248	501	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-248	501	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-248	501	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-248	501	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-248	501	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-248	501	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-248	501	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-415	522	7497049285898883	esp-idf/main/libmain.a	d37284420477a775
-267	536	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-267	536	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-522	10529	7497049385586460	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-522	10529	7497049385586460	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-10529	12693	7497049407241735	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-12694	13156	7497049412229263	.bin_timestamp	f5bd76b40b47b9a2
-12694	13156	7497049412229263	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-13156	13280	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-13156	13280	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-13280	33810	0	CMakeFiles/flash	8d34b2a00c322441
-13280	33810	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-259	537	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-259	537	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-259	537	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-259	537	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-259	537	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-259	537	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-259	537	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-259	537	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-280	542	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-280	542	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-270	7202	7497050236619781	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
-7202	7322	7497050238398991	esp-idf/main/libmain.a	d37284420477a775
-7322	18335	7497050348188337	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-7322	18335	7497050348188337	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-18335	20616	7497050370916234	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-20617	21173	7497050376907496	.bin_timestamp	f5bd76b40b47b9a2
-20617	21173	7497050376907496	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-21173	21314	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21173	21314	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21314	42012	0	CMakeFiles/flash	8d34b2a00c322441
-21314	42012	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-267	624	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-267	624	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-267	624	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-267	624	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-267	624	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-267	624	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-267	624	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-267	624	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-299	635	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-299	635	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-278	8607	7497051773558401	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
-288	8827	7497051775728706	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
-8828	8960	7497051777745732	esp-idf/main/libmain.a	d37284420477a775
-8961	22046	7497051908248194	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-8961	22046	7497051908248194	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-22046	24482	7497051932554632	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-24482	24990	7497051938060184	.bin_timestamp	f5bd76b40b47b9a2
-24482	24990	7497051938060184	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-24990	25113	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-24990	25113	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-25113	45723	0	CMakeFiles/flash	8d34b2a00c322441
-25113	45723	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-310	681	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-310	681	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-310	681	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-310	681	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-310	681	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-310	681	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-310	681	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-310	681	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-334	708	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-334	708	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-322	7814	7497053704361569	esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj	81e9a44b844bd81f
-7815	7948	7497053706368327	esp-idf/main/libmain.a	d37284420477a775
-7949	18677	7497053813366476	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-7949	18677	7497053813366476	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-18677	20701	7497053833382820	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-20701	21238	7497053839283969	.bin_timestamp	f5bd76b40b47b9a2
-20701	21238	7497053839283969	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-21238	21364	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21238	21364	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21364	41948	0	CMakeFiles/flash	8d34b2a00c322441
-21364	41948	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-244	521	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-244	521	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-244	521	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-244	521	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-244	521	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-244	521	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-244	521	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-244	521	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-261	528	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-261	528	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-252	7091	7497061189012965	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
-7092	7291	7497061191585141	esp-idf/main/libmain.a	d37284420477a775
-7292	18046	7497061298781951	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-7292	18046	7497061298781951	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-18046	20763	7497061325844330	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-20765	21270	7497061331368449	.bin_timestamp	f5bd76b40b47b9a2
-20765	21270	7497061331368449	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-21271	21409	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21271	21409	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21409	41897	0	CMakeFiles/flash	8d34b2a00c322441
-21409	41897	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-206	431	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-206	431	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-206	431	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-206	431	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-206	431	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-206	431	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-206	431	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-206	431	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-223	440	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-223	440	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-215	5889	7497062053527944	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
-5890	6014	7497062055336414	esp-idf/main/libmain.a	d37284420477a775
-6014	18474	7497062179598293	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-6014	18474	7497062179598293	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-18474	20933	7497062204076570	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-20934	21527	7497062210470056	.bin_timestamp	f5bd76b40b47b9a2
-20934	21527	7497062210470056	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-21527	21669	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21527	21669	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21669	42056	0	CMakeFiles/flash	8d34b2a00c322441
-21669	42056	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-220	501	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-220	501	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-220	501	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-220	501	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-220	501	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-220	501	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-220	501	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-220	501	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-235	506	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-235	506	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-228	8669	7497063012939020	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
-8670	8843	7497063015513476	esp-idf/main/libmain.a	d37284420477a775
-319	650	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-319	650	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-319	650	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-319	650	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-319	650	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-319	650	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-319	650	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-319	650	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-343	691	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-343	691	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-334	7405	7497063169733764	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
-7405	7537	7497063171615390	esp-idf/main/libmain.a	d37284420477a775
-7537	19939	7497063295309778	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-7537	19939	7497063295309778	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-19939	22324	7497063319101320	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-22325	22912	7497063325378596	.bin_timestamp	f5bd76b40b47b9a2
-22325	22912	7497063325378596	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-22912	23060	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-22912	23060	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-23060	43524	0	CMakeFiles/flash	8d34b2a00c322441
-23060	43524	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-304	599	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-304	599	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-279	600	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-279	600	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-279	600	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-279	600	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-279	600	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-279	600	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-279	600	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-279	600	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-294	6611	7497064505019258	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
-6612	6748	7497064506918673	esp-idf/main/libmain.a	d37284420477a775
-6748	18214	7497064621239867	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-6748	18214	7497064621239867	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-18214	20597	7497064645033190	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-20598	21150	7497064650993468	.bin_timestamp	f5bd76b40b47b9a2
-20598	21150	7497064650993468	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-21150	21285	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21150	21285	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21285	41683	0	CMakeFiles/flash	8d34b2a00c322441
-21285	41683	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-223	505	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-223	505	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-223	505	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-223	505	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-223	505	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-223	505	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-223	505	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-223	505	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-240	543	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-240	543	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-232	6401	7497090410980731	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
-6402	6528	7497090412811879	esp-idf/main/libmain.a	d37284420477a775
-6528	16053	7497090507777855	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-6528	16053	7497090507777855	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-16054	18155	7497090528652071	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-18156	18670	7497090534252192	.bin_timestamp	f5bd76b40b47b9a2
-18156	18670	7497090534252192	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-18670	18804	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-18670	18804	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-18804	39374	0	CMakeFiles/flash	8d34b2a00c322441
-18804	39374	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-297	664	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-297	664	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-297	664	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-297	664	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-297	664	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-297	664	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-297	664	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-297	664	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-317	672	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-317	672	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-307	7707	7497132960496819	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
-7708	7847	7497132962585802	esp-idf/main/libmain.a	d37284420477a775
-7847	19090	7497133074661827	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-7847	19090	7497133074661827	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-19090	21626	7497133099922183	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-21627	22250	7497133106427664	.bin_timestamp	f5bd76b40b47b9a2
-21627	22250	7497133106427664	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-22250	22420	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-22250	22420	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-22420	43051	0	CMakeFiles/flash	8d34b2a00c322441
-22420	43051	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-215	464	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-215	464	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-215	464	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-215	464	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-215	464	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-215	464	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-215	464	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-215	464	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-232	481	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-232	481	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-224	7304	7497133627262611	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
-7305	7437	7497133629283924	esp-idf/main/libmain.a	d37284420477a775
-7438	18356	7497133738119795	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-7438	18356	7497133738119795	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-18356	21218	7497133766605364	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-21219	21790	7497133772808544	.bin_timestamp	f5bd76b40b47b9a2
-21219	21790	7497133772808544	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-21790	21932	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21790	21932	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-21932	42497	0	CMakeFiles/flash	8d34b2a00c322441
-21932	42497	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
-258	634	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-258	634	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
-258	634	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
-258	634	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
-258	634	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
-258	634	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
-258	634	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
-258	634	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
-280	641	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-280	641	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
-270	10834	7497136939178422	esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj	1f2ab86a8c00d1f3
-10835	10985	7497136941363853	esp-idf/main/libmain.a	d37284420477a775
-10985	21520	7497137046436295	esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-10985	21520	7497137046436295	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esp_system/ld/sections.ld	ab052864b0db178d
-21520	24111	7497137071983621	BlockLights_VSCode.elf	2259ed3ebd2d02ba
-24111	24963	7497137081159184	.bin_timestamp	f5bd76b40b47b9a2
-24111	24963	7497137081159184	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/.bin_timestamp	f5bd76b40b47b9a2
-24963	25115	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-24963	25115	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
-25115	45855	0	CMakeFiles/flash	8d34b2a00c322441
-25115	45855	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441
+466	10727	7497292290999917	esp-idf/main/CMakeFiles/__idf_main.dir/autoPacing.cpp.obj	bc43ec674865d5e2
+190	57197	7497293715384129	build.ninja	68dfb7730bd445c7
+762	1178	0	esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
+762	1178	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/esptool_py/CMakeFiles/app_check_size	a540917566f8c5f1
+740	1360	7490975889726826	bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
+740	1360	7490975889726826	bootloader/bootloader.elf	a0d913265ec11370
+740	1360	7490975889726826	bootloader/bootloader.bin	a0d913265ec11370
+740	1360	7490975889726826	bootloader/bootloader.map	a0d913265ec11370
+740	1360	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader-prefix/src/bootloader-stamp/bootloader-build	a0d913265ec11370
+740	1360	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.elf	a0d913265ec11370
+740	1360	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin	a0d913265ec11370
+740	1360	7490975889726826	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.map	a0d913265ec11370
+787	1427	0	esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
+787	1427	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin	6072479ea4a002c4
+1428	23148	0	CMakeFiles/flash	8d34b2a00c322441
+1428	23148	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/CMakeFiles/flash	8d34b2a00c322441

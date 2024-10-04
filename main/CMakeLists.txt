@@ -1,4 +1,4 @@
-idf_component_register(SRCS "blockLightsSettings.cpp" "main.cpp"
+idf_component_register(SRCS "autoPacing.cpp" "blockLightsSettings.cpp" "main.cpp"
                             "realTimePacing.cpp"
                            
                     INCLUDE_DIRS ".")

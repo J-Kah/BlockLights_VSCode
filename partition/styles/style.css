@@ -24,3 +24,9 @@ button {
 button:hover {
     background-color: #45a049;
  }
+
+ input {
+    width: 35%;
+    padding: 5px;
+    font-size: 1rem;
+}

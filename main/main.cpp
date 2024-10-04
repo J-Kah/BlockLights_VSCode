@@ -8,12 +8,10 @@
 #include <SPIFFS.h>
 #include <WebSocketsServer.h>
 
-#include "esp_wifi.h"
-
-
 //Custom libraries
 #include <realTimePacing.h>
 #include <blockLightsSettings.h>
+#include <autoPacing.h>
 
 const char* ssid = "BlockLights";   // SSID for the Access Point
 
@@ -75,6 +73,14 @@ realTimePacing_t realTimePacing = {
     5,            // laps
     10.0f,         // lapTime
     false         // is_running
+};
+
+autoPacing_t autoPacing = {
+    "Stopped",
+    9.0,
+    90.00,
+    true,
+    false
 };
 
 int ensureRedirect(String path) {
@@ -272,13 +278,22 @@ void startRealTimePacingTask() {
     xTaskCreate(&realTimePacingTask, "realTimePacingTask", 4096, NULL, 5, NULL);
 }
 
+
+// void autoPacingTask(){}
+
+void startAutoPacingTask() {
+
+    //xTaskCreate(&realTimePacingTask, "realTimePacingTask", 4096, NULL, 5, NULL);
+}
+
+
 // Main function for initializing peripherals and starting tasks
 extern "C" void app_main(void) {
     esp_log_level_set("*", ESP_LOG_ERROR);  // Set all log levels to error
 
     Serial.begin(115200); // Initialize Serial communication
 
-    delay(5000); // 5 seconds to let you open the COM port if you need
+    //delay(5000); // 5 seconds to let you open the COM port if you need
 
     // Initialize SPIFFS
     if (!SPIFFS.begin(true)) {
@@ -306,6 +321,9 @@ extern "C" void app_main(void) {
 
     // initialise routes for the settings page
     initSettingsRoutes(server);
+
+    // initialise routes for the auto pacing page
+    initAutoPacingRoutes(server);
 
     // Serve the favicon.ico file
     server.on("/favicon.ico", HTTP_GET, []() {
