@@ -107,29 +107,40 @@
 43012	44914	7490976352292820	esp-idf/micro-ecc/libmicro-ecc.a	6be27eef8fa3dc5a
 13780	14207	7495159675600903	esp-idf/soc/libsoc.a	551602a39b0d4f58
 14207	14420	7495159678045344	esp-idf/main/libmain.a	1674b4e6798d45b3
-14420	14921	7495159682821602	bootloader.elf	2808e3c40ac5f0de
-14921	16157	7495159695045187	.bin_timestamp	b0f5dfa5542b9868
-14921	16157	7495159695045187	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/.bin_timestamp	b0f5dfa5542b9868
-105	573	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-105	573	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-44	77881	7495159533044369	build.ninja	27d11e6619975991
-123	682	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-123	682	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-76	368	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-76	368	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-83	355	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-83	355	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-94	408	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-94	408	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-118	625	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-118	625	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-55	257	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-55	257	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-51	235	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-51	235	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-68	277	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-68	277	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-72	387	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-72	387	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-90	447	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
-90	447	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+111	1853	7499385153078162	bootloader.elf	2808e3c40ac5f0de
+1854	3541	7499385172455575	.bin_timestamp	b0f5dfa5542b9868
+1854	3541	7499385172455575	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/.bin_timestamp	b0f5dfa5542b9868
+250	1044	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+250	1044	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+41	68593	7499594343511220	build.ninja	27d11e6619975991
+44	14594	7499594343511220	build.ninja	27d11e6619975991
+101	390	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+101	390	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+55	225	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+55	225	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+101	438	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+101	438	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+85	364	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+85	364	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+59	296	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+59	296	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+329	970	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+329	970	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+153	589	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+153	589	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+114	565	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+114	565	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+69	299	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+69	299	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+97	801	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+97	801	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+100	683	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+100	683	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+120	641	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+120	641	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+43	208	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+43	208	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+98	523	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+98	523	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+88	402	0	esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e
+88	402	0	C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/esp-idf/esptool_py/CMakeFiles/bootloader_check_size	3309126ff7caa96e

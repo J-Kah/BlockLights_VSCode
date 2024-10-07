@@ -1,0 +1,8 @@
+ESP Insights Project commit: 498084c-dirty
+ESP RainMaker Project commit: 498084c-dirty
+CMake Error at main/CMakeLists.txt:6 (target_compile_options):
+  Cannot specify compile options for target "BlockLights_VSCode" which is not
+  built by this project.
+
+
+ninja: error: rebuilding 'build.ninja': subcommand failed

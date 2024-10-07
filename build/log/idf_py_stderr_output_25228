@@ -1,0 +1,23 @@
+[0;33m--- Warning: GDB cannot open serial ports accessed as COMx[0m
+[0;33m--- Using \\.\COM8 instead...[0m
+[0;33m--- esp-idf-monitor 1.5.0 on \\.\COM8 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0;33m--- 0x400228d8: usb_serial_device_rx_one_char in ROM
+[0m
+[0;33m--- 0x4201b652: fastled_rmt51_strip::RmtLedStrip::acquire_rmt() at C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/libraries/FastLED/src/platforms/esp/32/led_strip/rmt_strip.cpp:85 (discriminator 1)
+[0m
+[0;33m--- 0x40809597: _esp_error_check_failed at C:/Users/joshk/esp/v5.3.1/esp-idf/components/esp_system/esp_err.c:49
+[0m
+[0;33m--- Stack dump detected[0m
+[0;33m--- 0x408007c6: panic_abort at C:/Users/joshk/esp/v5.3.1/esp-idf/components/esp_system/panic.c:463
+0x408095a2: __ubsan_include at C:/Users/joshk/esp/v5.3.1/esp-idf/components/esp_system/ubsan.c:311
+[0m
+[0;33m--- 0x40800001: _vector_table at C:/Users/joshk/esp/v5.3.1/esp-idf/components/riscv/vectors_intc.S:54
+[0m
+[0;33m--- Warning: Failed to run gdb_panic_server.py script: Command '['riscv32-esp-elf-gdb', '--batch', '-n', 'C:\\Users\\joshk\\Documents\\Arduino\\Block Lights\\BlockLights_VSCode\\build\\BlockLights_VSCode.elf', '-ex', 'target remote | "C:\\Users\\joshk\\.espressif\\python_env\\idf5.3_py3.11_env\\Scripts\\python.exe" -m esp_idf_panic_decoder --target esp32c6 "C:\\Users\\joshk\\AppData\\Local\\Temp\\tmpxex6z6cf"', '-ex', 'bt']' returned non-zero exit status 1.
+b"\r\nwarning: could not convert 'main' from the host encoding (CP1252) to UTF-32.\r\nThis normally should not happen, please file a bug report.\r\nerror starting child process 'C:\\Users\\joshk\\.espressif\\python_env\\idf5.3_py3.11_env\\Scripts\\python.exe -m esp_idf_panic_decoder --target esp32c6 C:\\Users\\joshk\\AppData\\Local\\Temp\\tmpxex6z6cf': CreateProcess: No such file or directory\r\nNo stack.\r\n"
+
+[0m
+[0;33m--- 0x4001975a: software_reset_cpu in ROM
+[0m
+[0m

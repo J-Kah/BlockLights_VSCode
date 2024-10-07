@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", function() {
     fetchTrackNumber();
     fetchNumberOfTracks();
     fetchStartingOn500mSide();
+    fetchNumLeadingBlocks();
+    fetchNumPacingBlocks();
+    fetchNumTrailingBlocks();
 });
 
 // Function to fetch the current lap value from the server
@@ -22,7 +25,7 @@ function fetchNumberOfTracks() {
         .then(data => {
             document.getElementById("numberOfTracks").innerText = data; // Update lap value
         })
-        .catch(error => console.error('Error fetching NnumberOfTracks value:', error));
+        .catch(error => console.error('Error fetching numberOfTracks value:', error));
 }
 
 // Function to fetch the current lap value from the server
@@ -33,6 +36,33 @@ function fetchStartingOn500mSide() {
             document.getElementById("startingOn500mSide").innerText = data; // Update lap value
         })
         .catch(error => console.error('Error fetching startingOn500mSide value:', error));
+}
+
+function fetchNumLeadingBlocks() {
+    fetch('/getNumLeadingBlocks')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("numLeadingBlocks").innerText = data; // Update lap value
+        })
+        .catch(error => console.error('Error fetching NumLeadingBlocks value:', error));
+}
+
+function fetchNumPacingBlocks() {
+    fetch('/getNumPacingBlocks')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("numPacingBlocks").innerText = data; // Update lap value
+        })
+        .catch(error => console.error('Error fetching NumPacingBlocks value:', error));
+}
+
+function fetchNumTrailingBlocks() {
+    fetch('/getNumTrailingBlocks')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("numTrailingBlocks").innerText = data; // Update lap value
+        })
+        .catch(error => console.error('Error fetching NumTrailingBlocks value:', error));
 }
 
 function incrementTrackNumber() {
@@ -65,6 +95,54 @@ function toggleStartingOn500mSide() {
         .then(response => response.text())
         .then(data => {
             document.getElementById("startingOn500mSide").innerText = data;
+        });
+}
+
+function incrementNumLeadingBlocks() {
+    fetch('/incrementNumLeadingBlocks')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("numLeadingBlocks").innerText = data;
+        });
+}
+
+function decrementNumLeadingBlocks() {
+    fetch('/decrementNumLeadingBlocks')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("numLeadingBlocks").innerText = data;
+        });
+}
+
+function incrementNumPacingBlocks() {
+    fetch('/incrementNumPacingBlocks')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("numPacingBlocks").innerText = data;
+        });
+}
+
+function decrementNumPacingBlocks() {
+    fetch('/decrementNumPacingBlocks')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("numPacingBlocks").innerText = data;
+        });
+}
+
+function incrementNumTrailingBlocks() {
+    fetch('/incrementNumTrailingBlocks')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("numTrailingBlocks").innerText = data;
+        });
+}
+
+function decrementNumTrailingBlocks() {
+    fetch('/decrementNumTrailingBlocks')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("numTrailingBlocks").innerText = data;
         });
 }
 

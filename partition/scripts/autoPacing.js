@@ -124,7 +124,7 @@ function initWebSocket() {
         document.getElementById("autoStatus").innerText = data.autoStatus;
         document.getElementById("autoLaps").innerText = data.autoLaps;
         document.getElementById("autoTime").innerText = data.autoTime;
-        document.getElementById("autoCountdown").innerText = data.autoCountdown === "true" ? "Yes" : "No";
+        document.getElementById("autoCountdown").innerText = data.autoCountdown;
     };
 }
 

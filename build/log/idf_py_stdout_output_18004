@@ -1,0 +1,33 @@
+-- ccache will be used for faster recompilation
+-- Building ESP-IDF components for target esp32c6
+NOTICE: Skipping optional dependency: espressif/esp-sr
+NOTICE: Skipping optional dependency: espressif/esp-sr
+Processing 27 dependencies:
+[1/27] chmorgan/esp-libhelix-mp3 (1.0.3)
+[2/27] espressif/arduino-esp32 (3.1.0-rc1)
+[3/27] espressif/cbor (0.6.0~1)
+[4/27] espressif/esp-dsp (1.5.2)
+[5/27] espressif/esp-modbus (1.0.16)
+[6/27] espressif/esp-serial-flasher (0.0.11)
+[7/27] espressif/esp-zboss-lib (1.5.0)
+[8/27] espressif/esp-zigbee-lib (1.5.0)
+[9/27] espressif/esp_diag_data_store (1.0.1)
+[10/27] espressif/esp_diagnostics (1.2.0)
+[11/27] espressif/esp_insights (1.2.0)
+[12/27] espressif/esp_modem (1.1.0)
+[13/27] espressif/esp_rainmaker (1.5.0)
+[14/27] espressif/esp_rcp_update (1.2.0)
+[15/27] espressif/esp_schedule (1.2.0)
+[16/27] espressif/esp_secure_cert_mgr (2.4.1)
+[17/27] espressif/esp_websocket_client (1.2.3)
+[18/27] espressif/jsmn (1.1.0)
+[19/27] espressif/json_generator (1.1.2)
+[20/27] espressif/json_parser (1.0.3)
+[21/27] espressif/libsodium (1.0.20~1)
+[22/27] espressif/mdns (1.4.0)
+[23/27] espressif/network_provisioning (1.0.2)
+[24/27] espressif/qrcode (0.1.0~2)
+[25/27] espressif/rmaker_common (1.4.6)
+[26/27] joltwallet/littlefs (1.14.8)
+[27/27] idf (5.3.1)
+-- DEBUG: Use esp-modbus component folder: C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__esp-modbus.

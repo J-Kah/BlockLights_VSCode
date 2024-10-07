@@ -4,15 +4,34 @@
 extern WebSocketsServer webSocket;  // Access the WebSocket server instance
 
 void sendAutoPacingUpdates() {
-    // Create a JSON string with the real-time pacing data
-    String jsonResponse = "{\"autoStatus\": \"" + String(autoPacing.autoStatus) + "\""
-                          ", \"autoLaps\": " + String(autoPacing.autoLaps) + 
-                          ", \"autoTime\": " + String(autoPacing.autoLaps) + 
-                          ", \"autoCountdown\": " + String(autoPacing.autoCountdown) + "}";
+
+    int mins = autoPacing.autoTime / 60;
+    float seconds = autoPacing.autoTime - mins * 60;
+
+    String laps = String(autoPacing.autoLaps, 1); // Default with 1 decimal place
+    if (int(2 * autoPacing.autoLaps) % 2 == 0) {
+        laps = String(autoPacing.autoLaps, 0); // Update the same laps variable
+    }
+
+
+    String countDown = autoPacing.autoCountdown ? "Yes" : "No";
+
+    // Ensure seconds have leading zeros if less than 10
+    String secondsStr = String(seconds, 2);
+    if (seconds < 10) {
+        secondsStr = "0" + secondsStr; // Add leading zero for seconds < 10
+    }
+
+    // Create a JSON string with the real-time pacing 
+    String jsonResponse = "{\"autoStatus\": \"" + autoPacing.autoStatus + "\""
+                          ", \"autoLaps\": " + laps + 
+                          ", \"autoTime\": \"" + String(mins) + ":" + secondsStr + "\"" +
+                          ", \"autoCountdown\": \"" + countDown + "\"}";
 
     // Send it to all connected WebSocket clients
     webSocket.broadcastTXT(jsonResponse);
 }
+
 
 // Define the initialization function
 void initAutoPacingRoutes(WebServer &server) {
@@ -33,7 +52,7 @@ void initAutoPacingRoutes(WebServer &server) {
 
     // Routes for fetching auto Pacing values
     server.on("/getAutoLaps", [&]() {
-        if(long(autoPacing.autoLaps) % 1 == 0){
+        if(int(2*autoPacing.autoLaps) % 2 == 0){
             server.send(200, "text/plain", String(autoPacing.autoLaps, 0));
         } else {
             server.send(200, "text/plain", String(autoPacing.autoLaps, 1)); // Send lap value as plain text
@@ -88,6 +107,7 @@ void initAutoPacingRoutes(WebServer &server) {
     server.on("/toggleAutoPacing", [&]() {
         // Turn on or off the running status
         autoPacing.autoIsRunning = !autoPacing.autoIsRunning;
+
         if(autoPacing.autoIsRunning) {
             startAutoPacingTask();
             autoPacing.autoStatus = "Running";
@@ -99,7 +119,7 @@ void initAutoPacingRoutes(WebServer &server) {
     });
 
     server.on("/toggleAutoCountdown", [&]() {
-        // Turn on or off the running status
+        // Turn on or off the auto countdown
         autoPacing.autoCountdown = !autoPacing.autoCountdown;
         server.send(200, "text/plain", autoPacing.autoCountdown ? "Yes" : "No");
     });

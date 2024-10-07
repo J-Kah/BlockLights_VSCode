@@ -27,6 +27,17 @@ void initSettingsRoutes(WebServer &server) {
         server.send(200, "text/plain", String(settings.trackNumber)); // Send lap time with 1 decimal place
     });
 
+    server.on("/getNumLeadingBlocks", [&]() {
+        server.send(200, "text/plain", String(settings.numLeadingBlocks)); // Send lap time with 1 decimal place
+    });
+
+    server.on("/getNumPacingBlocks", [&]() {
+        server.send(200, "text/plain", String(settings.numPacingBlocks)); // Send lap time with 1 decimal place
+    });
+
+    server.on("/getNumTrailingBlocks", [&]() {
+        server.send(200, "text/plain", String(settings.numTrailingBlocks)); // Send lap time with 1 decimal place
+    });
 
     // Serve the settings page
     server.on("/blockLightsSettings", []() {
@@ -51,7 +62,7 @@ void initSettingsRoutes(WebServer &server) {
         server.send(200, "text/plain", String(settings.trackNumber));
     });
 
-     server.on("/decrementTrackNumber", [&]() {
+    server.on("/decrementTrackNumber", [&]() {
         // Increment laps (to be handled in JS)
         if(settings.trackNumber > 1) {
             settings.trackNumber -= 1;
@@ -75,4 +86,63 @@ void initSettingsRoutes(WebServer &server) {
         settings.startingOn500mSide = !settings.startingOn500mSide;
         server.send(200, "text/plain", settings.startingOn500mSide ? "Yes" : "No");
     });
+
+
+
+
+
+
+
+
+
+    server.on("/incrementNumLeadingBlocks", [&]() {
+        // Increment laps (to be handled in JS)
+        if(settings.numLeadingBlocks < 5) {
+            settings.numLeadingBlocks += 1;
+        }
+        server.send(200, "text/plain", String(settings.numLeadingBlocks));
+    });
+
+    server.on("/decrementNumLeadingBlocks", [&]() {
+        // Increment laps (to be handled in JS)
+        if(settings.numLeadingBlocks > 1) {
+            settings.numLeadingBlocks -= 1;
+        }
+        server.send(200, "text/plain", String(settings.numLeadingBlocks));
+    });
+
+    server.on("/incrementNumPacingBlocks", [&]() {
+        // Increment laps (to be handled in JS)
+        if(settings.numPacingBlocks < 5) {
+            settings.numPacingBlocks += 1;
+        }
+        server.send(200, "text/plain", String(settings.numPacingBlocks));
+    });
+
+    server.on("/decrementNumPacingBlocks", [&]() {
+        // Increment laps (to be handled in JS)
+        if(settings.numPacingBlocks > 1) {
+            settings.numPacingBlocks -= 1;
+        }
+        server.send(200, "text/plain", String(settings.numPacingBlocks));
+    });
+
+    server.on("/incrementNumTrailingBlocks", [&]() {
+        // Increment laps (to be handled in JS)
+        if(settings.numTrailingBlocks < 5) {
+            settings.numTrailingBlocks += 1;
+        }
+        server.send(200, "text/plain", String(settings.numTrailingBlocks));
+    });
+
+    server.on("/decrementNumTrailingBlocks", [&]() {
+        // Increment laps (to be handled in JS)
+        if(settings.numTrailingBlocks > 1) {
+            settings.numTrailingBlocks -= 1;
+        }
+        server.send(200, "text/plain", String(settings.numTrailingBlocks));
+    });
+
+
+
 }

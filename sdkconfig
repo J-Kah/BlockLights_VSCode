@@ -750,7 +750,7 @@ CONFIG_BT_ALARM_MAX_NUM=50
 #
 # Legacy RMT Driver Configurations
 #
-# CONFIG_RMT_SUPPRESS_DEPRECATE_WARN is not set
+CONFIG_RMT_SUPPRESS_DEPRECATE_WARN=y
 # end of Legacy RMT Driver Configurations
 
 #

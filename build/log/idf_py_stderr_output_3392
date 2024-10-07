@@ -1,0 +1,375 @@
+ESP Insights Project commit: 498084c-dirty
+ESP RainMaker Project commit: 498084c-dirty
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:226
+
+  when parsing string
+
+    libraries\FastLED\src\stub_main.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:227
+
+  when parsing string
+
+    libraries\FastLED\src\wiring.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:228
+
+  when parsing string
+
+    libraries\FastLED\src\transpose8x1_noinline.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:229
+
+  when parsing string
+
+    libraries\FastLED\src\simplex.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:230
+
+  when parsing string
+
+    libraries\FastLED\src\rgbw.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:232
+
+  when parsing string
+
+    libraries\FastLED\src\platforms.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:233
+
+  when parsing string
+
+    libraries\FastLED\src\noise.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:234
+
+  when parsing string
+
+    libraries\FastLED\src\lib8tion.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:235
+
+  when parsing string
+
+    libraries\FastLED\src\hsv2rgb.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:236
+
+  when parsing string
+
+    libraries\FastLED\src\five_bit_hd_gamma.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:237
+
+  when parsing string
+
+    libraries\FastLED\src\FastLED.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:238
+
+  when parsing string
+
+    libraries\FastLED\src\crgb.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:239
+
+  when parsing string
+
+    libraries\FastLED\src\colorutils.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:240
+
+  when parsing string
+
+    libraries\FastLED\src\colorpalettes.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:241
+
+  when parsing string
+
+    libraries\FastLED\src\bilinear_expansion.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:242
+
+  when parsing string
+
+    libraries\FastLED\src\bitswap.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:243
+
+  when parsing string
+
+    libraries\FastLED\src\platforms\stub\led_sysdefs_stub.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:244
+
+  when parsing string
+
+    libraries\FastLED\src\platforms\esp\32\i2s.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:245
+
+  when parsing string
+
+    libraries\FastLED\src\platforms\esp\32\idf4_rmt.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:246
+
+  when parsing string
+
+    libraries\FastLED\src\platforms\esp\32\idf4_rmt_impl.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:247
+
+  when parsing string
+
+    libraries\FastLED\src\platforms\esp\32\idf5_rmt.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:248
+
+  when parsing string
+
+    libraries\FastLED\src\platforms\avr\avr_millis_timer_source.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:249
+
+  when parsing string
+
+    libraries\FastLED\src\fx\storage\sd.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:250
+
+  when parsing string
+
+    libraries\FastLED\tests\test_sdcard.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:251
+
+  when parsing string
+
+    libraries\FastLED\tests\test_refptr.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:252
+
+  when parsing string
+
+    libraries\FastLED\tests\test_math.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:253
+
+  when parsing string
+
+    libraries\FastLED\tests\test_intmap.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:254
+
+  when parsing string
+
+    libraries\FastLED\tests\test_fx_engine.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:255
+
+  when parsing string
+
+    libraries\FastLED\tests\test_fx.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:256
+
+  when parsing string
+
+    libraries\FastLED\tests\test_brightness_bitshifter.cpp
+
+  Invalid character escape '\F'.
+
+
+CMake Error at managed_components/espressif__arduino-esp32/CMakeLists.txt:225 (set):
+  Syntax error in cmake code at
+
+    C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/managed_components/espressif__arduino-esp32/CMakeLists.txt:257
+
+  when parsing string
+
+    libraries\FastLED\tests\test_apa102_hd.cpp
+
+  Invalid character escape '\F'.
+
+
+ninja: error: rebuilding 'build.ninja': subcommand failed

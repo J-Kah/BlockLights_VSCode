@@ -9,6 +9,9 @@ typedef struct {
     bool numberOfTracks;
     int trackNumber;
     bool startingOn500mSide;
+    int numLeadingBlocks;
+    int numPacingBlocks;
+    int numTrailingBlocks;
 } settings_t;
 
 extern settings_t settings;

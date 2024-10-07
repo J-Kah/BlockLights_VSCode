@@ -5,15 +5,18 @@
 cmake_minimum_required(VERSION 3.16)
 
 add_definitions(
--DARDUINO_USB_MODE
--DARDUINO_USB_CDC_ON_BOOT
+    -DARDUINO_USB_MODE
+    -DARDUINO_USB_CDC_ON_BOOT
 )
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(BlockLights_VSCode)
 
-set(EXTRA_COMPONENT_DIRS components)
-
+# Here, we can set the compile options globally, but it might be better to set them per component
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Os")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os")
+
+# Note: You should define your main component in a separate directory 
+# (e.g., in a folder named 'main' with its own CMakeLists.txt)
+
 
