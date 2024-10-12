@@ -6,6 +6,33 @@ body {
     padding: 20px;
     text-align: center;
 }
+.container {
+    position: relative;
+    width: 100%;              /* Let the container take the full width of its parent */
+    max-width: 500px;          /* Ensure the container does not exceed 500px */
+    height: auto;              /* Maintain aspect ratio */
+    margin: 0px auto;         /* Center the container on the page */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.overlay-image {
+    width: 100%;               /* Make the image responsive, taking up the full width of the container */
+    height: auto;              /* Maintain the image's aspect ratio */
+}
+
+.circle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: black;
+    transform: translate(-50%, -50%);  /* Center the circle */
+}
 
 h1, h2 {
     color: #555;
@@ -29,4 +56,20 @@ button:hover {
     width: 35%;
     padding: 5px;
     font-size: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
 }

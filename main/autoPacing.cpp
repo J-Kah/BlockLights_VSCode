@@ -2,6 +2,23 @@
 #include <WebSocketsServer.h>
 
 extern WebSocketsServer webSocket;  // Access the WebSocket server instance
+uint64_t prevToggleTime = 0;
+
+String CRGBtoHexString(const CRGB& colour) {
+    if(colour == CRGB::Red){
+        return("#FF0000");
+    }
+    if(colour == CRGB::Green){
+        return("#00FF00");
+    }
+    if(colour == CRGB::Blue){
+        return("#0000FF");
+    }
+    if(colour == CRGB::Orange){
+        return("#FFA500");
+    }
+    return ("#000000");
+}
 
 void sendAutoPacingUpdates() {
 
@@ -13,7 +30,6 @@ void sendAutoPacingUpdates() {
         laps = String(autoPacing.autoLaps, 0); // Update the same laps variable
     }
 
-
     String countDown = autoPacing.autoCountdown ? "Yes" : "No";
 
     // Ensure seconds have leading zeros if less than 10
@@ -22,14 +38,29 @@ void sendAutoPacingUpdates() {
         secondsStr = "0" + secondsStr; // Add leading zero for seconds < 10
     }
 
-    // Create a JSON string with the real-time pacing 
-    String jsonResponse = "{\"autoStatus\": \"" + autoPacing.autoStatus + "\""
-                          ", \"autoLaps\": " + laps + 
-                          ", \"autoTime\": \"" + String(mins) + ":" + secondsStr + "\"" +
-                          ", \"autoCountdown\": \"" + countDown + "\"}";
+    String json = "{";
+    json += "\"autoStatus\": \"" + autoPacing.autoStatus + "\",";
+    json += "\"autoLaps\": \"" + laps + "\",";
+    json += "\"autoTime\": \"" + String(mins) + ":" + secondsStr + "\",";
+    json += "\"autoCountdown\": \"" + countDown + "\",";
+    json += "\"circles\": [";
+
+    for (size_t i = 0; i < blocks.size(); ++i) {
+        json += "{";
+        json += "\"id\": \"" + blocks[i].blockId + "\",";
+        json += "\"color\": \"" + CRGBtoHexString(blocks[i].colour) + "\"";
+        json += "}";
+
+        if (i < blocks.size() - 1) {
+            json += ",";
+        }
+    }
+
+    json += "]";
+    json += "}";
 
     // Send it to all connected WebSocket clients
-    webSocket.broadcastTXT(jsonResponse);
+    webSocket.broadcastTXT(json);
 }
 
 
@@ -41,6 +72,7 @@ void initAutoPacingRoutes(WebServer &server) {
         if(ensureRedirect("/autoPacing")) {
             return;
         }else {
+            killPacingTasks();
             serveFile("/autoPacing.html", "text/html");
         }
     });
@@ -100,19 +132,32 @@ void initAutoPacingRoutes(WebServer &server) {
         // Respond to the client with a success message
         int mins = autoPacing.autoTime / 60;
         float seconds = autoPacing.autoTime - mins*60;
-        server.send(200, "text/plain", String(mins) + ":" + String(seconds, 2)); // Send time with 2 decimal places
+        String secondsStr;
+
+        if(seconds < 10){
+            secondsStr = "0" + String(seconds, 2);
+        } else {
+            secondsStr = String(seconds, 2);
+        }
+        server.send(200, "text/plain", String(mins) + ":" + secondsStr); // Send time with 2 decimal places
     });
 
 
     server.on("/toggleAutoPacing", [&]() {
         // Turn on or off the running status
-        autoPacing.autoIsRunning = !autoPacing.autoIsRunning;
 
-        if(autoPacing.autoIsRunning) {
-            startAutoPacingTask();
-            autoPacing.autoStatus = "Running";
-        } else {
-            autoPacing.autoStatus = "Stopped";
+        // limit how quickly we can toggle this
+        if(esp_timer_get_time() - prevToggleTime > 500000){
+            autoPacing.autoIsRunning = !autoPacing.autoIsRunning;
+
+            if(autoPacing.autoIsRunning) {
+                startAutoPacingTask();
+                autoPacing.autoStatus = "Running";
+            } else {
+                autoPacing.autoStatus = "Stopped";
+            }
+
+            prevToggleTime = esp_timer_get_time();
         }
 
         server.send(200, "text/plain", autoPacing.autoStatus);
@@ -120,8 +165,25 @@ void initAutoPacingRoutes(WebServer &server) {
 
     server.on("/toggleAutoCountdown", [&]() {
         // Turn on or off the auto countdown
-        autoPacing.autoCountdown = !autoPacing.autoCountdown;
+        if(!autoPacing.autoIsRunning){
+            autoPacing.autoCountdown = !autoPacing.autoCountdown;
+        }
+        
         server.send(200, "text/plain", autoPacing.autoCountdown ? "Yes" : "No");
+    });
+
+    // Handle requests for background.jpg
+    server.on("/track-background.jpg", HTTP_GET, [&]() {
+        File file = SPIFFS.open("/track-background.jpg", "r"); // Open image file in read mode
+
+        if (!file) {
+            server.send(404, "text/plain", "File not found");
+            return;
+        }
+
+        // Set the content type as image/jpeg
+        server.streamFile(file, "image/jpeg");
+        file.close(); // Close the file after sending
     });
 
 }

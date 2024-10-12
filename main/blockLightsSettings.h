@@ -20,6 +20,8 @@ extern bool reDir;
 // Declare serveFile function
 extern void serveFile(const char *filename, const char *contentType);
 
+extern void killPacingTasks();
+
 // Declare redirect function
 extern int ensureRedirect(String path);
 

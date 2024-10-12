@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockLights Setup</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/blockLightsSetup.js" defer></script>
+</head>
+<body>
+    <p><a href="/">Back to Home</a></p>
+
+    <h1>BlockLights Setup</h1>
+
+    <div class="button-container">
+        <button onclick="blockSetup('scanBlocks')">Scan</button>
+        <!-- <button onclick="blockSetup('autoBlockSetup')">Auto Setup</button> -->
+        <button onclick="blockSetup('blinkAll')">Blink All</button>
+        <button onclick="blockSetup('clearAllBlocks')">Clear All</button>
+    </div>
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>MAC Address</th>
+                <th>Block Number</th>
+                <th>Status</th>
+                <th>Manual Blink</th>
+                <th>Clear Block</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be dynamically added here -->
+        </tbody>
+    </table>
+
+</body>
+</html>

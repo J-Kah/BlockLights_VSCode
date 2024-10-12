@@ -3,6 +3,7 @@
 
 #include <WebServer.h>
 #include <SPIFFS.h>  // Assuming you are using SPIFFS
+#include <sharedData.h>
 
 // Declare the struct and global variables as before
 typedef struct {
@@ -14,6 +15,7 @@ typedef struct {
 
 extern realTimePacing_t realTimePacing;
 extern bool reDir;
+extern std::vector<block_t> blocks;
 
 // Declare serveFile function
 extern void serveFile(const char *filename, const char *contentType);
@@ -23,6 +25,8 @@ extern int ensureRedirect(String path);
 
 // Declare the real-time pacing fucnction
 extern void startRealTimePacingTask();
+
+extern void killPacingTasks();
 
 // Declare the initialization function for routes
 void initRealTimePacingRoutes(WebServer &server);

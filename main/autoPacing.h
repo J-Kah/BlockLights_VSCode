@@ -3,6 +3,7 @@
 
 #include <WebServer.h>
 #include <SPIFFS.h>  // Assuming you are using SPIFFS
+#include <sharedData.h>
 
 // Declare the struct and global variables as before
 typedef struct {
@@ -13,8 +14,13 @@ typedef struct {
     bool autoIsRunning;
 } autoPacing_t;
 
+extern std::vector<block_t> blocks;
+
 extern autoPacing_t autoPacing;
 extern bool reDir;
+
+extern void killPacingTasks();
+
 
 // Declare serveFile function
 extern void serveFile(const char *filename, const char *contentType);

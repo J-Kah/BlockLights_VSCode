@@ -1,5 +1,6 @@
 #include "realTimePacing.h"
 #include <WebSocketsServer.h>
+#include <FastLED.h>
 
 extern WebSocketsServer webSocket;  // Access the WebSocket server instance
 
@@ -11,15 +12,51 @@ void resetRealTimePacing() {
     realTimePacing.is_running = false;
 }
 
+String CRGBtoHexString2(const CRGB& colour) {
+    if(colour == CRGB::Red){
+        return("#FF0000");
+    }
+    if(colour == CRGB::Green){
+        return("#00FF00");
+    }
+    if(colour == CRGB::Blue){
+        return("#0000FF");
+    }
+    if(colour == CRGB::Orange){
+        return("#FFA500");
+    }
+    return ("#000000");
+}
+
 void sendRealTimePacingUpdates() {
-    // Create a JSON string with the real-time pacing data
-    String jsonResponse = "{\"status\": \"" + String(realTimePacing.status) + "\""
-                          ", \"lap\": " + String(realTimePacing.lap) + 
-                          ", \"lapTime\": " + String(realTimePacing.lapTime, 1) + "}";
+    // Serial.println(realTimePacing.status);
+    // Serial.println(realTimePacing.lap);
+    // Serial.println(realTimePacing.lapTime);
+
+    String json = "{";
+    json += "\"status\": \"" + realTimePacing.status + "\",";  // status is a string
+    json += "\"lap\": \"" + String(realTimePacing.lap) + "\",";  // lap is a number, convert to String
+    json += "\"lapTime\": \"" + String(realTimePacing.lapTime, 1) + "\",";  // lapTime is a number convert to String
+    json += "\"circles\": [";
+
+    for (size_t i = 0; i < blocks.size(); ++i) {
+        json += "{";
+        json += "\"id\": \"" + blocks[i].blockId + "\",";  // blockId is a string
+        json += "\"color\": \"" + CRGBtoHexString2(blocks[i].colour) + "\"";  // color is a string
+        json += "}";
+
+        if (i < blocks.size() - 1) {
+            json += ",";
+        }
+    }
+
+    json += "]";
+    json += "}";
 
     // Send it to all connected WebSocket clients
-    webSocket.broadcastTXT(jsonResponse);
+    webSocket.broadcastTXT(json);
 }
+
 
 
 // Define the initialization function
@@ -58,6 +95,7 @@ void initRealTimePacingRoutes(WebServer &server) {
         if(ensureRedirect("/realTimePacing")) {
             return;
         }else {
+            killPacingTasks();
             serveFile("/realTimePacing.html", "text/html");
         }
     });

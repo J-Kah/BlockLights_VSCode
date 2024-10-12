@@ -44,6 +44,7 @@ void initSettingsRoutes(WebServer &server) {
         if(ensureRedirect("/blockLightsSettings")) {
             return;
         }else {
+            killPacingTasks();
             serveFile("/blockLightsSettings.html", "text/html");
         }
     });
@@ -86,14 +87,6 @@ void initSettingsRoutes(WebServer &server) {
         settings.startingOn500mSide = !settings.startingOn500mSide;
         server.send(200, "text/plain", settings.startingOn500mSide ? "Yes" : "No");
     });
-
-
-
-
-
-
-
-
 
     server.on("/incrementNumLeadingBlocks", [&]() {
         // Increment laps (to be handled in JS)

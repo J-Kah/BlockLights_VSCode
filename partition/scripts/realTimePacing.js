@@ -97,8 +97,22 @@ function initWebSocket() {
     ws.onmessage = function(event) {
         var data = JSON.parse(event.data);
         document.getElementById("status").innerText = data.status;
+        console.log("This is the status");
+        console.log(data.status);
         document.getElementById("lapValue").innerText = data.lap;
-        document.getElementById("lapTimeValue").innerText = data.lapTime.toFixed(1);
+        console.log("This is the lap");
+        console.log(data.lap);
+        document.getElementById("lapTimeValue").innerText = data.lapTime;
+        console.log("This is the lapTime");
+        console.log(data.lapTime);
+
+        // Update the circles based on the received data
+        data.circles.forEach(item => {
+            const circle = document.getElementById(item.id);
+            if (circle) {
+                circle.style.backgroundColor = item.color;
+            }
+        });
     };
 }
 

@@ -9,11 +9,12 @@
 #include <WebSocketsServer.h>
 #include <FastLED.h>
 
-
 //Custom libraries
 #include <realTimePacing.h>
 #include <blockLightsSettings.h>
 #include <autoPacing.h>
+#include <blockLightsSetup.h>
+#include <sharedData.h>
 
 
 #define NUM_LEDS 1        // Number of LEDs in your strip
@@ -31,17 +32,14 @@ WebServer server(80);                 // Create a web server on port 80
 WebSocketsServer webSocket = WebSocketsServer(81);  // Create WebSocket on port 81
 
 bool reDir = 1;
+bool blinking = 0;
 
 IPAddress apIP(192, 168, 4, 1);
+uint8_t masterMacAddress[6];
+String masterMacAddressString;
 
-// Struct for each of the blocks
-typedef struct {
-    uint8_t mac[6];      // MAC address of the slave
-    int rssi;            // Signal strength
-    String status;         // Online/offline or active status
-    int number;      // number of block along track
-    CRGB colour;
-} block_t;
+String blinkBlockMac;
+int blinkBlockIdx;
 
 // Array of structs to hold all the blocks
 std::vector<block_t> blocks;
@@ -53,7 +51,7 @@ float blockDistances[14] = {
     14.4250,  // First block (master block)
     18.8756,
     23.3262,
-    27.7768, // Apex blcok of first corner
+    27.7768, // Apex block of first corner
     32.2274,
     36.6779,
     41.1285, // last block of first corner
@@ -111,9 +109,108 @@ autoPacing_t autoPacing = {
     false
 };
 
+void blinkAllTask(void* Parameters){
+    // change status
+    blocks[0].status = "Blinking...";
+    sendSetupUpdates();
+
+    blocks[0].colour = CRGB::Blue;
+    leds[0] = blocks[0].colour;
+    FastLED.show();
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+    blocks[0].colour = CRGB::Black;
+    leds[0] = blocks[0].colour;
+    FastLED.show();
+
+    blocks[0].status = "Master";
+    sendSetupUpdates();
+
+    for(int i=1; i < blocks.size(); i++){
+        blocks[i].status = "Blinking...";
+        sendSetupUpdates();
+        blocks[i].colour = CRGB::Blue;
+        // ESP NOW
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+        blocks[i].colour = CRGB::Black;
+        // ESP NOW
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+        
+        blocks[i].status = "Working";
+        sendSetupUpdates();
+        
+    }
+    blinking = 0;
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+    vTaskDelete(NULL);  // Delete this task
+
+}
+
+void blinkAll(){
+    xTaskCreate(&blinkAllTask, "blinkAllTask", 4096, NULL, 5, NULL);
+}
+
+void blinkBlockTask(void* Parameters){
+    //update block status to blinking    
+    blocks[blinkBlockIdx].status = "Blinking...";
+    sendSetupUpdates();
+    
+    if(blinkBlockMac == masterMacAddressString){
+        blocks[0].colour = CRGB::Blue;
+        leds[0] = blocks[0].colour;
+        FastLED.show();
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+        blocks[0].colour = CRGB::Black;
+        leds[0] = blocks[0].colour;
+        FastLED.show();
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+        blocks[0].colour = CRGB::Blue;
+        leds[0] = blocks[0].colour;
+        FastLED.show();
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+        blocks[0].colour = CRGB::Black;
+        leds[0] = blocks[0].colour;
+        FastLED.show();
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+        blocks[0].colour = CRGB::Blue;
+        leds[0] = blocks[0].colour;
+        FastLED.show();
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+        blocks[0].colour = CRGB::Black;
+        leds[0] = blocks[0].colour;
+        FastLED.show();       
+
+        blocks[blinkBlockIdx].status = "Master"; 
+
+    } else {
+        // Send ESP NOW command to mac address (run the code on each block, don't want indexes to get messed up)
+        vTaskDelay(3000 / portTICK_PERIOD_MS);
+        blocks[blinkBlockIdx].status = "Working";
+
+    }
+
+    
+    sendSetupUpdates();
+    blinking = 0;
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+    vTaskDelete(NULL);  // Delete this task
+
+
+}
+
+void blinkBlock(String mac, int idx) {
+    blinkBlockMac = mac;
+    blinkBlockIdx = idx;
+    xTaskCreate(&blinkBlockTask, "blinkBlockTask", 4096, NULL, 5, NULL);
+}
+
 void updateLEDs(){
     leds[0] = blocks[0].colour;
     FastLED.show();
+    if(realTimePacing.is_running){
+        sendRealTimePacingUpdates();
+    } else if(autoPacing.autoIsRunning){
+        sendAutoPacingUpdates();
+    }
     // SEND ESP NOW COMMAND
 }
 
@@ -170,6 +267,8 @@ void setupWiFi() {
         return;
     }
     printf("mDNS responder started\n");
+
+    WiFi.setSleep(false); // prevent the master block from going into deepsleep
 
     // Start the DNS server
     dnsServer.start(53, "*", apIP); // Redirect all DNS queries to the access point IP
@@ -242,16 +341,13 @@ void realTimePacingTask(void* pvParameters) {
             Serial.println(realTimePacing.lapTime);
             Serial.print("Time delta (us): ");
             Serial.print(timeDelta);
-
-            // update the webserver 
-            sendRealTimePacingUpdates();
         }
         
         // change blocks based on distance
         for (int i = 0; i < size(blocks); i++) {
 
             
-            float blockPosition = blockDistances[blocks[i].number] + trackOffset;
+            float blockPosition = blockDistances[blocks[i].number - 1] + trackOffset;
 
             // edge case for crossing the start/finish lines and track lenght being reset
             if(blockPosition - currentDist > trackLength/2) {
@@ -309,8 +405,11 @@ void realTimePacingTask(void* pvParameters) {
     realTimePacing.lap = originalNumLaps;
     // send updates to client?
     realTimePacing.is_running = false;
+    realTimePacing.status = "Stopped";
     sendRealTimePacingUpdates();
 
+    
+    vTaskDelay(50 / portTICK_PERIOD_MS); // let other tasks run
     vTaskDelete(NULL);  // Delete this task
 }
 
@@ -337,31 +436,21 @@ void autoPacingTask(void* pvParameters) {
        
     }
 
-    // calculate the 100% speed for given time
+    // calculate the 100% speed for given time (linear acceleration assumed)
     float temp = 0.0;
     for(int i = 0; i < size(autoPacingSpeedProfile)-1; i++) {
         temp += 1/(autoPacingSpeedProfile[i+1] + autoPacingSpeedProfile[i]);
     }
-    float maxSpeed = autoPacing.autoTime/temp; // max speed in terms of laptimes
+    float maxSpeed = trackLength*temp/autoPacing.autoTime; // max speed in terms of m/s
     Serial.println("Max speed:");
     Serial.println(maxSpeed);
 
-    // convert percentage max speed values into laptimes.
+    // convert percentage max speed values into m/s
     Serial.println("Auto Pacing Speed Profile:");
     for (int i = 0; i < size(autoPacingSpeedProfile); ++i) {
-        autoPacingSpeedProfile[i] = maxSpeed/autoPacingSpeedProfile[i];
+        autoPacingSpeedProfile[i] = maxSpeed*autoPacingSpeedProfile[i];
         Serial.println(autoPacingSpeedProfile[i]);
     }
-    
-    float originalNumLaps = autoPacing.autoLaps;  
-    float prevDist;
-    if(int((2*autoPacing.autoLaps)) % 2 == 0) {
-        prevDist = 0.0f;
-    } else {
-        prevDist = trackLength/2; 
-        autoPacing.autoLaps += 0.5; 
-    }
-    float prevLapTime = 0.0;
 
 
     // 5 second countdown
@@ -372,149 +461,168 @@ void autoPacingTask(void* pvParameters) {
         uint64_t countDownStartTime = esp_timer_get_time();
         uint64_t currentTime = countDownStartTime;
         while(autoPacing.autoIsRunning && currentTime - countDownStartTime < 3000000){
-
             currentTime = esp_timer_get_time();
-
             if (currentTime - countDownStartTime > 0 && currentTime - countDownStartTime < 500000 && blocks[0].colour != CRGB::Red) {
-
                 for (int i = 0; i < size(blocks); i++) {
                     blocks[i].colour = CRGB::Red;
                 }
                 updateLEDs();
-
             } else if (currentTime - countDownStartTime > 500000 && currentTime - countDownStartTime < 1000000 && blocks[0].colour != CRGB::Black) {
-
                 for (int i = 0; i < size(blocks); i++) {
                     blocks[i].colour = CRGB::Black;
                 }
                 updateLEDs();
-
             } else if (currentTime - countDownStartTime > 1000000 && currentTime - countDownStartTime < 1500000 && blocks[0].colour != CRGB::Red) {
-
                 for (int i = 0; i < size(blocks); i++) {
                     blocks[i].colour = CRGB::Red;
                 }
                 updateLEDs();
-
             } else if (currentTime - countDownStartTime > 1500000 && currentTime - countDownStartTime < 2000000 && blocks[0].colour != CRGB::Black) {
-
                 for (int i = 0; i < size(blocks); i++) {
                     blocks[i].colour = CRGB::Black;
                 }
                 updateLEDs();
-
             } else if (currentTime - countDownStartTime > 2000000 && currentTime - countDownStartTime < 2500000 && blocks[0].colour != CRGB::Orange) {
-
                 for (int i = 0; i < size(blocks); i++) {
                     blocks[i].colour = CRGB::Orange;
                 }
                 updateLEDs();
-
             } else if (currentTime - countDownStartTime > 2500000 && blocks[0].colour != CRGB::Black) {
-
                 for (int i = 0; i < size(blocks); i++) {
                     blocks[i].colour = CRGB::Black;
                 }
                 updateLEDs();
-
             }
-
-
-            vTaskDelay(1 / portTICK_PERIOD_MS); // let other tasks run
+            vTaskDelay(10 / portTICK_PERIOD_MS); // let other tasks run
         }
-        
-
         for (int i = 0; i < size(blocks); i++) {
             blocks[i].colour = CRGB::Green;
         }
         updateLEDs();
-
         Serial.println("Finishing countdown");
-        
+    }
 
+    if(!autoPacing.autoIsRunning){
+        Serial.println("Pacing finished (or stopped)");
+
+        // Turn all blocks off
+        for (int i = 0; i < size(blocks); i++) {
+            blocks[i].colour = CRGB::Black;
+        }
+        updateLEDs();
+        autoPacing.autoStatus = String("Stopped");
+        sendAutoPacingUpdates();
+        vTaskDelay(50 / portTICK_PERIOD_MS); // let other tasks run, needed to finish sending autopacing updates
+        vTaskDelete(NULL);  // Delete this task
+    }
+    
+
+    // calculate the total distance:
+    float totalDist = autoPacing.autoLaps * trackLength;
+    int originalNumLaps = floor(autoPacing.autoLaps);
+
+    // Start AutoPacing!
+    int numHalfLaps = 0;
+    float currentDist = 0.0;
+    float prevLaptime = 0.0;
+
+    Serial.println("Started AutoPacing");
+    int64_t pacingStartTime = esp_timer_get_time();
+    int64_t prevHalfLapTime = pacingStartTime;
+
+    if(autoPacing.autoCountdown){   // wait for 1 second of green
+        while(esp_timer_get_time() - pacingStartTime < 1000000){
+            vTaskDelay(10 / portTICK_PERIOD_MS); // let other tasks run
+        }
+
+        // Turn all blocks off
+        for (int i = 0; i < size(blocks); i++) {
+            blocks[i].colour = CRGB::Black;
+        }
+        updateLEDs();
     }
 
 
-    
-    int64_t pacingStartTime = esp_timer_get_time();
-    int64_t prevTime = pacingStartTime;
-    while(autoPacing.autoIsRunning && autoPacing.autoLaps > 0) {
+
+    while(autoPacing.autoIsRunning && currentDist < totalDist) {
         int64_t currentTime = esp_timer_get_time();
-        int64_t timeDelta = currentTime - prevTime;
 
-        // calculate laptime...
-        int i = 2*(originalNumLaps - autoPacing.autoLaps);
-        float lapTime;
-        float vInitial;
-        float vFinal;
-        if(prevDist > 0.5*trackLength) {
-            i += 1;
-            vInitial = autoPacingSpeedProfile[i];
-            vFinal = autoPacingSpeedProfile[i+1];
-            lapTime = (vFinal - vInitial)*(2*prevDist/trackLength - 1) + vInitial;
-        } else {
-            vInitial = autoPacingSpeedProfile[i];
-            vFinal = autoPacingSpeedProfile[i+1];
-            lapTime = (vFinal - vInitial)*(2*prevDist/trackLength) + vInitial;
-        }
+        float sPrev = autoPacingSpeedProfile[numHalfLaps]; // m/s speed of the previous half lap checkpoint
+        float sNext = autoPacingSpeedProfile[numHalfLaps+1]; // m/s speed of the next half lap checkpoint
 
-        if(fabs(lapTime - prevLapTime) > 0.01) {
-            // update the status to show the current speed?
-            autoPacing.autoStatus = String("Running. Laptime: ") + String(lapTime, 2);
-            prevLapTime = lapTime;
+        float currentSpeed = (sNext*sNext - sPrev*sPrev)*(currentTime - prevHalfLapTime)/(trackLength*1000000) + sPrev; 
+
+        float currentLaptime = trackLength/currentSpeed;
+
+        if(fabs(currentLaptime - prevLaptime) > 0.01) {
+            // update the status to show the current speed
+            autoPacing.autoStatus = String("Running. Laptime: ") + String(currentLaptime, 2);
+            prevLaptime = currentLaptime;
 
             // update the webserver 
+            sendAutoPacingUpdates(); 
+        }
+
+        currentDist = numHalfLaps*trackLength/2 + (currentTime - prevHalfLapTime)*(currentSpeed + sPrev)/2000000;
+        
+        // update previous half lap time. i is the number of half laps (NEEDS to be after line above, otherwise ends in a loop because prevHalfLaptTime is calculated after currentTime.)
+        if(2*currentDist > (numHalfLaps+1)*trackLength){
+            numHalfLaps++;
+            prevHalfLapTime = currentTime;
+        }
+
+        // update lap count
+        if(int((2*autoPacing.autoLaps))%2 == 1 && 2*currentDist > trackLength ){
+            autoPacing.autoLaps -= 0.5;
+            Serial.print("Lap count updated, laps to go: ");
+            Serial.println(autoPacing.autoLaps);
+            sendAutoPacingUpdates();
+        } else if(currentDist > (originalNumLaps - autoPacing.autoLaps + 1)*trackLength + trackLength*settings.startingOn500mSide/2){
+            Serial.print("Total distance: ");
+            Serial.println(currentDist);
+            autoPacing.autoLaps -= 1;
+            Serial.print("Lap count updated, laps to go: ");
+            Serial.println(autoPacing.autoLaps);
             sendAutoPacingUpdates();
         }
 
-        float currentSpeed = trackLength / lapTime;
-        float currentDist = prevDist + (timeDelta/(1000000.0)) * currentSpeed;
-
-        // update the lap value if we do a lap
-        if(currentDist > trackLength) {
-            autoPacing.autoLaps -= 1;
-            currentDist -= trackLength;
-
-            Serial.print("Lap count updated, laps to go: ");
-            Serial.println(autoPacing.autoLaps);
-            Serial.print("Lap time: ");
-            Serial.println(lapTime);
-            Serial.print("Time delta (us): ");
-            Serial.println(timeDelta);
+        // calculate current distance around the track (start/finish line is exactly 0m)
+        float lapDist = currentDist + trackLength*settings.startingOn500mSide/2;
+        while(lapDist > trackLength){
+            lapDist -= trackLength;
         }
-        
+
         // change blocks based on distance
         for (int i = 0; i < size(blocks); i++) {
 
-            
-            float blockPosition = blockDistances[blocks[i].number] + trackOffset;
+            float blockPosition = blockDistances[blocks[i].number - 1] + trackOffset;
 
-            // edge case for crossing the start/finish lines and track lenght being reset
-            if(blockPosition - currentDist > trackLength/2) {
+            // edge case for crossing the start/finish lines and track length being reset
+            if(blockPosition - lapDist > trackLength/2) {
                 blockPosition -= trackLength;
-            } else if(currentDist - blockPosition > trackLength/2) {
+            } else if(lapDist - blockPosition > trackLength/2) {
                 blockPosition += trackLength;
             }
 
-            if(blockPosition < (currentDist + offOffset)) {
+            if(blockPosition < (lapDist + offOffset)) {
                 if(blocks[i].colour != CRGB::Black) {
                     // change block to off
                     blocks[i].colour = CRGB::Black;
                     Serial.println("Changed block " + String(i+1) + " to colour off");
                 }
-            } else if(blockPosition < currentDist + redOffset) {
+            } else if(blockPosition < lapDist + redOffset) {
                 if(blocks[i].colour != CRGB::Red) {
                     // change block to red
                     blocks[i].colour = CRGB::Red;
                     Serial.println("Changed block " + String(i+1) + " to colour red");
                 }
-            } else if(blockPosition < currentDist + greenOffset) {
+            } else if(blockPosition < lapDist + greenOffset) {
                 if(blocks[i].colour != CRGB::Green) {
                     // change block to green
                     blocks[i].colour = CRGB::Green;
                     Serial.println("Changed block " + String(i+1) + " to colour green");
                 }
-            } else if(blockPosition < currentDist + blueOffset) {
+            } else if(blockPosition < lapDist + blueOffset) {
                 if(blocks[i].colour != CRGB::Blue) {
                     // change block to blue
                     blocks[i].colour = CRGB::Blue;
@@ -522,17 +630,14 @@ void autoPacingTask(void* pvParameters) {
                 }
             }
         }
+        updateLEDs();
 
-        if((autoPacing.autoCountdown && (currentTime - pacingStartTime) > 1000000) || !autoPacing.autoCountdown) {
-            updateLEDs();
-        }
-
-
-        vTaskDelay(1 / portTICK_PERIOD_MS); // let other tasks run
-        prevDist = currentDist;
-        prevTime = currentTime;
+        vTaskDelay(10 / portTICK_PERIOD_MS); // let other tasks run
 
     }
+    Serial.print("TOTAL TIME TAKEN: ");
+    Serial.println(String((esp_timer_get_time() - pacingStartTime)/1000000.0, 3));
+    Serial.println(autoPacing.autoTime);
 
     Serial.println("Pacing finished (or stopped)");
 
@@ -540,17 +645,16 @@ void autoPacingTask(void* pvParameters) {
     for (int i = 0; i < size(blocks); i++) {
         blocks[i].colour = CRGB::Black;
     }
-
     updateLEDs();
 
-
-    // send updates to client?
+    // send updates to client
     autoPacing.autoLaps = originalNumLaps;
     autoPacing.autoIsRunning = false;
-    autoPacing.autoStatus = String("Stopped");
+    autoPacing.autoStatus = "Stopped";
     sendAutoPacingUpdates();
-    
 
+    vTaskDelay(50 / portTICK_PERIOD_MS); // let other tasks run, needed to finish sending autopacing updates
+    
     vTaskDelete(NULL);  // Delete this task
 }
 
@@ -567,11 +671,23 @@ void startAutoPacingTask() {
 
 }
 
+void addAllBlocks(){
+    for(int i=2; i<=14; i++){
+        block_t block = { {0x30, 0xAE, 0xA4, 0x45, 0x67, (uint8_t)i}, 0, "Working", i, "block" + String(i), CRGB::Black};
+        blocks.push_back(block);   
+    }
+}
+
+void killPacingTasks(){
+    realTimePacing.is_running = false;
+    autoPacing.autoIsRunning = false;
+}
+
 
 // Main function for initializing peripherals and starting tasks
 extern "C" void app_main(void) {
 
-    //esp_log_level_set("*", ESP_LOG_ERROR);  // Set all log levels to error  WARNING THIS BREAKS FASTLED (3.8 prerelease)  
+    esp_log_level_set("*", ESP_LOG_ERROR);  // Set all log levels to error  WARNING setting all logs to just error BREAKS FASTLED (3.8 prerelease)  
 
     Serial.begin(115200); // Initialize Serial communication
 
@@ -594,6 +710,7 @@ extern "C" void app_main(void) {
 
     // Serve the main index page
     server.on("/", []() {
+        killPacingTasks();
         serveFile("/home.html", "text/html");
     });
 
@@ -605,6 +722,9 @@ extern "C" void app_main(void) {
 
     // initialise routes for the auto pacing page
     initAutoPacingRoutes(server);
+
+    // initialise routes for the auto pacing page
+    initSetupRoutes(server);
 
     // Serve the favicon.ico file
     server.on("/favicon.ico", HTTP_GET, []() {
@@ -626,10 +746,18 @@ extern "C" void app_main(void) {
     server.begin();                      // Start the web server
     printf("Server started\n");
 
-    block_t newBlock = { {0x30, 0xAE, 0xA4, 0x45, 0x67, 0x89}, 0, "working", 1, CRGB::Black};
-    blocks.push_back(newBlock);
+    // Add Master Block
+    WiFi.macAddress(masterMacAddress);
+    masterMacAddressString = WiFi.macAddress();
 
-    FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);  // Initialize FastLED (This needs to be first or it won't work)
+    block_t masterBlock = {{masterMacAddress[0], masterMacAddress[1], masterMacAddress[2], 
+        masterMacAddress[3], masterMacAddress[4], masterMacAddress[5]}, 0, "Master", 1, "block1", CRGB::Black};
+
+    blocks.push_back(masterBlock);  
+
+    addAllBlocks(); // Add the other 13 blocks
+
+    FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);  // Initialize FastLED
     updateLEDs(); // Make sure all the LEDs are off.
 
     // Create the server task - runs continuously and checks for http requests from clients

@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "BlockLights_VSCode",
-    "project_version":    "498084c-dirty",
+    "project_version":    "fe4a342-dirty",
     "project_path":       "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode",
     "idf_path":           "C:/Users/joshk/esp/v5.3.1/esp-idf",
     "build_dir":          "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build",
@@ -1570,7 +1570,7 @@
             "managed_reqs": [],
             "managed_priv_reqs": [ "espressif__arduino-esp32", "espressif__esp_websocket_client" ],
             "file": "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/libmain.a",
-            "sources": [ "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/autoPacing.cpp", "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/blockLightsSettings.cpp", "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp", "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/realTimePacing.cpp" ],
+            "sources": [ "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/blockLightsSetup.cpp", "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/autoPacing.cpp", "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/blockLightsSettings.cpp", "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp", "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/realTimePacing.cpp" ],
             "include_dirs": [ "." ]
         },
         "mbedtls": {
