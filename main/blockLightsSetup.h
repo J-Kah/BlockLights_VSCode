@@ -27,6 +27,8 @@ extern void updateBlockNumber(int idx, int num);
 
 extern void removePeer(uint8_t* peerMAC);
 
+extern void writeBlocksToFile();
+
 // Declare the initialization function for routes
 void initSetupRoutes(WebServer &server);
 

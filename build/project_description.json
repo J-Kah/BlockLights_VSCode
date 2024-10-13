@@ -1,7 +1,7 @@
 {
     "version":            "1.1",
     "project_name":       "BlockLights_VSCode",
-    "project_version":    "3ff2536-dirty",
+    "project_version":    "444dc3b-dirty",
     "project_path":       "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode",
     "idf_path":           "C:/Users/joshk/esp/v5.3.1/esp-idf",
     "build_dir":          "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build",

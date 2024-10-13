@@ -118,6 +118,91 @@ typedef struct Message {
     int number;    // slave block number
 } Message;
 
+// Function to convert MAC address from string (like "AA:BB:CC:DD:EE:FF") to byte array
+void parseMACAddress(const String& macStr, uint8_t* mac) {
+    sscanf(macStr.c_str(), "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx", &mac[0], &mac[1], &mac[2], &mac[3], &mac[4], &mac[5]);
+}
+
+// Function to convert MAC address byte array to string
+String macToString(const uint8_t* mac) {
+    char buffer[18];
+    sprintf(buffer, "%02X:%02X:%02X:%02X:%02X:%02X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+    return String(buffer);
+}
+
+// Function to write array of structs to file in the custom format
+void writeBlocksToFile() {
+
+    String path = "/blocks.txt";
+    File file = SPIFFS.open(path, FILE_WRITE);
+    if (!file) {
+        Serial.println("Failed to open file for writing");
+        return;
+    }
+
+    for (int i = 1; i < blocks.size(); i++) {
+        file.print(macToString(blocks[i].mac));  // Write MAC address as a string
+        file.print(";");                          // Separator between MAC address and value
+        file.print(blocks[i].number);             // Write the integer value
+        if (i < blocks.size() - 1) {
+            file.print(",");                      // Add comma between devices, except for the last one
+        }
+    }
+
+    file.close();
+    Serial.println("Data written successfully.");
+}
+
+// Function to read from file and populate the array of structs
+void readBlocksFromFile() {
+
+    String path = "/blocks.txt";
+    int maxBlocks = 14;
+    
+    File file = SPIFFS.open(path, FILE_READ);
+    if (!file) {
+        Serial.println("Failed to open file for reading");
+        return;
+    }
+
+    String content = file.readString();
+    file.close();
+
+    // Split the content by commas to get individual device entries
+    int blockCount = 0;
+    int start = 0;
+    while (start < content.length() && blockCount < maxBlocks) {
+        block_t newBlock;
+
+        int end = content.indexOf(',', start);
+        if (end == -1) end = content.length();  // No more commas, process the last entry
+
+        String entry = content.substring(start, end);
+        int separatorIndex = entry.indexOf(';');
+        
+        // Get MAC address and integer value
+        String macStr = entry.substring(0, separatorIndex);
+        String intStr = entry.substring(separatorIndex + 1);
+
+        // Parse MAC address and integer
+        parseMACAddress(macStr, newBlock.mac);
+        newBlock.number = intStr.toInt();
+        newBlock.colour = CRGB::Black;
+        newBlock.blockId = "block" + String(newBlock.number);
+        newBlock.status = "Disconnected";
+
+        Serial.println("Pushed a new block");
+        blocks.push_back(newBlock);
+
+        blockCount++;
+        start = end + 1;
+    }
+
+    Serial.println("Data read successfully.");
+    return;
+}
+
+
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
     Serial.print("Send status to MAC: ");
     Serial.print(mac_addr[0], HEX);
@@ -951,21 +1036,19 @@ extern "C" void app_main(void) {
     masterMacAddressString = WiFi.macAddress();
     Serial.println(masterMacAddressString);
    
+    // read blocks data from nv memory
+    readBlocksFromFile();
+    // add to ESP peers list
+    for(int i=0; i < blocks.size(); i++) {
+        addPeer(blocks[i].mac);
+    }
 
     block_t masterBlock = {{masterMacAddress[0], masterMacAddress[1], masterMacAddress[2], 
         masterMacAddress[3], masterMacAddress[4], masterMacAddress[5]}, 0, "Master", 1, "block1", CRGB::Black};
 
-    blocks.push_back(masterBlock);  
+    blocks.insert(blocks.begin(), masterBlock);
 
-    // read blocks data from nv memory
-    // add to ESP peers list
-
-    // change all status to disconnected
-    for(int i = 1; i < blocks.size(); i++) {
-        blocks[i].status = "Disconnected";
-    }
-
-    // scan blocks for number (maybe two or three times)
+    // scan blocks for number (maybe two or three times), also orders them
     scanForBlocks();
     //addAllBlocks(); // Add the other 13 blocks
 

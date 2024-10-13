@@ -18,6 +18,8 @@ void sendSetupUpdates() {
         }
     }
 
+    writeBlocksToFile();
+
     // Create a JSON string with the block data
     String jsonResponse = "[";
 
