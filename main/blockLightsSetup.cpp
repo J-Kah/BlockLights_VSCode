@@ -68,33 +68,39 @@ int extractNumber(String label, String body) {
 void initSetupRoutes(WebServer &server) {
 
     server.on("/updateBlockNumber", [&]() {
-        String body = server.arg("plain");
+        if(!blinking) {
+            String body = server.arg("plain");
 
-        int numFrom = extractNumber("numFrom", body);
-        int numTo = extractNumber("numTo", body);
+            int numFrom = extractNumber("numFrom", body);
+            int numTo = extractNumber("numTo", body);
 
-        int idxFrom = -1;
-        int idxTemp = -1;
+            int idxFrom = -1;
+            int idxTemp = -1;
 
-        // find index(s) of blocks to change
-        for(int i=0; i<blocks.size(); i++) {
-            if(blocks[i].number == numTo){
-                idxTemp = i;
+            // find index(s) of blocks to change
+            for(int i=0; i<blocks.size(); i++) {
+                if(blocks[i].number == numTo){
+                    idxTemp = i;
+                }
+                if(blocks[i].number == numFrom){
+                    idxFrom = i;
+                }
             }
-            if(blocks[i].number == numFrom){
-                idxFrom = i;
+
+            // change idxFrom to numTo
+            blocks[idxFrom].number = numTo;
+            blocks[idxFrom].blockId = "block" + String(numTo);
+            // update slave block number
+            updateBlockNumber(idxFrom, numTo);
+
+            // change numTo (if previously found) to numFrom
+            if(idxTemp != -1){
+                blocks[idxTemp].number = numFrom;
+                blocks[idxTemp].blockId = "block" + String(numFrom);
+                updateBlockNumber(idxTemp, numFrom);
             }
         }
-
-        // change idxFrom to numTo
-        blocks[idxFrom].number = numTo;
-        blocks[idxFrom].blockId = "block" + String(numTo);
-
-        // change numTo (if previously found) to numFrom
-        if(idxTemp != -1){
-            blocks[idxTemp].number = numFrom;
-            blocks[idxTemp].blockId = "block" + String(numFrom);
-        }
+        // Might need a delay here if blocks are getting sent updates after being sorted -> wrong index
 
         // send updates
         sendSetupUpdates();
@@ -102,16 +108,19 @@ void initSetupRoutes(WebServer &server) {
     });
 
     server.on("/clearBlock", [&]() {
-        String macAddress = server.arg("plain");
+        if(!blinking){
+            String macAddress = server.arg("plain");
 
-        // Loop through the array to find the block with matching MAC address
-        for (size_t i = 0; i < blocks.size(); i++) {
-            String blockMac = formatMACAddress(blocks[i].mac); // Convert MAC to String for comparison
+            // Loop through the array to find the block with matching MAC address
+            for (size_t i = 0; i < blocks.size(); i++) {
+                String blockMac = formatMACAddress(blocks[i].mac); // Convert MAC to String for comparison
 
-            if (blockMac == macAddress) {
-                // Erase the struct from the array
-                blocks.erase(blocks.begin() + i);
-                break;
+                if (blockMac == macAddress) {
+                    // Erase the struct from the array
+                    removePeer(blocks[i].mac);
+                    blocks.erase(blocks.begin() + i);
+                    break;
+                }
             }
         }
 
@@ -123,7 +132,7 @@ void initSetupRoutes(WebServer &server) {
     server.on("/blinkBlock", [&]() {
         String macAddress = server.arg("plain");
 
-        if(!blinking){
+        if(!blinking) {
             blinking = 1;
 
             // Loop through the array to find the block with matching MAC address
@@ -140,7 +149,7 @@ void initSetupRoutes(WebServer &server) {
     });
 
     server.on("/blinkAll", [&]() {
-        if(!blinking){
+        if(!blinking) {
             blinking = 1;
             blinkAll();
         }
@@ -151,7 +160,10 @@ void initSetupRoutes(WebServer &server) {
 
     server.on("/scanBlocks", [&]() {
 
-        // scan for blocks
+        if(!blinking) {
+            // Scan for any new blocks and add them
+            scanForBlocks();
+        }
 
         server.send(200); // 
     });
@@ -165,9 +177,17 @@ void initSetupRoutes(WebServer &server) {
 
     server.on("/clearAllBlocks", [&]() {
 
-        // clear all the blocks
-        if (blocks.size() > 1) {
-            blocks.erase(blocks.begin() + 1, blocks.end());
+        if(!blinking){
+            // clear all the blocks
+            if (blocks.size() > 1) {
+
+                for(int i=1; i < blocks.size(); i++) {
+                    removePeer(blocks[i].mac);
+                }
+
+
+                blocks.erase(blocks.begin() + 1, blocks.end());
+            }
         }
 
         sendSetupUpdates();

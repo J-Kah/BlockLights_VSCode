@@ -8,6 +8,7 @@
 #include <SPIFFS.h>
 #include <WebSocketsServer.h>
 #include <FastLED.h>
+#include <esp_now.h>
 
 //Custom libraries
 #include <realTimePacing.h>
@@ -35,6 +36,7 @@ bool reDir = 1;
 bool blinking = 0;
 
 IPAddress apIP(192, 168, 4, 1);
+uint8_t broadcastMAC[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};  // Broadcast address for scan
 uint8_t masterMacAddress[6];
 String masterMacAddressString;
 
@@ -109,33 +111,212 @@ autoPacing_t autoPacing = {
     false
 };
 
+typedef struct Message {
+    int type;      // 0 for discovery (scan), 1 for LED color change, 2 for slave block number update
+    uint8_t mac[6];    // Master's MAC address (for scan)
+    CRGB colour;    // RGB values (for LED color change)
+    int number;    // slave block number
+} Message;
+
+void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+    Serial.print("Send status to MAC: ");
+    Serial.print(mac_addr[0], HEX);
+    Serial.print(":");
+    Serial.print(mac_addr[1], HEX);
+    Serial.print(":");
+    Serial.print(mac_addr[2], HEX);
+    Serial.print(":");
+    Serial.print(mac_addr[3], HEX);
+    Serial.print(":");
+    Serial.print(mac_addr[4], HEX);
+    Serial.print(":");
+    Serial.print(mac_addr[5], HEX);
+    Serial.println();
+
+    if (status == ESP_NOW_SEND_SUCCESS) {
+        Serial.println("Delivery Success");
+    } else {
+        Serial.println("Delivery Fail");
+    }
+}
+
+
+void addPeer(uint8_t* peerMAC) {
+    esp_now_peer_info_t peerInfo;
+    memset(&peerInfo, 0, sizeof(esp_now_peer_info_t));
+    memcpy(peerInfo.peer_addr, peerMAC, 6);  // Use the specific MAC address
+    peerInfo.channel = 0;  // Same channel as Wi-Fi
+    peerInfo.encrypt = false;  // No encryption
+
+    if (esp_now_add_peer(&peerInfo) == ESP_OK) {
+        Serial.println("Peer added successfully");
+    } else {
+        Serial.println("Failed to add peer");
+    }
+}
+
+void removePeer(uint8_t* peerMAC) {
+    if (esp_now_del_peer(peerMAC) == ESP_OK) {
+        Serial.println("Peer removed successfully");
+    } else {
+        Serial.println("Failed to remove peer");
+    }
+}
+
+// Callback when ESP-NOW message is received
+void OnDataRecv(const esp_now_recv_info_t *esp_now_info, const uint8_t *data, int data_len) {
+    const uint8_t *mac_addr = esp_now_info->src_addr;
+
+    Serial.print("Received data from: ");
+    for (int i = 0; i < 6; i++) {
+        Serial.printf("%02X", mac_addr[i]);
+        if (i < 5) Serial.print(":");
+    }
+    Serial.println();
+
+    // Optionally process the received data
+    Message receivedMessage;
+    memcpy(&receivedMessage, data, sizeof(receivedMessage));
+
+    // if block MAC is in blocks
+    bool inBlocks = false;
+    int idx;
+    for(int i=0; i < blocks.size(); i++) {
+        if (memcmp(receivedMessage.mac, blocks[i].mac, sizeof(receivedMessage.mac)) == 0) {
+            inBlocks = true;
+            idx = i;
+        }
+    }
+
+    if(inBlocks) {
+        // if block number from block != block number in blocks
+        if(receivedMessage.number != blocks[idx].number) {
+            // send ESP-NOW with blocks data for that block
+            Message updateMessage;
+            updateMessage.type = 2;
+            updateMessage.number = blocks[idx].number;
+
+            esp_err_t result = esp_now_send(blocks[idx].mac, (uint8_t *)&updateMessage, sizeof(updateMessage));
+    
+            if (result == ESP_OK) {
+                Serial.println("Update block number (MAC in blocks, wrong block number on block) message sent successfully");
+            } else {
+                Serial.println("Error sending Update block number (MAC in blocks, wrong block number on block) message");
+            }
+        }
+        blocks[idx].status = "Working";
+    // else if blocks size <= 14
+    } else if(blocks.size() <= 14) { 
+        // add to ESP peer list
+        addPeer(receivedMessage.mac);
+
+        block_t newBlock;
+        newBlock.status = "Working";
+        for(int i=0; i < 6; i++) {
+            newBlock.mac[i] = receivedMessage.mac[i];
+        }
+        newBlock.colour = CRGB::Black;
+
+
+        // if block number in blocks
+        bool numInBlocks = false;
+        for(int i=0; i < blocks.size(); i++) {
+            if(receivedMessage.number == blocks[i].number) {
+                numInBlocks = true;
+            }
+        }
+
+        if(numInBlocks) {
+            // assign block to smallest available number
+            for(int i=0; i < blocks.size(); i++) {
+                if(blocks[i].number != i+1) {
+                    // found a free number
+                    newBlock.number = i+1;
+                    newBlock.blockId = "block" + String(i+1);
+                    break;
+                }
+                if(i == blocks.size()-1) {
+                    // checked all the blocks, they're in order so we assign it to the next (i+2) value.
+                    newBlock.number = i+2;
+                    newBlock.blockId = "block" + String(i+2);
+                }
+            }
+
+            // add to blocks
+            blocks.push_back(newBlock);
+            // send updated number to block
+            Message updateMessage;
+            updateMessage.type = 2;
+            updateMessage.number = newBlock.number;
+
+            esp_err_t result = esp_now_send(newBlock.mac, (uint8_t *)&updateMessage, sizeof(updateMessage));
+    
+            if (result == ESP_OK) {
+                Serial.println("Update Block number (no MAC in blocks, but num in blocks) message sent successfully");
+            } else {
+                Serial.println("Error sending update block number (no MAC in blocks, but num in blocks) message");
+            }
+        // else
+        } else {
+            // add to blocks with given number
+            newBlock.number = receivedMessage.number;
+            newBlock.blockId = "block" + String(newBlock.number);
+            blocks.push_back(newBlock);
+        }
+    }
+
+    sendSetupUpdates(); // make sure blocks is ordered
+}
+
+void updateLEDs(){
+    leds[0] = blocks[0].colour;
+    FastLED.show();
+    if(realTimePacing.is_running){
+        sendRealTimePacingUpdates();
+    } else if(autoPacing.autoIsRunning){
+        sendAutoPacingUpdates();
+    }
+
+    // SEND ESP NOW COMMAND to all slaves
+    for(int i=1; i< blocks.size(); i++) {
+        Message msg;
+        msg.type = 1;  // Type 1: LED color change
+        msg.colour = blocks[i].colour;
+        uint8_t slaveMAC[6];
+        for(int j = 0; j < 6; j++) {
+            slaveMAC[j] = blocks[i].mac[j];
+        }
+
+        esp_err_t result = esp_now_send(slaveMAC, (uint8_t *)&msg, sizeof(msg));
+
+        if (result == ESP_OK) {
+            Serial.println("LED color change message sent successfully");
+        } else {
+            Serial.println("Error sending LED color change message");
+        }
+    }
+}
+
 void blinkAllTask(void* Parameters){
-    // change status
-    blocks[0].status = "Blinking...";
-    sendSetupUpdates();
 
-    blocks[0].colour = CRGB::Blue;
-    leds[0] = blocks[0].colour;
-    FastLED.show();
-    vTaskDelay(500 / portTICK_PERIOD_MS);
-    blocks[0].colour = CRGB::Black;
-    leds[0] = blocks[0].colour;
-    FastLED.show();
+    for(int i=0; i < blocks.size(); i++){
 
-    blocks[0].status = "Master";
-    sendSetupUpdates();
-
-    for(int i=1; i < blocks.size(); i++){
         blocks[i].status = "Blinking...";
         sendSetupUpdates();
+
         blocks[i].colour = CRGB::Blue;
-        // ESP NOW
+        updateLEDs();
         vTaskDelay(500 / portTICK_PERIOD_MS);
+
         blocks[i].colour = CRGB::Black;
-        // ESP NOW
+        updateLEDs();
         vTaskDelay(500 / portTICK_PERIOD_MS);
-        
-        blocks[i].status = "Working";
+
+        if(i == 0){
+            blocks[i].status = "Master";
+        } else {
+            blocks[i].status = "Working";
+        }
         sendSetupUpdates();
         
     }
@@ -154,46 +335,25 @@ void blinkBlockTask(void* Parameters){
     blocks[blinkBlockIdx].status = "Blinking...";
     sendSetupUpdates();
     
-    if(blinkBlockMac == masterMacAddressString){
-        blocks[0].colour = CRGB::Blue;
-        leds[0] = blocks[0].colour;
-        FastLED.show();
+    for(int i = 0; i < 3; i++) {
+        blocks[blinkBlockIdx].colour = CRGB::Blue;
+        updateLEDs();
         vTaskDelay(500 / portTICK_PERIOD_MS);
-        blocks[0].colour = CRGB::Black;
-        leds[0] = blocks[0].colour;
-        FastLED.show();
+        blocks[blinkBlockIdx].colour = CRGB::Black;
+        updateLEDs();
         vTaskDelay(500 / portTICK_PERIOD_MS);
-        blocks[0].colour = CRGB::Blue;
-        leds[0] = blocks[0].colour;
-        FastLED.show();
-        vTaskDelay(500 / portTICK_PERIOD_MS);
-        blocks[0].colour = CRGB::Black;
-        leds[0] = blocks[0].colour;
-        FastLED.show();
-        vTaskDelay(500 / portTICK_PERIOD_MS);
-        blocks[0].colour = CRGB::Blue;
-        leds[0] = blocks[0].colour;
-        FastLED.show();
-        vTaskDelay(500 / portTICK_PERIOD_MS);
-        blocks[0].colour = CRGB::Black;
-        leds[0] = blocks[0].colour;
-        FastLED.show();       
-
-        blocks[blinkBlockIdx].status = "Master"; 
-
-    } else {
-        // Send ESP NOW command to mac address (run the code on each block, don't want indexes to get messed up)
-        vTaskDelay(3000 / portTICK_PERIOD_MS);
-        blocks[blinkBlockIdx].status = "Working";
-
     }
-
     
+    if(blinkBlockIdx == 0) {
+        blocks[blinkBlockIdx].status = "Master"; 
+    } else {
+        blocks[blinkBlockIdx].status = "Working";
+    }
     sendSetupUpdates();
+
     blinking = 0;
     vTaskDelay(100 / portTICK_PERIOD_MS);
     vTaskDelete(NULL);  // Delete this task
-
 
 }
 
@@ -201,17 +361,6 @@ void blinkBlock(String mac, int idx) {
     blinkBlockMac = mac;
     blinkBlockIdx = idx;
     xTaskCreate(&blinkBlockTask, "blinkBlockTask", 4096, NULL, 5, NULL);
-}
-
-void updateLEDs(){
-    leds[0] = blocks[0].colour;
-    FastLED.show();
-    if(realTimePacing.is_running){
-        sendRealTimePacingUpdates();
-    } else if(autoPacing.autoIsRunning){
-        sendAutoPacingUpdates();
-    }
-    // SEND ESP NOW COMMAND
 }
 
 int ensureRedirect(String path) {
@@ -241,6 +390,8 @@ void serveFile(const char *filename, const char *contentType) {
     }
 }
 
+
+
 // Function to start the Wi-Fi network
 void setupWiFi() {
     esp_err_t ret = nvs_flash_init();
@@ -252,6 +403,7 @@ void setupWiFi() {
     ESP_ERROR_CHECK(ret);  // Ensure NVS is initialized successfully
 
     // Set up access point with a specific channel and maximum connection
+    WiFi.mode(WIFI_MODE_APSTA);
     WiFi.softAP(ssid, "", 11);          // wifi name, password, channel
     printf("Access Point Started\n");
     
@@ -262,6 +414,19 @@ void setupWiFi() {
     IPAddress IP = WiFi.softAPIP();
     printf("IP Address: %d.%d.%d.%d\n", IP[0], IP[1], IP[2], IP[3]); // Should print the actual IP address, not 0.0.0.0
 
+    if (esp_now_init() != ESP_OK) {
+        Serial.println("Error initializing ESP-NOW");
+        return;
+    }
+
+     // Register broadcast peer (this is necessary for sending broadcast messages)
+    addPeer(broadcastMAC);
+
+    esp_now_register_send_cb(OnDataSent);
+    esp_now_register_recv_cb(OnDataRecv);
+
+
+    // Start mDNS
     if (!MDNS.begin("blocklights")) {
         printf("Error setting up MDNS responder!\n");
         return;
@@ -446,10 +611,8 @@ void autoPacingTask(void* pvParameters) {
     Serial.println(maxSpeed);
 
     // convert percentage max speed values into m/s
-    Serial.println("Auto Pacing Speed Profile:");
     for (int i = 0; i < size(autoPacingSpeedProfile); ++i) {
         autoPacingSpeedProfile[i] = maxSpeed*autoPacingSpeedProfile[i];
-        Serial.println(autoPacingSpeedProfile[i]);
     }
 
 
@@ -683,11 +846,47 @@ void killPacingTasks(){
     autoPacing.autoIsRunning = false;
 }
 
+void scanForBlocks() {
+    Serial.println("Scanning for ESP-NOW slaves...");
+
+    Message msg;
+    msg.type = 0;  // Type 0: Scan
+    memcpy(msg.mac, masterMacAddress, 6);  // Include Master's MAC address in the scan
+
+    // Send broadcast message to all devices
+    esp_err_t result = esp_now_send(broadcastMAC, (uint8_t *)&msg, sizeof(msg));
+    
+    if (result == ESP_OK) {
+        Serial.println("Broadcast scan message sent successfully");
+    } else {
+        Serial.println("Error sending scan message");
+    }
+}
+
+void updateBlockNumber(int idx, int num) {
+    Message msg;
+    msg.type = 2;
+    msg.number = num;
+    
+    uint8_t slaveMAC[6];
+    for(int j = 0; j < 6; j++) {
+        slaveMAC[j] = blocks[idx].mac[j];
+    }
+
+    esp_err_t result = esp_now_send(slaveMAC, (uint8_t *)&msg, sizeof(msg));
+
+    if (result == ESP_OK) {
+        Serial.println("Block number update message sent successfully");
+    } else {
+        Serial.println("Error sending block number update message");
+    }
+}
+
 
 // Main function for initializing peripherals and starting tasks
 extern "C" void app_main(void) {
 
-    esp_log_level_set("*", ESP_LOG_ERROR);  // Set all log levels to error  WARNING setting all logs to just error BREAKS FASTLED (3.8 prerelease)  
+    //esp_log_level_set("*", ESP_LOG_ERROR);  // Set all log levels to error  WARNING setting all logs to just error BREAKS FASTLED (3.8 prerelease)  
 
     Serial.begin(115200); // Initialize Serial communication
 
@@ -747,15 +946,28 @@ extern "C" void app_main(void) {
     printf("Server started\n");
 
     // Add Master Block
+    //esp_read_mac(masterMacAddress, ESP_MAC_WIFI_STA);
     WiFi.macAddress(masterMacAddress);
     masterMacAddressString = WiFi.macAddress();
+    Serial.println(masterMacAddressString);
+   
 
     block_t masterBlock = {{masterMacAddress[0], masterMacAddress[1], masterMacAddress[2], 
         masterMacAddress[3], masterMacAddress[4], masterMacAddress[5]}, 0, "Master", 1, "block1", CRGB::Black};
 
     blocks.push_back(masterBlock);  
 
-    addAllBlocks(); // Add the other 13 blocks
+    // read blocks data from nv memory
+    // add to ESP peers list
+
+    // change all status to disconnected
+    for(int i = 1; i < blocks.size(); i++) {
+        blocks[i].status = "Disconnected";
+    }
+
+    // scan blocks for number (maybe two or three times)
+    scanForBlocks();
+    //addAllBlocks(); // Add the other 13 blocks
 
     FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);  // Initialize FastLED
     updateLEDs(); // Make sure all the LEDs are off.

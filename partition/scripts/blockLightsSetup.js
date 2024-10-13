@@ -50,13 +50,15 @@ function fetchBlockData() {
 
 // Function to perform actions when buttons are clicked
 function sendUpdate(numFrom, numTo) {
-    fetch('/updateBlockNumber', {
-        method: 'POST', // Use POST to update the value
-        headers: {
-            'Content-Type': 'text/plain' // Change the content type to plain text
-        },
-        body: JSON.stringify({ numFrom: numFrom, numTo: numTo })
-    })
+    if(numTo <= 14 && numTo >= 2) {
+        fetch('/updateBlockNumber', {
+            method: 'POST', // Use POST to update the value
+            headers: {
+                'Content-Type': 'text/plain' // Change the content type to plain text
+            },
+            body: JSON.stringify({ numFrom: numFrom, numTo: numTo })
+        })
+    }
 }
 
 
