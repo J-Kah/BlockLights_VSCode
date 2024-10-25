@@ -6,7 +6,21 @@ document.addEventListener("DOMContentLoaded", function() {
     fetchNumLeadingBlocks();
     fetchNumPacingBlocks();
     fetchNumTrailingBlocks();
+    fetchShowAllBlocks();
 });
+
+let lastRequestTime = 0;
+const throttleTime = 200; // Time in milliseconds (0.2 seconds)
+
+function reqAllowed(){
+    const currentTime = Date.now();
+    // Check if enough time has passed since the last request
+    if (currentTime - lastRequestTime >= throttleTime) {
+        lastRequestTime = currentTime; // Update the last request time
+        return true;
+    }
+    return false;
+}
 
 // Function to fetch the current lap value from the server
 function fetchTrackNumber() {
@@ -65,85 +79,124 @@ function fetchNumTrailingBlocks() {
         .catch(error => console.error('Error fetching NumTrailingBlocks value:', error));
 }
 
-function incrementTrackNumber() {
-    fetch('/incrementTrackNumber')
+function fetchShowAllBlocks() {
+    fetch('/getShowAllBlocks')
         .then(response => response.text())
         .then(data => {
-            console.log('Track Number incremented:', data); // Log the response
-            document.getElementById("trackNumber").innerText = data;
-        });
+            document.getElementById("showAllBlocks").innerText = data; // Update lap value
+        })
+        .catch(error => console.error('Error fetching showAllBlocks value:', error));
+}
+
+function incrementTrackNumber() {
+    if(reqAllowed()) {
+        fetch('/incrementTrackNumber')
+            .then(response => response.text())
+            .then(data => {
+                console.log('Track Number incremented:', data); // Log the response
+                document.getElementById("trackNumber").innerText = data;
+            });
+    }
 }
 
 function decrementTrackNumber() {
-    fetch('/decrementTrackNumber')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("trackNumber").innerText = data;
-        });
+    if(reqAllowed()) {
+        fetch('/decrementTrackNumber')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("trackNumber").innerText = data;
+            });
+    }
 }
 
 function toggleNumberOfTracks() {
-    fetch('/toggleNumberOfTracks')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("numberOfTracks").innerText = data;
-        });
+    if(reqAllowed()) {
+        fetch('/toggleNumberOfTracks')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("numberOfTracks").innerText = data;
+            });
+    }
 }
 
 function toggleStartingOn500mSide() {
-    fetch('/toggleStartingOn500mSide')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("startingOn500mSide").innerText = data;
-        });
+    if(reqAllowed()) {
+        fetch('/toggleStartingOn500mSide')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("startingOn500mSide").innerText = data;
+            });
+    }
+}
+
+function toggleShowAllBlocks() {
+    if(reqAllowed()) {
+        fetch('/toggleShowAllBlocks')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("showAllBlocks").innerText = data;
+            });
+    }
 }
 
 function incrementNumLeadingBlocks() {
-    fetch('/incrementNumLeadingBlocks')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("numLeadingBlocks").innerText = data;
-        });
+    if(reqAllowed()) {
+        fetch('/incrementNumLeadingBlocks')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("numLeadingBlocks").innerText = data;
+            });
+    }
 }
 
 function decrementNumLeadingBlocks() {
-    fetch('/decrementNumLeadingBlocks')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("numLeadingBlocks").innerText = data;
-        });
+    if(reqAllowed()) {
+        fetch('/decrementNumLeadingBlocks')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("numLeadingBlocks").innerText = data;
+            });
+    }
 }
 
 function incrementNumPacingBlocks() {
-    fetch('/incrementNumPacingBlocks')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("numPacingBlocks").innerText = data;
-        });
+    if(reqAllowed()) {
+        fetch('/incrementNumPacingBlocks')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("numPacingBlocks").innerText = data;
+            });
+    }
 }
 
 function decrementNumPacingBlocks() {
-    fetch('/decrementNumPacingBlocks')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("numPacingBlocks").innerText = data;
-        });
+    if(reqAllowed()) {
+        fetch('/decrementNumPacingBlocks')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("numPacingBlocks").innerText = data;
+            });
+    }
 }
 
 function incrementNumTrailingBlocks() {
-    fetch('/incrementNumTrailingBlocks')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("numTrailingBlocks").innerText = data;
-        });
+    if(reqAllowed()) {
+        fetch('/incrementNumTrailingBlocks')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("numTrailingBlocks").innerText = data;
+            });
+    }
 }
 
 function decrementNumTrailingBlocks() {
-    fetch('/decrementNumTrailingBlocks')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("numTrailingBlocks").innerText = data;
-        });
+    if(reqAllowed()) {
+        fetch('/decrementNumTrailingBlocks')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("numTrailingBlocks").innerText = data;
+            });
+    }
 }
 
 // WebSocket to handle real-time data updates

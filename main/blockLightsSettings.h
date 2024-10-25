@@ -3,6 +3,7 @@
 
 #include <WebServer.h>
 #include <SPIFFS.h>  // Assuming you are using SPIFFS
+#include <sharedData.h>
 
 // Declare the struct and global variables as before
 typedef struct {
@@ -12,6 +13,7 @@ typedef struct {
     int numLeadingBlocks;
     int numPacingBlocks;
     int numTrailingBlocks;
+    bool showAllBlocks;
 } settings_t;
 
 extern settings_t settings;
@@ -21,6 +23,12 @@ extern bool reDir;
 extern void serveFile(const char *filename, const char *contentType);
 
 extern void killPacingTasks();
+
+extern void scanForBlocks();
+
+extern void addAllBlocks();
+
+extern void removePeer(uint8_t* peerMAC);
 
 // Declare redirect function
 extern int ensureRedirect(String path);

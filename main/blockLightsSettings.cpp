@@ -39,6 +39,10 @@ void initSettingsRoutes(WebServer &server) {
         server.send(200, "text/plain", String(settings.numTrailingBlocks)); // Send lap time with 1 decimal place
     });
 
+    server.on("/getShowAllBlocks", [&]() {
+        server.send(200, "text/plain", String(settings.showAllBlocks ? "Yes" : "No")); // Send lap time with 1 decimal place
+    });
+
     // Serve the settings page
     server.on("/blockLightsSettings", []() {
         if(ensureRedirect("/blockLightsSettings")) {
@@ -80,6 +84,27 @@ void initSettingsRoutes(WebServer &server) {
         sendSettingsUpdates();
         Serial.println("Toggled Tracks");
         server.send(200, "text/plain", settings.numberOfTracks ? "7" : "5" );
+    });
+
+    server.on("/toggleShowAllBlocks", [&]() {
+        // Turn on or off the running status
+        settings.showAllBlocks = !settings.showAllBlocks;
+        if(settings.showAllBlocks){
+            addAllBlocks();
+        } else {
+            // clear all the blocks
+            if (blocks.size() > 1) {
+                for(int i=1; i < blocks.size(); i++) {
+                    removePeer(blocks[i].mac);
+                }
+                blocks.erase(blocks.begin() + 1, blocks.end());
+            }
+            // scan
+            scanForBlocks();
+        }
+        sendSettingsUpdates();
+        Serial.println("Toggled showAllBlocks");
+        server.send(200, "text/plain", settings.showAllBlocks ? "Yes" : "No" );
     });
 
     server.on("/toggleStartingOn500mSide", [&]() {

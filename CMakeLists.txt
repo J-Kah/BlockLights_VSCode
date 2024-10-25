@@ -11,7 +11,3 @@ add_definitions(
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(BlockLights_VSCode)
-
-# Here, we can set the compile options globally, but it might be better to set them per component
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Os")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os")

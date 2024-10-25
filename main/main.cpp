@@ -1,14 +1,18 @@
-#include <WiFi.h>
-#include <WebServer.h>
+#include <nvs_flash.h> // needed for arduino WiFI.h?
+#include <WiFi.h> // arduino
+#include <WebServer.h> // arduino
+#include <ESPmDNS.h> // arduino
+#include <DNSServer.h> // arduino
+#include <WebSocketsServer.h> // arduino
+
+// Hopefully the above can be replaced with ESPAsyncWebServer or similar.
+
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include <nvs_flash.h>
-#include <ESPmDNS.h>
-#include <DNSServer.h>
-#include <SPIFFS.h>
-#include <WebSocketsServer.h>
-#include <FastLED.h>
-#include <esp_now.h>
+#include <SPIFFS.h> // need to replace with LittleFS / ESP-IDF friendly thing
+
+#include <FastLED.h> // Shouldn't need to be in the arduino layer, supports ESP-IDF natively.
+#include <esp_now.h> // Shouldn't need to be in the arduino layer, supports ESP-IDF natively.
 
 //Custom libraries
 #include <realTimePacing.h>
@@ -18,8 +22,8 @@
 #include <sharedData.h>
 
 
-#define NUM_LEDS 1        // Number of LEDs in your strip
-#define DATA_PIN 8         // Pin connected to your LED strip
+#define NUM_LEDS 1          // Number of LEDs in your strip
+#define DATA_PIN 8          // Pin connected to your LED strip
 
 CRGB leds[NUM_LEDS];
 
@@ -92,7 +96,8 @@ settings_t settings = {
     false,      // starting on 500m side (true if starting on 500m side, flase if starting on 1000m side)
     2,          // number of leading blocks  
     1,          // number of pacing blocks
-    2           // number of trailing blocks
+    2,          // number of trailing blocks
+    false       // show all blocks
 };
 
 // Initialize the realTimePacing struct
@@ -286,6 +291,8 @@ void OnDataRecv(const esp_now_recv_info_t *esp_now_info, const uint8_t *data, in
             if (result == ESP_OK) {
                 Serial.println("Update block number (MAC in blocks, wrong block number on block) message sent successfully");
             } else {
+                blocks[idx].status = "Disconnected";
+                sendSetupUpdates();
                 Serial.println("Error sending Update block number (MAC in blocks, wrong block number on block) message");
             }
         }
@@ -339,6 +346,8 @@ void OnDataRecv(const esp_now_recv_info_t *esp_now_info, const uint8_t *data, in
             if (result == ESP_OK) {
                 Serial.println("Update Block number (no MAC in blocks, but num in blocks) message sent successfully");
             } else {
+                blocks[blocks.size() - 1].status = "Disconnected";
+                sendSetupUpdates();
                 Serial.println("Error sending update block number (no MAC in blocks, but num in blocks) message");
             }
         // else
@@ -364,20 +373,24 @@ void updateLEDs(){
 
     // SEND ESP NOW COMMAND to all slaves
     for(int i=1; i< blocks.size(); i++) {
-        Message msg;
-        msg.type = 1;  // Type 1: LED color change
-        msg.colour = blocks[i].colour;
-        uint8_t slaveMAC[6];
-        for(int j = 0; j < 6; j++) {
-            slaveMAC[j] = blocks[i].mac[j];
-        }
+        if(blocks[i].status != "Virtual") {
+            Message msg;
+            msg.type = 1;  // Type 1: LED color change
+            msg.colour = blocks[i].colour;
+            uint8_t slaveMAC[6];
+            for(int j = 0; j < 6; j++) {
+                slaveMAC[j] = blocks[i].mac[j];
+            }
 
-        esp_err_t result = esp_now_send(slaveMAC, (uint8_t *)&msg, sizeof(msg));
+            esp_err_t result = esp_now_send(slaveMAC, (uint8_t *)&msg, sizeof(msg));
 
-        if (result == ESP_OK) {
-            Serial.println("LED color change message sent successfully");
-        } else {
-            Serial.println("Error sending LED color change message");
+            if (result == ESP_OK) {
+                Serial.println("LED color change message sent successfully");
+            } else {
+                blocks[i].status = "Disconnected";
+                sendSetupUpdates();
+                Serial.println("Error sending LED color change message");
+            }
         }
     }
 }
@@ -921,9 +934,18 @@ void startAutoPacingTask() {
 
 void addAllBlocks(){
     for(int i=2; i<=14; i++){
-        block_t block = { {0x30, 0xAE, 0xA4, 0x45, 0x67, (uint8_t)i}, 0, "Working", i, "block" + String(i), CRGB::Black};
-        blocks.push_back(block);   
+        bool inBlocks = false;
+        for(int j = 0; j < blocks.size(); j++) {
+            if(blocks[j].number == i) {
+                inBlocks = true;
+            }
+        }  
+        if(!inBlocks) {
+            block_t block = { {0x00, 0x00, 0x00, 0x00, 0x00, (uint8_t)i}, 0, "Virtual", i, "block" + String(i), CRGB::Black};
+            blocks.push_back(block);
+        } 
     }
+    sendSetupUpdates();
 }
 
 void killPacingTasks(){
@@ -963,6 +985,8 @@ void updateBlockNumber(int idx, int num) {
     if (result == ESP_OK) {
         Serial.println("Block number update message sent successfully");
     } else {
+        blocks[idx].status = "Disconnected";
+        sendSetupUpdates();
         Serial.println("Error sending block number update message");
     }
 }

@@ -5,6 +5,19 @@ document.addEventListener("DOMContentLoaded", function() {
     fetchStatus();
 });
 
+let lastRequestTime = 0;
+const throttleTime = 200; // Time in milliseconds (0.2 seconds)
+
+function reqAllowed(){
+    const currentTime = Date.now();
+    // Check if enough time has passed since the last request
+    if (currentTime - lastRequestTime >= throttleTime) {
+        lastRequestTime = currentTime; // Update the last request time
+        return true;
+    }
+    return false;
+}
+
 // Function to fetch the current lap value from the server
 function fetchLapValue() {
     fetch('/getLap')
@@ -39,51 +52,63 @@ function fetchStatus() {
 
 // Function to increment the lap (no page reload)
 function incrementLap() {
-    fetch('/incrementLap')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("lapValue").innerText = data;
-        });
+    if(reqAllowed()) {
+        fetch('/incrementLap')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("lapValue").innerText = data;
+            });
+    }
 }
 
 // Function to decrement the lap (no page reload)
 function decrementLap() {
-    fetch('/decrementLap')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("lapValue").innerText = data;
-        });
+    if(reqAllowed()) {
+        fetch('/decrementLap')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("lapValue").innerText = data;
+            });
+    }
 }
 
 // Function to increment the lap time (no page reload)
 function incrementLapTime() {
-    fetch('/incrementLapTime')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("lapTimeValue").innerText = data;
-        });
+    if(reqAllowed()) {
+        fetch('/incrementLapTime')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("lapTimeValue").innerText = data;
+            });
+    }
 }
 
 // Function to decrement the lap time (no page reload)
 function decrementLapTime() {
-    fetch('/decrementLapTime')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("lapTimeValue").innerText = data;
-        });
+    if(reqAllowed()) {
+        fetch('/decrementLapTime')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("lapTimeValue").innerText = data;
+            });
+    }
 }
 
 // Function to toggle the system status
 function toggleSystem() {
-    fetch('/toggleSystem')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("status").innerText = data; // Update displayed status
-        });
+    if(reqAllowed()) {
+        fetch('/toggleSystem')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("status").innerText = data; // Update displayed status
+            });
+    }
 }
 
 function resetRealTimePacing() {
-    fetch('/resetRealTimePacing')
+    if(reqAllowed()) {
+        fetch('/resetRealTimePacing')
+    }
 }
 
 

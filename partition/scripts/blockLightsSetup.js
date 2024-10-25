@@ -3,6 +3,19 @@ document.addEventListener("DOMContentLoaded", function() {
     fetchBlockData();
 });
 
+let lastRequestTime = 0;
+const throttleTime = 200; // Time in milliseconds (0.2 seconds)
+
+function reqAllowed(){
+    const currentTime = Date.now();
+    // Check if enough time has passed since the last request
+    if (currentTime - lastRequestTime >= throttleTime) {
+        lastRequestTime = currentTime; // Update the last request time
+        return true;
+    }
+    return false;
+}
+
 
 
 
@@ -50,45 +63,53 @@ function fetchBlockData() {
 
 // Function to perform actions when buttons are clicked
 function sendUpdate(numFrom, numTo) {
-    if(numTo <= 14 && numTo >= 2) {
-        fetch('/updateBlockNumber', {
-            method: 'POST', // Use POST to update the value
-            headers: {
-                'Content-Type': 'text/plain' // Change the content type to plain text
-            },
-            body: JSON.stringify({ numFrom: numFrom, numTo: numTo })
-        })
+    if(reqAllowed()) {
+        if(numTo <= 14 && numTo >= 2) {
+            fetch('/updateBlockNumber', {
+                method: 'POST', // Use POST to update the value
+                headers: {
+                    'Content-Type': 'text/plain' // Change the content type to plain text
+                },
+                body: JSON.stringify({ numFrom: numFrom, numTo: numTo })
+            })
+        }
     }
 }
 
 
 function blockSetup(action) {
-    fetch('/' + action) // Sends action request to ESP
-        .then(response => response.text())
-        .then(result => {
-            console.log(result);
-        })
-        .catch(error => console.error('Error performing action:', error));
+    if(reqAllowed()) {
+        fetch('/' + action) // Sends action request to ESP
+            .then(response => response.text())
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => console.error('Error performing action:', error));
+    }
 }
 
 function clearBlock(mac){
-    fetch('/clearBlock', {
-        method: 'POST', // Use POST to update the value
-        headers: {
-            'Content-Type': 'text/plain' // Change the content type to plain text
-        },
-        body: mac // Convert the float to a string
-    })
+    if(reqAllowed()) {
+        fetch('/clearBlock', {
+            method: 'POST', // Use POST to update the value
+            headers: {
+                'Content-Type': 'text/plain' // Change the content type to plain text
+            },
+            body: mac // Convert the float to a string
+        })
+    }
 }
 
 function blinkBlock(mac){
-    fetch('/blinkBlock', {
-        method: 'POST', // Use POST to update the value
-        headers: {
-            'Content-Type': 'text/plain' // Change the content type to plain text
-        },
-        body: mac
-    })
+    if(reqAllowed()) {
+        fetch('/blinkBlock', {
+            method: 'POST', // Use POST to update the value
+            headers: {
+                'Content-Type': 'text/plain' // Change the content type to plain text
+            },
+            body: mac
+        })
+    }
 }
 
 
