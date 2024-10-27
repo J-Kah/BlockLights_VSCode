@@ -174,16 +174,7 @@ void initAutoPacingRoutes(WebServer &server) {
 
     // Handle requests for background.jpg
     server.on("/track-background.jpg", HTTP_GET, [&]() {
-        File file = SPIFFS.open("/track-background.jpg", "r"); // Open image file in read mode
-
-        if (!file) {
-            server.send(404, "text/plain", "File not found");
-            return;
-        }
-
-        // Set the content type as image/jpeg
-        server.streamFile(file, "image/jpeg");
-        file.close(); // Close the file after sending
+        serveFile("/track-background.jpg", "image/jpeg");
     });
 
 }

@@ -985,7 +985,7 @@ C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/e
 C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/espressif__esp_websocket_client/CMakeFiles/install/local.dir
 C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/espressif__esp_websocket_client/CMakeFiles/install/strip.dir
 C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/__idf_main.dir
-C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/spiffs_storage_bin.dir
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/littlefs_storage_bin.dir
 C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/storage-flash.dir
 C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/encrypted-storage-flash.dir
 C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/esp-idf/main/CMakeFiles/edit_cache.dir

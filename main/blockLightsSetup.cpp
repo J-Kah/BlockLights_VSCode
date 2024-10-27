@@ -89,6 +89,11 @@ void initSetupRoutes(WebServer &server) {
                 }
             }
 
+            // Make sure the block is (or was recently) connected
+            if(blocks[idxFrom].status == "Disconnected") {
+                return;
+            }
+
             // change idxFrom to numTo
             blocks[idxFrom].number = numTo;
             blocks[idxFrom].blockId = "block" + String(numTo);

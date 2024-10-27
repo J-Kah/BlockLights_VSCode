@@ -17,7 +17,6 @@ if("${CONFIG}" STREQUAL "" OR "${CONFIG}" STREQUAL "")
   "rmaker_claim_service_server.crt.S"
   "rmaker_mqtt_server.crt.S"
   "rmaker_ota_server.crt.S"
-  "storage.bin"
   "x509_crt_bundle.S"
   )
 endif()

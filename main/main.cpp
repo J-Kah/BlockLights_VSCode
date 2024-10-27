@@ -7,7 +7,7 @@
 
 #include <nvs_flash.h>
 #include <esp_wifi.h>
-#include <SPIFFS.h> // need to replace with LittleFS / ESP-IDF friendly thing                       ******
+#include <esp_littlefs.h>
 #include <FastLED.h>
 #include <esp_now.h>
 
@@ -132,40 +132,51 @@ String macToString(const uint8_t* mac) {
 // Function to write array of structs to file in the custom format
 void writeBlocksToFile() {
 
-    String path = "/blocks.txt";
-    File file = SPIFFS.open(path, FILE_WRITE);
+    // Open the file for writing using standard fopen (overwrite mode)
+    FILE* file = fopen("/partition/blocks.txt", "w");  // "w" mode will overwrite the file
     if (!file) {
         Serial.println("Failed to open file for writing");
         return;
     }
 
+    // Iterate through the blocks and write data to the file
     for (int i = 1; i < blocks.size(); i++) {
-        file.print(macToString(blocks[i].mac));  // Write MAC address as a string
-        file.print(";");                          // Separator between MAC address and value
-        file.print(blocks[i].number);             // Write the integer value
+        // Write MAC address as a string followed by a separator
+        fputs(macToString(blocks[i].mac).c_str(), file);
+        fputc(';', file);  // Separator between MAC address and number
+
+        // Write the integer value
+        fprintf(file, "%d", blocks[i].number);
+
+        // Add comma between devices, except for the last one
         if (i < blocks.size() - 1) {
-            file.print(",");                      // Add comma between devices, except for the last one
+            fputc(',', file);
         }
     }
 
-    file.close();
+    // Close the file after writing
+    fclose(file);
     Serial.println("Data written successfully.");
 }
 
 // Function to read from file and populate the array of structs
 void readBlocksFromFile() {
-
-    String path = "/blocks.txt";
     int maxBlocks = 14;
-    
-    File file = SPIFFS.open(path, FILE_READ);
+
+    // Open the file for reading using fopen in "r" (read) mode
+    FILE* file = fopen("/partition/blocks.txt", "r");
     if (!file) {
         Serial.println("Failed to open file for reading");
         return;
     }
 
-    String content = file.readString();
-    file.close();
+    // Read the entire file into a string
+    String content;
+    char buffer[281];
+    while (fgets(buffer, sizeof(buffer), file) != nullptr) {
+        content += String(buffer);  // Append each line to the content
+    }
+    fclose(file);  // Close the file
 
     // Split the content by commas to get individual device entries
     int blockCount = 0;
@@ -220,8 +231,14 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
     Serial.println();
 
     if (status == ESP_NOW_SEND_SUCCESS) {
+        if(blinking){
+            blocks[blinkBlockIdx].status = "Blinking...";
+        }
         Serial.println("Delivery Success");
     } else {
+        if(blinking){
+            blocks[blinkBlockIdx].status = "Disconnected";
+        }
         Serial.println("Delivery Fail");
     }
 }
@@ -287,7 +304,6 @@ void OnDataRecv(const esp_now_recv_info_t *esp_now_info, const uint8_t *data, in
                 Serial.println("Update block number (MAC in blocks, wrong block number on block) message sent successfully");
             } else {
                 blocks[idx].status = "Disconnected";
-                sendSetupUpdates();
                 Serial.println("Error sending Update block number (MAC in blocks, wrong block number on block) message");
             }
         }
@@ -342,7 +358,6 @@ void OnDataRecv(const esp_now_recv_info_t *esp_now_info, const uint8_t *data, in
                 Serial.println("Update Block number (no MAC in blocks, but num in blocks) message sent successfully");
             } else {
                 blocks[blocks.size() - 1].status = "Disconnected";
-                sendSetupUpdates();
                 Serial.println("Error sending update block number (no MAC in blocks, but num in blocks) message");
             }
         // else
@@ -358,10 +373,13 @@ void OnDataRecv(const esp_now_recv_info_t *esp_now_info, const uint8_t *data, in
 }
 
 void updateLED(int i){
+    
     if(i == 0) {
         leds[0] = blocks[0].colour;
         FastLED.show();
     } else if(blocks[i].status != "Virtual") {
+        blinkBlockIdx = i;
+
         Message msg;
         msg.type = 1;  // Type 1: LED color change
         msg.colour = blocks[i].colour;
@@ -371,8 +389,6 @@ void updateLED(int i){
         if (result == ESP_OK) {
             Serial.println("LED color change message sent successfully");
         } else {
-            blocks[i].status = "Disconnected";
-            sendSetupUpdates();
             Serial.println("Error sending LED color change message");
         }
     }
@@ -399,33 +415,29 @@ void updateLEDs(){
             if (result == ESP_OK) {
                 Serial.println("LED color change message sent successfully");
             } else {
-                blocks[i].status = "Disconnected";
-                sendSetupUpdates();
                 Serial.println("Error sending LED color change message");
             }
         }
     }
 }
 
-void blinkAllTask(void* Parameters){
-
+void blinkAllTask(void* Parameters){    
     for(int i=0; i < blocks.size(); i++){
         if(blocks[i].status != "Virtual") {
-
             blocks[i].status = "Blinking...";
             sendSetupUpdates();
 
             blocks[i].colour = CRGB::Blue;
-            updateLEDs();
+            updateLED(i);
             vTaskDelay(500 / portTICK_PERIOD_MS);
 
             blocks[i].colour = CRGB::Black;
-            updateLEDs();
+            updateLED(i);
             vTaskDelay(500 / portTICK_PERIOD_MS);
 
             if(i == 0){
                 blocks[i].status = "Master";
-            } else {
+            } else if(blocks[i].status != "Disconnected") {
                 blocks[i].status = "Working";
             }
             sendSetupUpdates();
@@ -449,16 +461,16 @@ void blinkBlockTask(void* Parameters){
     
     for(int i = 0; i < 3; i++) {
         blocks[blinkBlockIdx].colour = CRGB::Blue;
-        updateLEDs();
+        updateLED(blinkBlockIdx);
         vTaskDelay(500 / portTICK_PERIOD_MS);
         blocks[blinkBlockIdx].colour = CRGB::Black;
-        updateLEDs();
+        updateLED(blinkBlockIdx);
         vTaskDelay(500 / portTICK_PERIOD_MS);
     }
     
     if(blinkBlockIdx == 0) {
         blocks[blinkBlockIdx].status = "Master"; 
-    } else {
+    } else if(blocks[blinkBlockIdx].status != "Disconnected") {
         blocks[blinkBlockIdx].status = "Working";
     }
     sendSetupUpdates();
@@ -493,14 +505,36 @@ int ensureRedirect(String path) {
 
 // Function to serve files from SPIFFS
 void serveFile(const char *filename, const char *contentType) {
-    if (SPIFFS.exists(filename)) {
-        File file = SPIFFS.open(filename, "r");
-        server.streamFile(file, contentType);
-        file.close();
+    // Create the full path using String
+    String fullPath = String("/partition/") + filename;
+
+    // Open the file for reading
+    FILE* file = fopen(fullPath.c_str(), "r");
+    if (file) {
+        // Get file size
+        struct stat fileInfo;
+        fstat(fileno(file), &fileInfo);
+        size_t fileSize = fileInfo.st_size;
+
+        // Set content length
+        server.setContentLength(fileSize);  // Set known length
+
+        // Send the header
+        server.send(200, contentType, "");  // Start the response
+
+        // Stream file content to client
+        char buffer[128];
+        size_t bytesRead;
+        while ((bytesRead = fread(buffer, 1, sizeof(buffer), file)) > 0) {
+            server.client().write(buffer, bytesRead);  // Send chunks to the client
+        }
+
+        fclose(file);  // Close the file when done
     } else {
         server.send(404, "text/plain", "File Not Found");
     }
 }
+
 
 // Function to start the Wi-Fi network
 void setupWiFi() {
@@ -1072,11 +1106,15 @@ extern "C" void app_main(void) {
 
     //delay(5000); // 5 seconds to let you open the COM port if you need
 
-    // Initialize SPIFFS
-    if (!SPIFFS.begin(true)) {
-        Serial.println("SPIFFS initialization failed!");
-        return;
-    }
+    esp_vfs_littlefs_conf_t conf = {
+        .base_path = "/partition",
+        .partition_label = "storage",
+        .format_if_mount_failed = true,
+        .dont_mount = false,
+    };
+
+    // Use settings defined above to initialize and mount LittleFS filesystem.
+    ESP_ERROR_CHECK(esp_vfs_littlefs_register(&conf));
 
     // Setup Wi-Fi and LED control
     printf("\nInitialising......\n");
@@ -1107,13 +1145,7 @@ extern "C" void app_main(void) {
 
     // Serve the favicon.ico file
     server.on("/favicon.ico", HTTP_GET, []() {
-        if (SPIFFS.exists("/favicon.ico")) {
-            File file = SPIFFS.open("/favicon.ico", "r");
-            server.streamFile(file, "image/x-icon");
-            file.close();
-        } else {
-            server.send(404, "text/plain", "404: Favicon not found");
-        }
+        serveFile("/favicon.ico", "image/x-icon");
     });
 
     // Redirect any other request to blocklights.local

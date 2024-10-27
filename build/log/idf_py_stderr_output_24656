@@ -1,0 +1,261 @@
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 536, in parse_int
+    return int(v, 0)
+           ^^^^^^^^^
+ValueError: invalid literal for int() with base 0: '512KB'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 188, in from_csv
+    res.append(PartitionDefinition.from_csv(line, line_no + 1))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 377, in from_csv
+    res.size = res.parse_address(fields[4])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 434, in parse_address
+    return parse_int(strval)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 539, in parse_int
+    raise InputError('Invalid field value %s' % v)
+gen_esp32part.InputError: Invalid field value 512KB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 363, in <module>
+    main()
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 332, in main
+    target = ParttoolTarget(**target_args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 97, in __init__
+    partition_table = gen.PartitionTable.from_csv(f.read())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 190, in from_csv
+    raise InputError('Error at line %d: %s\nPlease check extra_partition_subtypes.inc file in build/config directory' % (line_no + 1, err))
+gen_esp32part.InputError: Error at line 6: Invalid field value 512KB
+Please check extra_partition_subtypes.inc file in build/config directory
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 536, in parse_int
+    return int(v, 0)
+           ^^^^^^^^^
+ValueError: invalid literal for int() with base 0: '512KB'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 188, in from_csv
+    res.append(PartitionDefinition.from_csv(line, line_no + 1))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 377, in from_csv
+    res.size = res.parse_address(fields[4])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 434, in parse_address
+    return parse_int(strval)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 539, in parse_int
+    raise InputError('Invalid field value %s' % v)
+gen_esp32part.InputError: Invalid field value 512KB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 363, in <module>
+    main()
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 332, in main
+    target = ParttoolTarget(**target_args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 97, in __init__
+    partition_table = gen.PartitionTable.from_csv(f.read())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 190, in from_csv
+    raise InputError('Error at line %d: %s\nPlease check extra_partition_subtypes.inc file in build/config directory' % (line_no + 1, err))
+gen_esp32part.InputError: Error at line 6: Invalid field value 512KB
+Please check extra_partition_subtypes.inc file in build/config directory
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 536, in parse_int
+    return int(v, 0)
+           ^^^^^^^^^
+ValueError: invalid literal for int() with base 0: '512KB'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 188, in from_csv
+    res.append(PartitionDefinition.from_csv(line, line_no + 1))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 377, in from_csv
+    res.size = res.parse_address(fields[4])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 434, in parse_address
+    return parse_int(strval)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 539, in parse_int
+    raise InputError('Invalid field value %s' % v)
+gen_esp32part.InputError: Invalid field value 512KB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 363, in <module>
+    main()
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 332, in main
+    target = ParttoolTarget(**target_args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 97, in __init__
+    partition_table = gen.PartitionTable.from_csv(f.read())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 190, in from_csv
+    raise InputError('Error at line %d: %s\nPlease check extra_partition_subtypes.inc file in build/config directory' % (line_no + 1, err))
+gen_esp32part.InputError: Error at line 6: Invalid field value 512KB
+Please check extra_partition_subtypes.inc file in build/config directory
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 536, in parse_int
+    return int(v, 0)
+           ^^^^^^^^^
+ValueError: invalid literal for int() with base 0: '512KB'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 188, in from_csv
+    res.append(PartitionDefinition.from_csv(line, line_no + 1))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 377, in from_csv
+    res.size = res.parse_address(fields[4])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 434, in parse_address
+    return parse_int(strval)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 539, in parse_int
+    raise InputError('Invalid field value %s' % v)
+gen_esp32part.InputError: Invalid field value 512KB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 363, in <module>
+    main()
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 332, in main
+    target = ParttoolTarget(**target_args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 97, in __init__
+    partition_table = gen.PartitionTable.from_csv(f.read())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 190, in from_csv
+    raise InputError('Error at line %d: %s\nPlease check extra_partition_subtypes.inc file in build/config directory' % (line_no + 1, err))
+gen_esp32part.InputError: Error at line 6: Invalid field value 512KB
+Please check extra_partition_subtypes.inc file in build/config directory
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 536, in parse_int
+    return int(v, 0)
+           ^^^^^^^^^
+ValueError: invalid literal for int() with base 0: '512KB'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 188, in from_csv
+    res.append(PartitionDefinition.from_csv(line, line_no + 1))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 377, in from_csv
+    res.size = res.parse_address(fields[4])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 434, in parse_address
+    return parse_int(strval)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 539, in parse_int
+    raise InputError('Invalid field value %s' % v)
+gen_esp32part.InputError: Invalid field value 512KB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 363, in <module>
+    main()
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 332, in main
+    target = ParttoolTarget(**target_args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 97, in __init__
+    partition_table = gen.PartitionTable.from_csv(f.read())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 190, in from_csv
+    raise InputError('Error at line %d: %s\nPlease check extra_partition_subtypes.inc file in build/config directory' % (line_no + 1, err))
+gen_esp32part.InputError: Error at line 6: Invalid field value 512KB
+Please check extra_partition_subtypes.inc file in build/config directory
+ESP Insights Project commit: 6e9a2c7-dirty
+ESP RainMaker Project commit: 6e9a2c7-dirty
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 536, in parse_int
+    return int(v, 0)
+           ^^^^^^^^^
+ValueError: invalid literal for int() with base 0: '512KB'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 188, in from_csv
+    res.append(PartitionDefinition.from_csv(line, line_no + 1))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 377, in from_csv
+    res.size = res.parse_address(fields[4])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 434, in parse_address
+    return parse_int(strval)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 539, in parse_int
+    raise InputError('Invalid field value %s' % v)
+gen_esp32part.InputError: Invalid field value 512KB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 363, in <module>
+    main()
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 332, in main
+    target = ParttoolTarget(**target_args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 97, in __init__
+    partition_table = gen.PartitionTable.from_csv(f.read())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 190, in from_csv
+    raise InputError('Error at line %d: %s\nPlease check extra_partition_subtypes.inc file in build/config directory' % (line_no + 1, err))
+gen_esp32part.InputError: Error at line 6: Invalid field value 512KB
+Please check extra_partition_subtypes.inc file in build/config directory
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 536, in parse_int
+    return int(v, 0)
+           ^^^^^^^^^
+ValueError: invalid literal for int() with base 0: '512KB'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 188, in from_csv
+    res.append(PartitionDefinition.from_csv(line, line_no + 1))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 377, in from_csv
+    res.size = res.parse_address(fields[4])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 434, in parse_address
+    return parse_int(strval)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 539, in parse_int
+    raise InputError('Invalid field value %s' % v)
+gen_esp32part.InputError: Invalid field value 512KB
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 363, in <module>
+    main()
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 332, in main
+    target = ParttoolTarget(**target_args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\parttool.py", line 97, in __init__
+    partition_table = gen.PartitionTable.from_csv(f.read())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\joshk\esp\v5.3.1\esp-idf\components\partition_table\gen_esp32part.py", line 190, in from_csv
+    raise InputError('Error at line %d: %s\nPlease check extra_partition_subtypes.inc file in build/config directory' % (line_no + 1, err))
+gen_esp32part.InputError: Error at line 6: Invalid field value 512KB
+Please check extra_partition_subtypes.inc file in build/config directory
