@@ -41,18 +41,28 @@ function fetchBlockData() {
                 const blinkButton = row.insertCell(3);
                 const clearButton = row.insertCell(4);
 
-                blinkButton.innerHTML = `<button onclick="blinkBlock('${item.MACAddress}')">Blink</button>`;
+                // blinkButton logic
+                if(item.status != "Virtual") {
+                    blinkButton.innerHTML = `<button onclick="blinkBlock('${item.MACAddress}')">Blink</button>`;
+                } else {
+                    blinkButton.textContent = "-"; 
+                }
 
-                if(item.number != 1){
+                // number logic
+                if(item.number != 1 && item.status != "Virtual"){
                     number.innerHTML = `
                         ${item.number} 
                         <input type="number" id="updateInput_${item.MACAddress}" min="2" max="14" value="${item.number}">
                         <button onclick="sendUpdate('${item.number}', document.getElementById('updateInput_${item.MACAddress}').value)">Update</button>
                     `;
-    
-                    clearButton.innerHTML = `<button onclick="clearBlock('${item.MACAddress}')">Clear</button>`;
                 } else {
                     number.textContent = item.number;
+                }
+
+                // clear button logic
+                if(item.number != 1){
+                    clearButton.innerHTML = `<button onclick="clearBlock('${item.MACAddress}')">Clear</button>`;
+                } else {
                     clearButton.textContent = "-";
                 }
 
@@ -140,18 +150,28 @@ function initWebSocket() {
             const blinkButton = row.insertCell(3);
             const clearButton = row.insertCell(4);
 
-            blinkButton.innerHTML = `<button onclick="blinkBlock('${item.MACAddress}')">Blink</button>`;
+            // blinkButton logic
+            if(item.status != "Virtual") {
+                blinkButton.innerHTML = `<button onclick="blinkBlock('${item.MACAddress}')">Blink</button>`;
+            } else {
+                blinkButton.textContent = "-"; 
+            }
 
-            if(item.number != 1){
+            // number logic
+            if(item.number != 1 && item.status != "Virtual"){
                 number.innerHTML = `
                     ${item.number} 
                     <input type="number" id="updateInput_${item.MACAddress}" min="2" max="14" value="${item.number}">
                     <button onclick="sendUpdate('${item.number}', document.getElementById('updateInput_${item.MACAddress}').value)">Update</button>
                 `;
-
-                clearButton.innerHTML = `<button onclick="clearBlock('${item.MACAddress}')">Clear</button>`;
             } else {
                 number.textContent = item.number;
+            }
+
+            // clear button logic
+            if(item.number != 1){
+                clearButton.innerHTML = `<button onclick="clearBlock('${item.MACAddress}')">Clear</button>`;
+            } else {
                 clearButton.textContent = "-";
             }
 

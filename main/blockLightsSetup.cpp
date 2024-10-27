@@ -93,13 +93,21 @@ void initSetupRoutes(WebServer &server) {
             blocks[idxFrom].number = numTo;
             blocks[idxFrom].blockId = "block" + String(numTo);
             // update slave block number
-            updateBlockNumber(idxFrom, numTo);
+            if(blocks[idxFrom].status != "Virtual") {
+                updateBlockNumber(idxFrom, numTo);
+            } else {
+                blocks[idxFrom].mac[5] = (uint8_t)numTo;
+            }
 
             // change numTo (if previously found) to numFrom
             if(idxTemp != -1){
                 blocks[idxTemp].number = numFrom;
                 blocks[idxTemp].blockId = "block" + String(numFrom);
-                updateBlockNumber(idxTemp, numFrom);
+                if(blocks[idxTemp].status != "Virtual") {
+                    updateBlockNumber(idxTemp, numFrom);
+                } else {
+                    blocks[idxTemp].mac[5] = (uint8_t)numFrom;
+                }
             }
         }
         // Might need a delay here if blocks are getting sent updates after being sorted -> wrong index

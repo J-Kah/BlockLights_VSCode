@@ -109,7 +109,6 @@ set(ARDUINO_ALL_LIBRARIES
   USB
   WebServer
   WebSockets
-  FastLED
   NetworkClientSecure
   WiFi
   WiFiProv
@@ -221,38 +220,6 @@ set(ARDUINO_LIBRARY_WebSockets_SRCS
   libraries/WebSockets/src/WebSockets.cpp
   libraries/WebSockets/src/WebSocketsClient.cpp
   libraries/WebSockets/src/WebSocketsServer.cpp)
-
-  set(ARDUINO_LIBRARY_FastLED_SRCS
-  libraries/FastLED/src/stub_main.cpp
-  libraries/FastLED/src/wiring.cpp
-  libraries/FastLED/src/transpose8x1_noinline.cpp
-  libraries/FastLED/src/simplex.cpp
-  libraries/FastLED/src/rgbw.cpp
-  libraries/FastLED/src/power_mgt.cpp
-  libraries/FastLED/src/platforms.cpp
-  libraries/FastLED/src/noise.cpp
-  libraries/FastLED/src/lib8tion.cpp
-  libraries/FastLED/src/hsv2rgb.cpp
-  libraries/FastLED/src/five_bit_hd_gamma.cpp
-  libraries/FastLED/src/FastLED.cpp
-  libraries/FastLED/src/crgb.cpp
-  libraries/FastLED/src/colorutils.cpp
-  libraries/FastLED/src/colorpalettes.cpp
-  libraries/FastLED/src/bilinear_expansion.cpp
-  libraries/FastLED/src/bitswap.cpp
-  libraries/FastLED/src/platforms/stub/led_sysdefs_stub.cpp
-  libraries/FastLED/src/platforms/esp/32/i2s.cpp
-  libraries/FastLED/src/platforms/esp/32/idf4_rmt.cpp
-  libraries/FastLED/src/platforms/esp/32/idf4_rmt_impl.cpp
-  libraries/FastLED/src/platforms/esp/32/idf5_rmt.cpp
-  libraries/FastLED/src/platforms/esp/32/led_strip/configure_led.cpp
-  libraries/FastLED/src/platforms/esp/32/led_strip/construct.cpp
-  libraries/FastLED/src/platforms/esp/32/led_strip/led_strip_api.cpp
-  libraries/FastLED/src/platforms/esp/32/led_strip/led_strip_rmt_dev.cpp
-  libraries/FastLED/src/platforms/esp/32/led_strip/led_strip_rmt_encoder.cpp
-  libraries/FastLED/src/platforms/esp/32/led_strip/rmt_strip.cpp
-  libraries/FastLED/src/platforms/esp/32/led_strip/rmt_strip_group.cpp
-  libraries/FastLED/src/fx/storage/sd.cpp)
 
 set(ARDUINO_LIBRARY_NetworkClientSecure_SRCS
   libraries/NetworkClientSecure/src/ssl_client.cpp

@@ -92,15 +92,15 @@ void initSettingsRoutes(WebServer &server) {
         if(settings.showAllBlocks){
             addAllBlocks();
         } else {
-            // clear all the blocks
+            // clear all the virtual blocks
             if (blocks.size() > 1) {
                 for(int i=1; i < blocks.size(); i++) {
-                    removePeer(blocks[i].mac);
+                    if(blocks[i].status == "Virtual") {
+                        blocks.erase(blocks.begin() + i);
+                        i--; // check the same index again because we just erased the block in the current index
+                    }
                 }
-                blocks.erase(blocks.begin() + 1, blocks.end());
             }
-            // scan
-            scanForBlocks();
         }
         sendSettingsUpdates();
         Serial.println("Toggled showAllBlocks");

@@ -1,5 +1,3 @@
-#include <nvs_flash.h> // needed for arduino WiFI.h?
-#include <WiFi.h> // arduino
 #include <WebServer.h> // arduino
 #include <ESPmDNS.h> // arduino
 #include <DNSServer.h> // arduino
@@ -7,28 +5,24 @@
 
 // Hopefully the above can be replaced with ESPAsyncWebServer or similar.
 
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include <SPIFFS.h> // need to replace with LittleFS / ESP-IDF friendly thing
-
-#include <FastLED.h> // Shouldn't need to be in the arduino layer, supports ESP-IDF natively.
-#include <esp_now.h> // Shouldn't need to be in the arduino layer, supports ESP-IDF natively.
+#include <nvs_flash.h>
+#include <esp_wifi.h>
+#include <SPIFFS.h> // need to replace with LittleFS / ESP-IDF friendly thing                       ******
+#include <FastLED.h>
+#include <esp_now.h>
 
 //Custom libraries
-#include <realTimePacing.h>
-#include <blockLightsSettings.h>
-#include <autoPacing.h>
-#include <blockLightsSetup.h>
-#include <sharedData.h>
+#include "realTimePacing.h"
+#include "blockLightsSettings.h"
+#include "autoPacing.h"
+#include "blockLightsSetup.h"
+#include "sharedData.h"
 
 
 #define NUM_LEDS 1          // Number of LEDs in your strip
 #define DATA_PIN 8          // Pin connected to your LED strip
 
 CRGB leds[NUM_LEDS];
-
-
-const char* ssid = "BlockLights";   // SSID for the Access Point
 
 // DNS server
 DNSServer dnsServer;
@@ -191,15 +185,18 @@ void readBlocksFromFile() {
 
         // Parse MAC address and integer
         parseMACAddress(macStr, newBlock.mac);
-        newBlock.number = intStr.toInt();
-        newBlock.colour = CRGB::Black;
-        newBlock.blockId = "block" + String(newBlock.number);
-        newBlock.status = "Disconnected";
+        // check if it's a virtual block:
+        if(newBlock.mac[0] != 0x00 && newBlock.mac[1] != 0x00 && newBlock.mac[2] != 0x00 && newBlock.mac[3] != 0x00 && newBlock.mac[4] != 0x00) {
+            newBlock.number = intStr.toInt();
+            newBlock.colour = CRGB::Black;
+            newBlock.blockId = "block" + String(newBlock.number);
+            newBlock.status = "Disconnected";
 
-        Serial.println("Pushed a new block");
-        blocks.push_back(newBlock);
+            blocks.push_back(newBlock);
+            Serial.println("Pushed a new block");
 
-        blockCount++;
+            blockCount++;
+        }
         start = end + 1;
     }
 
@@ -207,9 +204,8 @@ void readBlocksFromFile() {
     return;
 }
 
-
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
-    Serial.print("Send status to MAC: ");
+    Serial.print("Send data to MAC: ");
     Serial.print(mac_addr[0], HEX);
     Serial.print(":");
     Serial.print(mac_addr[1], HEX);
@@ -229,7 +225,6 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
         Serial.println("Delivery Fail");
     }
 }
-
 
 void addPeer(uint8_t* peerMAC) {
     esp_now_peer_info_t peerInfo;
@@ -362,6 +357,27 @@ void OnDataRecv(const esp_now_recv_info_t *esp_now_info, const uint8_t *data, in
     sendSetupUpdates(); // make sure blocks is ordered
 }
 
+void updateLED(int i){
+    if(i == 0) {
+        leds[0] = blocks[0].colour;
+        FastLED.show();
+    } else if(blocks[i].status != "Virtual") {
+        Message msg;
+        msg.type = 1;  // Type 1: LED color change
+        msg.colour = blocks[i].colour;
+
+        esp_err_t result = esp_now_send(blocks[i].mac, (uint8_t *)&msg, sizeof(msg));
+
+        if (result == ESP_OK) {
+            Serial.println("LED color change message sent successfully");
+        } else {
+            blocks[i].status = "Disconnected";
+            sendSetupUpdates();
+            Serial.println("Error sending LED color change message");
+        }
+    }
+}
+
 void updateLEDs(){
     leds[0] = blocks[0].colour;
     FastLED.show();
@@ -377,12 +393,8 @@ void updateLEDs(){
             Message msg;
             msg.type = 1;  // Type 1: LED color change
             msg.colour = blocks[i].colour;
-            uint8_t slaveMAC[6];
-            for(int j = 0; j < 6; j++) {
-                slaveMAC[j] = blocks[i].mac[j];
-            }
 
-            esp_err_t result = esp_now_send(slaveMAC, (uint8_t *)&msg, sizeof(msg));
+            esp_err_t result = esp_now_send(blocks[i].mac, (uint8_t *)&msg, sizeof(msg));
 
             if (result == ESP_OK) {
                 Serial.println("LED color change message sent successfully");
@@ -398,24 +410,26 @@ void updateLEDs(){
 void blinkAllTask(void* Parameters){
 
     for(int i=0; i < blocks.size(); i++){
+        if(blocks[i].status != "Virtual") {
 
-        blocks[i].status = "Blinking...";
-        sendSetupUpdates();
+            blocks[i].status = "Blinking...";
+            sendSetupUpdates();
 
-        blocks[i].colour = CRGB::Blue;
-        updateLEDs();
-        vTaskDelay(500 / portTICK_PERIOD_MS);
+            blocks[i].colour = CRGB::Blue;
+            updateLEDs();
+            vTaskDelay(500 / portTICK_PERIOD_MS);
 
-        blocks[i].colour = CRGB::Black;
-        updateLEDs();
-        vTaskDelay(500 / portTICK_PERIOD_MS);
+            blocks[i].colour = CRGB::Black;
+            updateLEDs();
+            vTaskDelay(500 / portTICK_PERIOD_MS);
 
-        if(i == 0){
-            blocks[i].status = "Master";
-        } else {
-            blocks[i].status = "Working";
+            if(i == 0){
+                blocks[i].status = "Master";
+            } else {
+                blocks[i].status = "Working";
+            }
+            sendSetupUpdates();
         }
-        sendSetupUpdates();
         
     }
     blinking = 0;
@@ -488,41 +502,69 @@ void serveFile(const char *filename, const char *contentType) {
     }
 }
 
-
-
 // Function to start the Wi-Fi network
 void setupWiFi() {
+
+    // Initialize NVS (needed for wifi)
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         // NVS partition was truncated and needs to be erased
         ESP_ERROR_CHECK(nvs_flash_erase());
+        // Retry NVS initialization
         ret = nvs_flash_init();
     }
-    ESP_ERROR_CHECK(ret);  // Ensure NVS is initialized successfully
+    ESP_ERROR_CHECK(ret); // Check for errors in initialization     
 
-    // Set up access point with a specific channel and maximum connection
-    WiFi.mode(WIFI_MODE_APSTA);
-    WiFi.softAP(ssid, "", 11);          // wifi name, password, channel
-    printf("Access Point Started\n");
+    // Initialize TCP/IP adapter and Wi-Fi event handling
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+
+    // Creates a default Wi-Fi access point interface
+    esp_netif_create_default_wifi_ap();  
+
+    // Initialize the Wi-Fi stack in Station mode (STA)
+    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+
+    // Disable Wi-Fi power-saving mode to prevent deep sleep (similar to WiFi.setSleep(false))
+    ESP_ERROR_CHECK(esp_wifi_set_ps(WIFI_PS_NONE));
+
+    // Configure Wi-Fi Access Point settings
+    wifi_config_t wifi_config = {
+        .ap = {
+            .ssid = "BlockLights",
+            .channel = 11,
+            .authmode = WIFI_AUTH_OPEN, // No password
+            .max_connection = 10
+        },
+    };
+
+    // Set Wi-Fi mode to Access Point + Station
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_APSTA));
+    // Use 80 MHz bandwidth to allow better wifi standards in AP + STA Mode
+    ESP_ERROR_CHECK(esp_wifi_set_bandwidth(WIFI_IF_AP, WIFI_BW80));
+    // Set AP config
+    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &wifi_config)); 
+
+    // Start the Wi-Fi driver
+    ESP_ERROR_CHECK(esp_wifi_start());
     
-    // Wait a moment for the AP to configure itself
-    delay(1000);
-    
-    // Check IP address
-    IPAddress IP = WiFi.softAPIP();
-    printf("IP Address: %d.%d.%d.%d\n", IP[0], IP[1], IP[2], IP[3]); // Should print the actual IP address, not 0.0.0.0
+    // Delay for 1 second to allow AP configuration to settle
+    vTaskDelay(pdMS_TO_TICKS(1000));
+
+    Serial.println("wifi started");
 
     if (esp_now_init() != ESP_OK) {
         Serial.println("Error initializing ESP-NOW");
         return;
     }
+    Serial.println("espnow started");
 
      // Register broadcast peer (this is necessary for sending broadcast messages)
     addPeer(broadcastMAC);
 
     esp_now_register_send_cb(OnDataSent);
     esp_now_register_recv_cb(OnDataRecv);
-
 
     // Start mDNS
     if (!MDNS.begin("blocklights")) {
@@ -531,14 +573,13 @@ void setupWiFi() {
     }
     printf("mDNS responder started\n");
 
-    WiFi.setSleep(false); // prevent the master block from going into deepsleep
-
     // Start the DNS server
     dnsServer.start(53, "*", apIP); // Redirect all DNS queries to the access point IP
     Serial.println("DNS Server started");
 
     // Initialize WebSocket
     webSocket.begin();
+    Serial.println("WebSocket started");
 }
 
 // Main task to handle the server and client requests
@@ -587,11 +628,13 @@ void realTimePacingTask(void* pvParameters) {
     
     int64_t pacingStartTime = esp_timer_get_time();
     int64_t prevTime = pacingStartTime;
+    bool blocksChanged = false;
     while(realTimePacing.is_running && realTimePacing.lap > 0) {
         int64_t currentTime = esp_timer_get_time();
         int64_t timeDelta = currentTime - prevTime;
         float currentSpeed = trackLength / realTimePacing.lapTime;
         float currentDist = prevDist + (timeDelta/(1000000.0)) * currentSpeed;
+        
 
         // update the lap value if we do a lap
         if(currentDist > trackLength) {
@@ -623,33 +666,43 @@ void realTimePacingTask(void* pvParameters) {
                 if(blocks[i].colour != CRGB::Black) {
                     // change block to off
                     blocks[i].colour = CRGB::Black;
+                    updateLED(i);
+                    blocksChanged = true;
                     Serial.println("Changed block " + String(i+1) + " to colour off");
                 }
             } else if(blockPosition < currentDist + redOffset) {
                 if(blocks[i].colour != CRGB::Red) {
                     // change block to red
                     blocks[i].colour = CRGB::Red;
+                    updateLED(i);
+                    blocksChanged = true;
                     Serial.println("Changed block " + String(i+1) + " to colour red");
                 }
             } else if(blockPosition < currentDist + greenOffset) {
                 if(blocks[i].colour != CRGB::Green) {
                     // change block to green
                     blocks[i].colour = CRGB::Green;
+                    updateLED(i);
+                    blocksChanged = true;
                     Serial.println("Changed block " + String(i+1) + " to colour green");
                 }
             } else if(blockPosition < currentDist + blueOffset) {
                 if(blocks[i].colour != CRGB::Blue) {
                     // change block to blue
                     blocks[i].colour = CRGB::Blue;
+                    updateLED(i);
+                    blocksChanged = true;
                     Serial.println("Changed block " + String(i+1) + " to colour blue");
                 }
             }
         }
 
-        // Send colour updates to the LEDs
-        updateLEDs();
+        if(blocksChanged) {
+            sendRealTimePacingUpdates();
+        }
 
-        vTaskDelay(1 / portTICK_PERIOD_MS); // let other tasks run
+        vTaskDelay(10 / portTICK_PERIOD_MS); // let other tasks run
+        blocksChanged = false;
         prevDist = currentDist;
         prevTime = currentTime;
 
@@ -672,7 +725,7 @@ void realTimePacingTask(void* pvParameters) {
     sendRealTimePacingUpdates();
 
     
-    vTaskDelay(50 / portTICK_PERIOD_MS); // let other tasks run
+    vTaskDelay(50 / portTICK_PERIOD_MS); // Wait a little bit before deleting the task
     vTaskDelete(NULL);  // Delete this task
 }
 
@@ -804,7 +857,7 @@ void autoPacingTask(void* pvParameters) {
     }
 
 
-
+    bool blocksChanged = false;
     while(autoPacing.autoIsRunning && currentDist < totalDist) {
         int64_t currentTime = esp_timer_get_time();
 
@@ -869,32 +922,43 @@ void autoPacingTask(void* pvParameters) {
                 if(blocks[i].colour != CRGB::Black) {
                     // change block to off
                     blocks[i].colour = CRGB::Black;
+                    updateLED(i);
+                    blocksChanged = true;
                     Serial.println("Changed block " + String(i+1) + " to colour off");
                 }
             } else if(blockPosition < lapDist + redOffset) {
                 if(blocks[i].colour != CRGB::Red) {
                     // change block to red
                     blocks[i].colour = CRGB::Red;
+                    updateLED(i);
+                    blocksChanged = true;
                     Serial.println("Changed block " + String(i+1) + " to colour red");
                 }
             } else if(blockPosition < lapDist + greenOffset) {
                 if(blocks[i].colour != CRGB::Green) {
                     // change block to green
                     blocks[i].colour = CRGB::Green;
+                    updateLED(i);
+                    blocksChanged = true;
                     Serial.println("Changed block " + String(i+1) + " to colour green");
                 }
             } else if(blockPosition < lapDist + blueOffset) {
                 if(blocks[i].colour != CRGB::Blue) {
                     // change block to blue
                     blocks[i].colour = CRGB::Blue;
+                    updateLED(i);
+                    blocksChanged = true;
                     Serial.println("Changed block " + String(i+1) + " to colour blue");
                 }
             }
         }
-        updateLEDs();
+
+        if(blocksChanged) {
+            sendAutoPacingUpdates();
+        }
 
         vTaskDelay(10 / portTICK_PERIOD_MS); // let other tasks run
-
+        blocksChanged = false;
     }
     Serial.print("TOTAL TIME TAKEN: ");
     Serial.println(String((esp_timer_get_time() - pacingStartTime)/1000000.0, 3));
@@ -951,6 +1015,13 @@ void addAllBlocks(){
 void killPacingTasks(){
     realTimePacing.is_running = false;
     autoPacing.autoIsRunning = false;
+
+    // turn blocks off
+    vTaskDelay(pdMS_TO_TICKS(1000));
+    for(int i = 0; i < blocks.size(); i++){
+        blocks[i].colour = CRGB::Black;
+    }
+    updateLEDs();
 }
 
 void scanForBlocks() {
@@ -995,7 +1066,7 @@ void updateBlockNumber(int idx, int num) {
 // Main function for initializing peripherals and starting tasks
 extern "C" void app_main(void) {
 
-    //esp_log_level_set("*", ESP_LOG_ERROR);  // Set all log levels to error  WARNING setting all logs to just error BREAKS FASTLED (3.8 prerelease)  
+    //esp_log_level_set("*", ESP_LOG_ERROR);  // Set all log levels to error  WARNING setting all logs to just error BREAKS FASTLED (3.8 prerelease)
 
     Serial.begin(115200); // Initialize Serial communication
 
@@ -1054,14 +1125,13 @@ extern "C" void app_main(void) {
     server.begin();                      // Start the web server
     printf("Server started\n");
 
-    // Add Master Block
-    //esp_read_mac(masterMacAddress, ESP_MAC_WIFI_STA);
-    WiFi.macAddress(masterMacAddress);
-    masterMacAddressString = WiFi.macAddress();
+    ESP_ERROR_CHECK(esp_wifi_get_mac(WIFI_IF_STA, masterMacAddress));
+    masterMacAddressString = macToString(masterMacAddress);
     Serial.println(masterMacAddressString);
    
     // read blocks data from nv memory
     readBlocksFromFile();
+
     // add to ESP peers list
     for(int i=0; i < blocks.size(); i++) {
         addPeer(blocks[i].mac);
