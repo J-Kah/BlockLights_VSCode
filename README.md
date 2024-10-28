@@ -29,12 +29,12 @@ Currently there are two pacing modes implemented -
 5. Add arduino and LittleFS dependencies into the ESP-IDF
     1. In the ESP-IDF terminal, enter "idf.py add-dependency "espressif/arduino-esp32^3.1.0-rc1"
     2. In the ESP-IDF terminal, enter "idf.py add-dependency "joltwallet/littlefs^1.14.8"
-6. Configure sdkconfig file for ESP32
+6. Configure sdkconfig file for ESP32 (Skip this step if you're using the provided sdkconfig [*sdkconfig.esp32_c6_n4*])
     1. Press ctrl + shift + E to open the project folder explorer
     2. Open sdkconfig file near the bottom
     3. search for "CONFIG_FREERTOS_HZ" and change it from CONFIG_FREERTOS_HZ=100 to CONFIG_FREERTOS_HZ=1000.
     4. Press ctrl + S to save
-7. Change Compiler option in menuconfig
+7. Change Compiler option in menuconfig (Skip this step if you're using the provided sdkconfig [*sdkconfig.esp32_c6_n4*])
     1. In the ESP-IDF terminal, enter "idf.py menuconfig"
     2. Using the arrow keys, navigate to and change: menuconfig -> Serial flasher config -> Flash size -> Change to however much flash your ESP32 has (E.g.Beetle ESP32 C6 Mini has 4MB)
     3. Using the arrow keys, navigate to and change: menuconfig -> Partition Table -> Partition Table -> Change to Custom partition table CSV
@@ -48,6 +48,7 @@ Currently there are two pacing modes implemented -
         4. /partition/ folder and all its contents
         5. CMakeLists.txt
         6. partitions.csv
+        7. (optional: if you're using the provided sdkconfig.esp32_c6_n4, put it in the root directory and rename it to just sdkconfig, overwriting the old one.)
     3. Delete the file /main/main.c
 9. Edit the NUM_LEDS and DATA_PIN values in /main/main.cpp to suit your project
 10. In main.cpp, double check "FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);" includes your LED type and colour order (GRB or RGB)
