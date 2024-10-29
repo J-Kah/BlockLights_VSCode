@@ -73,6 +73,7 @@ Currently there are two pacing modes implemented -
 7. Tidy everything up, add descriptions in the web app, more incremental buttons (e.g. change lap times by +/-0.1s or +/- 0.5s)
 8. Implement and display a code version in the web app
 9. Maybe implement error handling for ESP-NOW between Master and Slave
+10. Automatically assign block numbers based on RSSI strength once they're in place.
 
 ## Folder contents
 

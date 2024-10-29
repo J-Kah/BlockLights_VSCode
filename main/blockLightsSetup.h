@@ -2,8 +2,7 @@
 #define BLOCKLIGHTSSETUP_H
 
 #include <WebServer.h>
-#include <SPIFFS.h>  // Assuming you are using SPIFFS
-#include <sharedData.h>
+#include "sharedData.h"
 
 
 extern bool reDir;

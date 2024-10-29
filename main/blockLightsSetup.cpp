@@ -1,7 +1,6 @@
 #include "blockLightsSetup.h"
 #include <WebSocketsServer.h>
 #include <FastLED.h>
-#include <algorithm>
 
 extern WebSocketsServer webSocket;  // Access the WebSocket server instance
 
@@ -270,8 +269,5 @@ void initSetupRoutes(WebServer &server) {
 
         server.send(200, "text/plain", jsonResponse); // Send lap time with 1 decimal place
     });
-
-    
-
 
 }

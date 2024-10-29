@@ -2,8 +2,7 @@
 #define AUTOPACING_H
 
 #include <WebServer.h>
-#include <SPIFFS.h>  // Assuming you are using SPIFFS
-#include <sharedData.h>
+#include "sharedData.h"
 
 // Declare the struct and global variables as before
 typedef struct {

@@ -1,7 +1,6 @@
 #ifndef SHAREDDATA_H
 #define SHAREDDATA_H
 
-#include <stdint.h>  // for uint8_t
 #include <FastLED.h>
 
 // Struct for each of the blocks
