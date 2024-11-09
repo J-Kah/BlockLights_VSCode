@@ -45,6 +45,7 @@
 
 #define NUM_LEDS 1          // Number of LEDs in your strip
 #define DATA_PIN 8          // Pin connected to your LED strip
+#define CHANNEL 11
 
 CRGB leds[NUM_LEDS];
 
@@ -271,8 +272,7 @@ void addPeer(uint8_t* peerMAC) {
     esp_now_peer_info_t peerInfo;
     memset(&peerInfo, 0, sizeof(esp_now_peer_info_t));
     memcpy(peerInfo.peer_addr, peerMAC, 6);  // Use the specific MAC address
-    peerInfo.channel = 0;  // Same channel as Wi-Fi
-    peerInfo.encrypt = false;  // No encryption
+
 
     if (esp_now_add_peer(&peerInfo) == ESP_OK) {
         Serial.println("Peer added successfully");
@@ -591,7 +591,7 @@ void setupWiFi() {
     wifi_config_t wifi_config = {
         .ap = {
             .ssid = "BlockLights",
-            .channel = 11,
+            .channel = CHANNEL,
             .authmode = WIFI_AUTH_OPEN, // No password
             .max_connection = 10
         },
