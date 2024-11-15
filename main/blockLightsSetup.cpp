@@ -1,6 +1,4 @@
 #include "blockLightsSetup.h"
-#include <WebSocketsServer.h>
-#include <FastLED.h>
 
 extern WebSocketsServer webSocket;  // Access the WebSocket server instance
 
@@ -39,7 +37,7 @@ void sendSetupUpdates() {
         
         // Add number and status fields
         jsonResponse += "\"number\":" + String(blocks[i].number) + ",";
-        jsonResponse += "\"status\":\"" + blocks[i].status + "\"";
+        jsonResponse += "\"status\":\"" + String(blocks[i].status.c_str()) + "\"";
         
         jsonResponse += "}";
         if (i < numBlocks - 1) {
@@ -54,10 +52,10 @@ void sendSetupUpdates() {
 }
 
 // Utility function to convert uint8_t MAC to String
-String formatMACAddress(uint8_t mac[6]) {
+std::string formatMACAddress(uint8_t mac[6]) {
     char buf[18];
     sprintf(buf, "%02X:%02X:%02X:%02X:%02X:%02X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
-    return String(buf);
+    return std::string(buf);
 }
 
 int extractNumber(String label, String body) {
@@ -95,7 +93,7 @@ void initSetupRoutes(WebServer &server) {
 
             // change idxFrom to numTo
             blocks[idxFrom].number = numTo;
-            blocks[idxFrom].blockId = "block" + String(numTo);
+            blocks[idxFrom].blockId = "block" + std::to_string(numTo);
             // update slave block number
             if(blocks[idxFrom].status != "Virtual") {
                 updateBlockNumber(idxFrom, numTo);
@@ -106,7 +104,7 @@ void initSetupRoutes(WebServer &server) {
             // change numTo (if previously found) to numFrom
             if(idxTemp != -1){
                 blocks[idxTemp].number = numFrom;
-                blocks[idxTemp].blockId = "block" + String(numFrom);
+                blocks[idxTemp].blockId = "block" + std::to_string(numFrom);
                 if(blocks[idxTemp].status != "Virtual") {
                     updateBlockNumber(idxTemp, numFrom);
                 } else {
@@ -123,11 +121,11 @@ void initSetupRoutes(WebServer &server) {
 
     server.on("/clearBlock", [&]() {
         if(!blinking){
-            String macAddress = server.arg("plain");
+            std::string macAddress = server.arg("plain").c_str();
 
             // Loop through the array to find the block with matching MAC address
             for (size_t i = 0; i < blocks.size(); i++) {
-                String blockMac = formatMACAddress(blocks[i].mac); // Convert MAC to String for comparison
+                std::string blockMac = formatMACAddress(blocks[i].mac); // Convert MAC to String for comparison
 
                 if (blockMac == macAddress) {
                     // Erase the struct from the array
@@ -144,14 +142,14 @@ void initSetupRoutes(WebServer &server) {
     });
 
     server.on("/blinkBlock", [&]() {
-        String macAddress = server.arg("plain");
+        std::string macAddress = server.arg("plain").c_str();
 
         if(!blinking) {
             blinking = 1;
 
             // Loop through the array to find the block with matching MAC address
             for (size_t i = 0; i < blocks.size(); i++) {
-                String blockMac = formatMACAddress(blocks[i].mac); // Convert MAC to String for comparison
+                std::string blockMac = formatMACAddress(blocks[i].mac); // Convert MAC to String for comparison
 
                 if (blockMac == macAddress) {
                     blinkBlock(blockMac, i);
@@ -213,7 +211,7 @@ void initSetupRoutes(WebServer &server) {
         if(ensureRedirect("/blockLightsSetup")) {
             return;
         }else {
-            killPacingTasks();
+            killPacingTasks(realTimePacing, autoPacing);
             serveFile("/blockLightsSetup.html", "text/html");
         }
     });
@@ -257,7 +255,7 @@ void initSetupRoutes(WebServer &server) {
             
             // Add number and status fields
             jsonResponse += "\"number\":" + String(blocks[i].number) + ",";
-            jsonResponse += "\"status\":\"" + blocks[i].status + "\"";
+            jsonResponse += "\"status\":\"" + String(blocks[i].status.c_str()) + "\"";
             
             jsonResponse += "}";
             if (i < numBlocks - 1) {

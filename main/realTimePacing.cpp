@@ -1,15 +1,16 @@
 #include "realTimePacing.h"
-#include <WebSocketsServer.h>
-#include <FastLED.h>
 
 extern WebSocketsServer webSocket;  // Access the WebSocket server instance
+
+realTimePacingClass realTimePacing = realTimePacingClass("Stopped", 5, false, 10.0f);
+
 
 // Function to reset realTimePacing to initial values
 void resetRealTimePacing() {
     realTimePacing.status = "Stopped";
-    realTimePacing.lap = 5;
-    realTimePacing.lapTime = 10.0;
-    realTimePacing.is_running = false;
+    realTimePacing.laps = 5;
+    realTimePacing.isRunning = false;
+    realTimePacing.lapTime = 10.0f;
 }
 
 String CRGBtoHexString2(const CRGB& colour) {
@@ -30,18 +31,18 @@ String CRGBtoHexString2(const CRGB& colour) {
 
 void sendRealTimePacingUpdates() {
     // Serial.println(realTimePacing.status);
-    // Serial.println(realTimePacing.lap);
+    // Serial.println(realTimePacing.laps);
     // Serial.println(realTimePacing.lapTime);
 
     String json = "{";
-    json += "\"status\": \"" + realTimePacing.status + "\",";  // status is a string
-    json += "\"lap\": \"" + String(realTimePacing.lap) + "\",";  // lap is a number, convert to String
+    json += "\"status\": \"" + String(realTimePacing.status.c_str()) + "\",";  // status is a string
+    json += "\"lap\": \"" + String(realTimePacing.laps, 0) + "\",";  // lap is a float, convert to String
     json += "\"lapTime\": \"" + String(realTimePacing.lapTime, 1) + "\",";  // lapTime is a number convert to String
     json += "\"circles\": [";
 
     for (size_t i = 0; i < blocks.size(); ++i) {
         json += "{";
-        json += "\"id\": \"" + blocks[i].blockId + "\",";  // blockId is a string
+        json += "\"id\": \"" + String(blocks[i].blockId.c_str()) + "\",";  // blockId is a string
         json += "\"color\": \"" + CRGBtoHexString2(blocks[i].colour) + "\"";  // color is a string
         json += "}";
 
@@ -64,7 +65,7 @@ void initRealTimePacingRoutes(WebServer &server) {
 
     // Routes for fetching Real-Time Pacing values
     server.on("/getLap", [&]() {
-        server.send(200, "text/plain", String(realTimePacing.lap)); // Send lap value as plain text
+        server.send(200, "text/plain", String(realTimePacing.laps, 0)); // Send lap value as plain text
     });
 
     // Route to get lap time
@@ -74,20 +75,20 @@ void initRealTimePacingRoutes(WebServer &server) {
 
     // Route to get running status
     server.on("/getStatus", [&]() {
-        server.send(200, "text/plain", realTimePacing.status); // Send running status
+        server.send(200, "text/plain", realTimePacing.status.c_str()); // Send running status
     });
 
     server.on("/toggleSystem", [&]() {
         // Turn on or off the running status
-        realTimePacing.is_running = !realTimePacing.is_running;
-        if(realTimePacing.is_running) {
+        realTimePacing.isRunning = !realTimePacing.isRunning;
+        if(realTimePacing.isRunning) {
             startRealTimePacingTask();
             realTimePacing.status = "Running";
         } else {
             realTimePacing.status = "Stopped";
         }
 
-        server.send(200, "text/plain", realTimePacing.status);
+        server.send(200, "text/plain", realTimePacing.status.c_str());
     });
 
     // Serve the Real-Time Pacing page
@@ -95,7 +96,7 @@ void initRealTimePacingRoutes(WebServer &server) {
         if(ensureRedirect("/realTimePacing")) {
             return;
         }else {
-            killPacingTasks();
+            killPacingTasks(realTimePacing, autoPacing);
             serveFile("/realTimePacing.html", "text/html");
         }
     });
@@ -108,17 +109,17 @@ void initRealTimePacingRoutes(WebServer &server) {
     // Routes for updating Real-Time Pacing values (no page reloads)
     server.on("/incrementLap", [&]() {
         // Increment laps (to be handled in JS)
-        realTimePacing.lap += 1;
-        server.send(200, "text/plain", String(realTimePacing.lap));
+        realTimePacing.laps += 1;
+        server.send(200, "text/plain", String(realTimePacing.laps, 0));
     });
 
     server.on("/decrementLap", [&]() {
         // Decrement laps
-        if(realTimePacing.lap>1) {
-            realTimePacing.lap -= 1;
+        if(realTimePacing.laps>1) {
+            realTimePacing.laps -= 1;
         }
         
-        server.send(200, "text/plain", String(realTimePacing.lap));
+        server.send(200, "text/plain", String(realTimePacing.laps, 0));
     });
 
     server.on("/incrementLapTime", [&]() {
@@ -144,3 +145,6 @@ void initRealTimePacingRoutes(WebServer &server) {
     });
 
 }
+
+
+

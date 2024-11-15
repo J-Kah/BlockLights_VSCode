@@ -21,12 +21,11 @@
  */
 
 
-
+#include <iostream>
 #include <WebServer.h> // arduino
 #include <ESPmDNS.h> // arduino
 #include <DNSServer.h> // arduino
 #include <WebSocketsServer.h> // arduino
-
 // Hopefully the above can be replaced with ESPAsyncWebServer or similar.
 
 #include <nvs_flash.h>
@@ -35,7 +34,7 @@
 #include <FastLED.h>
 #include <esp_now.h>
 
-//Custom libraries
+// Custom libraries
 #include "realTimePacing.h"
 #include "blockLightsSettings.h"
 #include "autoPacing.h"
@@ -43,35 +42,20 @@
 #include "sharedData.h"
 
 
-#define NUM_LEDS 1          // Number of LEDs in your strip
-#define DATA_PIN 8          // Pin connected to your LED strip
-#define CHANNEL 11
-
-CRGB leds[NUM_LEDS];
 
 // DNS server
 DNSServer dnsServer;
 
-WebServer server(80);                 // Create a web server on port 80
 WebSocketsServer webSocket = WebSocketsServer(81);  // Create WebSocket on port 81
-
-bool reDir = 1;
-bool blinking = 0;
 
 IPAddress apIP(192, 168, 4, 1);
 uint8_t broadcastMAC[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};  // Broadcast address for scan
 uint8_t masterMacAddress[6];
-String masterMacAddressString;
-
-String blinkBlockMac;
-int blinkBlockIdx;
-
-// Array of structs to hold all the blocks
-std::vector<block_t> blocks;
+std::string masterMacAddressString;
 
 // Array of floats that holds the distances of the blocks around the track (May need to be tweaked if timing motion is unrealistic around the corner).
 // Based off of ISU Short Track Special Regulations and Technical Rules.
-// TODO: Make track offsets for standing starts, .5 lap starts are 1m apart for 5 tracks or 0.7m for 7 tacks. The furtherest forward track on 500m start line is track 1.   
+// Ttrack offsets for standing starts, .5 lap starts are 1m apart for 5 tracks or 0.7m for 7 tacks. The furtherest forward track on 500m start line is track 1.   
 float blockDistances[14] = {
     14.4250,  // First block (master block)
     18.8756,
@@ -92,6 +76,25 @@ float blockDistances[14] = {
 
 float interBlockDistance = 4.4506;
 
+void getOffsets(float &blueOffset, float &greenOffset, float &redOffset, float &offOffset, float &trackOffset){
+    // figure out distance offset from pacing distance to each light
+    // turn blue distance in front
+    blueOffset = ((settings.numPacingBlocks-1)/2.0  + settings.numLeadingBlocks) * interBlockDistance;
+    // turn green distance in front
+    greenOffset = ((settings.numPacingBlocks-1)/2.0) * interBlockDistance;
+    // turn red distance behind
+    redOffset = -(((settings.numPacingBlocks-1)/2.0 + 1) * interBlockDistance);
+    // turn off distance behind
+    offOffset = -(((settings.numPacingBlocks-1)/2.0 + 1 + settings.numTrailingBlocks) * interBlockDistance);
+
+    // Vary the offsets based on which track we are on:
+    if(settings.numberOfTracks) {
+        trackOffset = (settings.trackNumber - 4)*0.7*(1.0 + settings.startingOn500mSide);
+    } else {
+        trackOffset = (settings.trackNumber - 3)*(1.0 + settings.startingOn500mSide);
+    } 
+}
+
 // track length (Based off of metric distances, 8.5m radius with 28.85m straights)
 float trackLength = 111.1071;
 
@@ -108,137 +111,6 @@ float autoPacingDefaultSpeedProfile[9] = {
     0.9677, // speed at 0.5 laps from finish
     0.9574  // speed at finish
 };
-
-settings_t settings = {
-    true,       // number of tracks (true = 7, false = 5)
-    1,          // current track nunmber
-    false,      // starting on 500m side (true if starting on 500m side, flase if starting on 1000m side)
-    2,          // number of leading blocks  
-    1,          // number of pacing blocks
-    2,          // number of trailing blocks
-    false       // show all blocks
-};
-
-// Initialize the realTimePacing struct
-realTimePacing_t realTimePacing = {
-    "Stopped", // status
-    5,            // laps
-    10.0f,         // lapTime
-    false         // is_running
-};
-
-autoPacing_t autoPacing = {
-    "Stopped",
-    9.0,
-    90.00,
-    true,
-    false
-};
-
-typedef struct Message {
-    int type;      // 0 for discovery (scan), 1 for LED color change, 2 for slave block number update
-    uint8_t mac[6];    // Master's MAC address (for scan)
-    CRGB colour;    // RGB values (for LED color change)
-    int number;    // slave block number
-} Message;
-
-// Function to convert MAC address from string (like "AA:BB:CC:DD:EE:FF") to byte array
-void parseMACAddress(const String& macStr, uint8_t* mac) {
-    sscanf(macStr.c_str(), "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx", &mac[0], &mac[1], &mac[2], &mac[3], &mac[4], &mac[5]);
-}
-
-// Function to convert MAC address byte array to string
-String macToString(const uint8_t* mac) {
-    char buffer[18];
-    sprintf(buffer, "%02X:%02X:%02X:%02X:%02X:%02X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
-    return String(buffer);
-}
-
-// Function to write array of structs to file in the custom format
-void writeBlocksToFile() {
-
-    // Open the file for writing using standard fopen (overwrite mode)
-    FILE* file = fopen("/partition/blocks.txt", "w");  // "w" mode will overwrite the file
-    if (!file) {
-        Serial.println("Failed to open file for writing");
-        return;
-    }
-
-    // Iterate through the blocks and write data to the file
-    for (int i = 1; i < blocks.size(); i++) {
-        // Write MAC address as a string followed by a separator
-        fputs(macToString(blocks[i].mac).c_str(), file);
-        fputc(';', file);  // Separator between MAC address and number
-
-        // Write the integer value
-        fprintf(file, "%d", blocks[i].number);
-
-        // Add comma between devices, except for the last one
-        if (i < blocks.size() - 1) {
-            fputc(',', file);
-        }
-    }
-
-    // Close the file after writing
-    fclose(file);
-    Serial.println("Data written successfully.");
-}
-
-// Function to read from file and populate the array of structs
-void readBlocksFromFile() {
-    int maxBlocks = 14;
-
-    // Open the file for reading using fopen in "r" (read) mode
-    FILE* file = fopen("/partition/blocks.txt", "r");
-    if (!file) {
-        Serial.println("Failed to open file for reading");
-        return;
-    }
-
-    // Read the entire file into a string
-    String content;
-    char buffer[281];
-    while (fgets(buffer, sizeof(buffer), file) != nullptr) {
-        content += String(buffer);  // Append each line to the content
-    }
-    fclose(file);  // Close the file
-
-    // Split the content by commas to get individual device entries
-    int blockCount = 0;
-    int start = 0;
-    while (start < content.length() && blockCount < maxBlocks) {
-        block_t newBlock;
-
-        int end = content.indexOf(',', start);
-        if (end == -1) end = content.length();  // No more commas, process the last entry
-
-        String entry = content.substring(start, end);
-        int separatorIndex = entry.indexOf(';');
-        
-        // Get MAC address and integer value
-        String macStr = entry.substring(0, separatorIndex);
-        String intStr = entry.substring(separatorIndex + 1);
-
-        // Parse MAC address and integer
-        parseMACAddress(macStr, newBlock.mac);
-        // check if it's a virtual block:
-        if(newBlock.mac[0] != 0x00 && newBlock.mac[1] != 0x00 && newBlock.mac[2] != 0x00 && newBlock.mac[3] != 0x00 && newBlock.mac[4] != 0x00) {
-            newBlock.number = intStr.toInt();
-            newBlock.colour = CRGB::Black;
-            newBlock.blockId = "block" + String(newBlock.number);
-            newBlock.status = "Disconnected";
-
-            blocks.push_back(newBlock);
-            Serial.println("Pushed a new block");
-
-            blockCount++;
-        }
-        start = end + 1;
-    }
-
-    Serial.println("Data read successfully.");
-    return;
-}
 
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
     Serial.print("Send data to MAC: ");
@@ -265,27 +137,6 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
             blocks[blinkBlockIdx].status = "Disconnected";
         }
         Serial.println("Delivery Fail");
-    }
-}
-
-void addPeer(uint8_t* peerMAC) {
-    esp_now_peer_info_t peerInfo;
-    memset(&peerInfo, 0, sizeof(esp_now_peer_info_t));
-    memcpy(peerInfo.peer_addr, peerMAC, 6);  // Use the specific MAC address
-
-
-    if (esp_now_add_peer(&peerInfo) == ESP_OK) {
-        Serial.println("Peer added successfully");
-    } else {
-        Serial.println("Failed to add peer");
-    }
-}
-
-void removePeer(uint8_t* peerMAC) {
-    if (esp_now_del_peer(peerMAC) == ESP_OK) {
-        Serial.println("Peer removed successfully");
-    } else {
-        Serial.println("Failed to remove peer");
     }
 }
 
@@ -359,13 +210,13 @@ void OnDataRecv(const esp_now_recv_info_t *esp_now_info, const uint8_t *data, in
                 if(blocks[i].number != i+1) {
                     // found a free number
                     newBlock.number = i+1;
-                    newBlock.blockId = "block" + String(i+1);
+                    newBlock.blockId = "block" + std::to_string(i+1);
                     break;
                 }
                 if(i == blocks.size()-1) {
                     // checked all the blocks, they're in order so we assign it to the next (i+2) value.
                     newBlock.number = i+2;
-                    newBlock.blockId = "block" + String(i+2);
+                    newBlock.blockId = "block" + std::to_string(i+2);
                 }
             }
 
@@ -388,177 +239,13 @@ void OnDataRecv(const esp_now_recv_info_t *esp_now_info, const uint8_t *data, in
         } else {
             // add to blocks with given number
             newBlock.number = receivedMessage.number;
-            newBlock.blockId = "block" + String(newBlock.number);
+            newBlock.blockId = "block" + std::to_string(newBlock.number);
             blocks.push_back(newBlock);
         }
     }
 
     sendSetupUpdates(); // make sure blocks is ordered
 }
-
-void updateLED(int i){
-    
-    if(i == 0) {
-        leds[0] = blocks[0].colour;
-        FastLED.show();
-    } else if(blocks[i].status != "Virtual") {
-        blinkBlockIdx = i;
-
-        Message msg;
-        msg.type = 1;  // Type 1: LED color change
-        msg.colour = blocks[i].colour;
-
-        esp_err_t result = esp_now_send(blocks[i].mac, (uint8_t *)&msg, sizeof(msg));
-
-        if (result == ESP_OK) {
-            Serial.println("LED color change message sent successfully");
-        } else {
-            Serial.println("Error sending LED color change message");
-        }
-    }
-}
-
-void updateLEDs(){
-    leds[0] = blocks[0].colour;
-    FastLED.show();
-    if(realTimePacing.is_running){
-        sendRealTimePacingUpdates();
-    } else if(autoPacing.autoIsRunning){
-        sendAutoPacingUpdates();
-    }
-
-    // SEND ESP NOW COMMAND to all slaves
-    for(int i=1; i< blocks.size(); i++) {
-        if(blocks[i].status != "Virtual") {
-            Message msg;
-            msg.type = 1;  // Type 1: LED color change
-            msg.colour = blocks[i].colour;
-
-            esp_err_t result = esp_now_send(blocks[i].mac, (uint8_t *)&msg, sizeof(msg));
-
-            if (result == ESP_OK) {
-                Serial.println("LED color change message sent successfully");
-            } else {
-                Serial.println("Error sending LED color change message");
-            }
-        }
-    }
-}
-
-void blinkAllTask(void* Parameters){    
-    for(int i=0; i < blocks.size(); i++){
-        if(blocks[i].status != "Virtual") {
-            blocks[i].status = "Blinking...";
-            sendSetupUpdates();
-
-            blocks[i].colour = CRGB::Blue;
-            updateLED(i);
-            vTaskDelay(500 / portTICK_PERIOD_MS);
-
-            blocks[i].colour = CRGB::Black;
-            updateLED(i);
-            vTaskDelay(500 / portTICK_PERIOD_MS);
-
-            if(i == 0){
-                blocks[i].status = "Master";
-            } else if(blocks[i].status != "Disconnected") {
-                blocks[i].status = "Working";
-            }
-            sendSetupUpdates();
-        }
-        
-    }
-    blinking = 0;
-    vTaskDelay(100 / portTICK_PERIOD_MS);
-    vTaskDelete(NULL);  // Delete this task
-
-}
-
-void blinkAll(){
-    xTaskCreate(&blinkAllTask, "blinkAllTask", 4096, NULL, 5, NULL);
-}
-
-void blinkBlockTask(void* Parameters){
-    //update block status to blinking    
-    blocks[blinkBlockIdx].status = "Blinking...";
-    sendSetupUpdates();
-    
-    for(int i = 0; i < 3; i++) {
-        blocks[blinkBlockIdx].colour = CRGB::Blue;
-        updateLED(blinkBlockIdx);
-        vTaskDelay(500 / portTICK_PERIOD_MS);
-        blocks[blinkBlockIdx].colour = CRGB::Black;
-        updateLED(blinkBlockIdx);
-        vTaskDelay(500 / portTICK_PERIOD_MS);
-    }
-    
-    if(blinkBlockIdx == 0) {
-        blocks[blinkBlockIdx].status = "Master"; 
-    } else if(blocks[blinkBlockIdx].status != "Disconnected") {
-        blocks[blinkBlockIdx].status = "Working";
-    }
-    sendSetupUpdates();
-
-    blinking = 0;
-    vTaskDelay(100 / portTICK_PERIOD_MS);
-    vTaskDelete(NULL);  // Delete this task
-
-}
-
-void blinkBlock(String mac, int idx) {
-    blinkBlockMac = mac;
-    blinkBlockIdx = idx;
-    xTaskCreate(&blinkBlockTask, "blinkBlockTask", 4096, NULL, 5, NULL);
-}
-
-int ensureRedirect(String path) {
-    // Redirect to blocklights.local
-    if(reDir) {
-        reDir = 0;
-        String URL= "http://blocklights.local" + path;
-        server.sendHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
-        server.sendHeader("Location", URL, true); // 301 (temporary) or 302 (permanent) redirect
-        server.send(301);
-        return 1;
-    }
-    else {
-        reDir = 1;
-        return 0;
-    }
-}
-
-// Function to serve files from SPIFFS
-void serveFile(const char *filename, const char *contentType) {
-    // Create the full path using String
-    String fullPath = String("/partition/") + filename;
-
-    // Open the file for reading
-    FILE* file = fopen(fullPath.c_str(), "r");
-    if (file) {
-        // Get file size
-        struct stat fileInfo;
-        fstat(fileno(file), &fileInfo);
-        size_t fileSize = fileInfo.st_size;
-
-        // Set content length
-        server.setContentLength(fileSize);  // Set known length
-
-        // Send the header
-        server.send(200, contentType, "");  // Start the response
-
-        // Stream file content to client
-        char buffer[128];
-        size_t bytesRead;
-        while ((bytesRead = fread(buffer, 1, sizeof(buffer), file)) > 0) {
-            server.client().write(buffer, bytesRead);  // Send chunks to the client
-        }
-
-        fclose(file);  // Close the file when done
-    } else {
-        server.send(404, "text/plain", "File Not Found");
-    }
-}
-
 
 // Function to start the Wi-Fi network
 void setupWiFi() {
@@ -657,37 +344,18 @@ void socketTask(void* pvParameters) {
     }
 }
 
-void getOffsets(float &blueOffset, float &greenOffset, float &redOffset, float &offOffset, float &trackOffset){
-    // figure out distance offset from pacing distance to each light
-    // turn blue distance in front
-    blueOffset = ((settings.numPacingBlocks-1)/2.0  + settings.numLeadingBlocks) * interBlockDistance;
-    // turn green distance in front
-    greenOffset = ((settings.numPacingBlocks-1)/2.0) * interBlockDistance;
-    // turn red distance behind
-    redOffset = -(((settings.numPacingBlocks-1)/2.0 + 1) * interBlockDistance);
-    // turn off distance behind
-    offOffset = -(((settings.numPacingBlocks-1)/2.0 + 1 + settings.numTrailingBlocks) * interBlockDistance);
-
-    // Vary the offsets based on which track we are on:
-    if(settings.numberOfTracks) {
-        trackOffset = (settings.trackNumber - 4)*0.7*(1.0 + settings.startingOn500mSide);
-    } else {
-        trackOffset = (settings.trackNumber - 3)*(1.0 + settings.startingOn500mSide);
-    } 
-}
-
 void realTimePacingTask(void* pvParameters) {
 
     float blueOffset, greenOffset, redOffset, offOffset, trackOffset;
     getOffsets(blueOffset, greenOffset, redOffset, offOffset, trackOffset);
     
-    float originalNumLaps = realTimePacing.lap;
+    float originalNumLaps = realTimePacing.laps;
     float prevDist = 0.0f;
     
     int64_t pacingStartTime = esp_timer_get_time();
     int64_t prevTime = pacingStartTime;
     bool blocksChanged = false;
-    while(realTimePacing.is_running && realTimePacing.lap > 0) {
+    while(realTimePacing.isRunning && realTimePacing.laps > 0) {
         int64_t currentTime = esp_timer_get_time();
         int64_t timeDelta = currentTime - prevTime;
         float currentSpeed = trackLength / realTimePacing.lapTime;
@@ -696,11 +364,11 @@ void realTimePacingTask(void* pvParameters) {
 
         // update the lap value if we do a lap
         if(currentDist > trackLength) {
-            realTimePacing.lap -= 1;
+            realTimePacing.laps -= 1;
             currentDist -= trackLength;
 
             Serial.print("Lap count updated, laps to go: ");
-            Serial.println(realTimePacing.lap);
+            Serial.println((int)realTimePacing.laps);
             Serial.print("Lapt time: ");
             Serial.println(realTimePacing.lapTime);
             Serial.print("Time delta (us): ");
@@ -726,7 +394,7 @@ void realTimePacingTask(void* pvParameters) {
                     blocks[i].colour = CRGB::Black;
                     updateLED(i);
                     blocksChanged = true;
-                    Serial.println("Changed block " + String(i+1) + " to colour off");
+                    std::cout << "Changed block " << (i + 1) << " to colour off" << std::endl;
                 }
             } else if(blockPosition < currentDist + redOffset) {
                 if(blocks[i].colour != CRGB::Red) {
@@ -734,7 +402,7 @@ void realTimePacingTask(void* pvParameters) {
                     blocks[i].colour = CRGB::Red;
                     updateLED(i);
                     blocksChanged = true;
-                    Serial.println("Changed block " + String(i+1) + " to colour red");
+                    std::cout << "Changed block " << (i + 1) << " to colour red" << std::endl;
                 }
             } else if(blockPosition < currentDist + greenOffset) {
                 if(blocks[i].colour != CRGB::Green) {
@@ -742,7 +410,7 @@ void realTimePacingTask(void* pvParameters) {
                     blocks[i].colour = CRGB::Green;
                     updateLED(i);
                     blocksChanged = true;
-                    Serial.println("Changed block " + String(i+1) + " to colour green");
+                    std::cout << "Changed block " << (i + 1) << " to colour green" << std::endl;
                 }
             } else if(blockPosition < currentDist + blueOffset) {
                 if(blocks[i].colour != CRGB::Blue) {
@@ -750,7 +418,7 @@ void realTimePacingTask(void* pvParameters) {
                     blocks[i].colour = CRGB::Blue;
                     updateLED(i);
                     blocksChanged = true;
-                    Serial.println("Changed block " + String(i+1) + " to colour blue");
+                    std::cout << "Changed block " << (i + 1) << " to colour blue" << std::endl;
                 }
             }
         }
@@ -776,9 +444,9 @@ void realTimePacingTask(void* pvParameters) {
     updateLEDs();
 
     // reset the lap count for the next set
-    realTimePacing.lap = originalNumLaps;
+    realTimePacing.laps = originalNumLaps;
     // send updates to client?
-    realTimePacing.is_running = false;
+    realTimePacing.isRunning = false;
     realTimePacing.status = "Stopped";
     sendRealTimePacingUpdates();
 
@@ -787,12 +455,10 @@ void realTimePacingTask(void* pvParameters) {
     vTaskDelete(NULL);  // Delete this task
 }
 
-// Real-time pacing function
 void startRealTimePacingTask() {
-    autoPacing.autoIsRunning = false;
+    autoPacing.isRunning = false;
     xTaskCreate(&realTimePacingTask, "realTimePacingTask", 4096, NULL, 5, NULL);
 }
-
 
 void autoPacingTask(void* pvParameters) {
     float blueOffset, greenOffset, redOffset, offOffset, trackOffset;
@@ -801,7 +467,7 @@ void autoPacingTask(void* pvParameters) {
 
     std::vector<float> autoPacingSpeedProfile;
     // Need to get array of speed percentages, per half lap
-    for(int i = 0; i <= 2*autoPacing.autoLaps; i++){
+    for(int i = 0; i <= 2*autoPacing.laps; i++){
         if(i <= 8) { // 9 is the size of autoPacingDefaultSpeedProfile
              autoPacingSpeedProfile.push_back(autoPacingDefaultSpeedProfile[i]);
         } else{
@@ -815,7 +481,7 @@ void autoPacingTask(void* pvParameters) {
     for(int i = 0; i < size(autoPacingSpeedProfile)-1; i++) {
         temp += 1/(autoPacingSpeedProfile[i+1] + autoPacingSpeedProfile[i]);
     }
-    float maxSpeed = trackLength*temp/autoPacing.autoTime; // max speed in terms of m/s
+    float maxSpeed = trackLength*temp/autoPacing.totalTime; // max speed in terms of m/s
     Serial.println("Max speed:");
     Serial.println(maxSpeed);
 
@@ -826,13 +492,13 @@ void autoPacingTask(void* pvParameters) {
 
 
     // 5 second countdown
-    if(autoPacing.autoCountdown){
+    if(autoPacing.countdown){
         
         Serial.println("Starting countdown...");
 
         uint64_t countDownStartTime = esp_timer_get_time();
         uint64_t currentTime = countDownStartTime;
-        while(autoPacing.autoIsRunning && currentTime - countDownStartTime < 3000000){
+        while(autoPacing.isRunning && currentTime - countDownStartTime < 3000000){
             currentTime = esp_timer_get_time();
             if (currentTime - countDownStartTime > 0 && currentTime - countDownStartTime < 500000 && blocks[0].colour != CRGB::Red) {
                 for (int i = 0; i < size(blocks); i++) {
@@ -874,7 +540,7 @@ void autoPacingTask(void* pvParameters) {
         Serial.println("Finishing countdown");
     }
 
-    if(!autoPacing.autoIsRunning){
+    if(!autoPacing.isRunning){
         Serial.println("Pacing finished (or stopped)");
 
         // Turn all blocks off
@@ -882,7 +548,7 @@ void autoPacingTask(void* pvParameters) {
             blocks[i].colour = CRGB::Black;
         }
         updateLEDs();
-        autoPacing.autoStatus = String("Stopped");
+        autoPacing.status = std::string("Stopped");
         sendAutoPacingUpdates();
         vTaskDelay(50 / portTICK_PERIOD_MS); // let other tasks run, needed to finish sending autopacing updates
         vTaskDelete(NULL);  // Delete this task
@@ -890,8 +556,8 @@ void autoPacingTask(void* pvParameters) {
     
 
     // calculate the total distance:
-    float totalDist = autoPacing.autoLaps * trackLength;
-    int originalNumLaps = floor(autoPacing.autoLaps);
+    float totalDist = autoPacing.laps * trackLength;
+    int originalNumLaps = floor(autoPacing.laps);
 
     // Start AutoPacing!
     int numHalfLaps = 0;
@@ -902,7 +568,7 @@ void autoPacingTask(void* pvParameters) {
     int64_t pacingStartTime = esp_timer_get_time();
     int64_t prevHalfLapTime = pacingStartTime;
 
-    if(autoPacing.autoCountdown){   // wait for 1 second of green
+    if(autoPacing.countdown){   // wait for 1 second of green
         while(esp_timer_get_time() - pacingStartTime < 1000000){
             vTaskDelay(10 / portTICK_PERIOD_MS); // let other tasks run
         }
@@ -916,7 +582,7 @@ void autoPacingTask(void* pvParameters) {
 
 
     bool blocksChanged = false;
-    while(autoPacing.autoIsRunning && currentDist < totalDist) {
+    while(autoPacing.isRunning && currentDist < totalDist) {
         int64_t currentTime = esp_timer_get_time();
 
         float sPrev = autoPacingSpeedProfile[numHalfLaps]; // m/s speed of the previous half lap checkpoint
@@ -928,7 +594,8 @@ void autoPacingTask(void* pvParameters) {
 
         if(fabs(currentLaptime - prevLaptime) > 0.01) {
             // update the status to show the current speed
-            autoPacing.autoStatus = String("Running. Laptime: ") + String(currentLaptime, 2);
+            String truncatedLaptime = String(currentLaptime, 2);
+            autoPacing.status = "Running. Laptime: " + std::string(truncatedLaptime.c_str());
             prevLaptime = currentLaptime;
 
             // update the webserver 
@@ -944,17 +611,17 @@ void autoPacingTask(void* pvParameters) {
         }
 
         // update lap count
-        if(int((2*autoPacing.autoLaps))%2 == 1 && 2*currentDist > trackLength ){
-            autoPacing.autoLaps -= 0.5;
+        if(int((2*autoPacing.laps))%2 == 1 && 2*currentDist > trackLength ){
+            autoPacing.laps -= 0.5;
             Serial.print("Lap count updated, laps to go: ");
-            Serial.println(autoPacing.autoLaps);
+            Serial.println(autoPacing.laps);
             sendAutoPacingUpdates();
-        } else if(currentDist > (originalNumLaps - autoPacing.autoLaps + 1)*trackLength + trackLength*settings.startingOn500mSide/2){
+        } else if(currentDist > (originalNumLaps - autoPacing.laps + 1)*trackLength + trackLength*settings.startingOn500mSide/2){
             Serial.print("Total distance: ");
             Serial.println(currentDist);
-            autoPacing.autoLaps -= 1;
+            autoPacing.laps -= 1;
             Serial.print("Lap count updated, laps to go: ");
-            Serial.println(autoPacing.autoLaps);
+            Serial.println(autoPacing.laps);
             sendAutoPacingUpdates();
         }
 
@@ -982,7 +649,7 @@ void autoPacingTask(void* pvParameters) {
                     blocks[i].colour = CRGB::Black;
                     updateLED(i);
                     blocksChanged = true;
-                    Serial.println("Changed block " + String(i+1) + " to colour off");
+                    std::cout << "Changed block " << (i + 1) << " to colour off" << std::endl;
                 }
             } else if(blockPosition < lapDist + redOffset) {
                 if(blocks[i].colour != CRGB::Red) {
@@ -990,7 +657,7 @@ void autoPacingTask(void* pvParameters) {
                     blocks[i].colour = CRGB::Red;
                     updateLED(i);
                     blocksChanged = true;
-                    Serial.println("Changed block " + String(i+1) + " to colour red");
+                    std::cout << "Changed block " << (i + 1) << " to colour red" << std::endl;
                 }
             } else if(blockPosition < lapDist + greenOffset) {
                 if(blocks[i].colour != CRGB::Green) {
@@ -998,7 +665,7 @@ void autoPacingTask(void* pvParameters) {
                     blocks[i].colour = CRGB::Green;
                     updateLED(i);
                     blocksChanged = true;
-                    Serial.println("Changed block " + String(i+1) + " to colour green");
+                    std::cout << "Changed block " << (i + 1) << " to colour green" << std::endl;
                 }
             } else if(blockPosition < lapDist + blueOffset) {
                 if(blocks[i].colour != CRGB::Blue) {
@@ -1006,7 +673,7 @@ void autoPacingTask(void* pvParameters) {
                     blocks[i].colour = CRGB::Blue;
                     updateLED(i);
                     blocksChanged = true;
-                    Serial.println("Changed block " + String(i+1) + " to colour blue");
+                    std::cout << "Changed block " << (i + 1) << " to colour blue" << std::endl;
                 }
             }
         }
@@ -1020,7 +687,7 @@ void autoPacingTask(void* pvParameters) {
     }
     Serial.print("TOTAL TIME TAKEN: ");
     Serial.println(String((esp_timer_get_time() - pacingStartTime)/1000000.0, 3));
-    Serial.println(autoPacing.autoTime);
+    Serial.println(autoPacing.totalTime);
 
     Serial.println("Pacing finished (or stopped)");
 
@@ -1031,9 +698,9 @@ void autoPacingTask(void* pvParameters) {
     updateLEDs();
 
     // send updates to client
-    autoPacing.autoLaps = originalNumLaps;
-    autoPacing.autoIsRunning = false;
-    autoPacing.autoStatus = "Stopped";
+    autoPacing.laps = originalNumLaps + 0.5*settings.startingOn500mSide;
+    autoPacing.isRunning = false;
+    autoPacing.status = "Stopped";
     sendAutoPacingUpdates();
 
     vTaskDelay(50 / portTICK_PERIOD_MS); // let other tasks run, needed to finish sending autopacing updates
@@ -1041,10 +708,9 @@ void autoPacingTask(void* pvParameters) {
     vTaskDelete(NULL);  // Delete this task
 }
 
-
 void startAutoPacingTask() {
-    realTimePacing.is_running = false;
-    if(int(2*autoPacing.autoLaps) % 2 == 0) {
+    realTimePacing.isRunning = false;
+    if(int(2*autoPacing.laps) % 2 == 0) {
         settings.startingOn500mSide = false;
     } else {
         settings.startingOn500mSide = true;
@@ -1054,96 +720,7 @@ void startAutoPacingTask() {
 
 }
 
-void addAllBlocks(){
-    for(int i=2; i<=14; i++){
-        bool inBlocks = false;
-        for(int j = 0; j < blocks.size(); j++) {
-            if(blocks[j].number == i) {
-                inBlocks = true;
-            }
-        }  
-        if(!inBlocks) {
-            block_t block = { {0x00, 0x00, 0x00, 0x00, 0x00, (uint8_t)i}, 0, "Virtual", i, "block" + String(i), CRGB::Black};
-            blocks.push_back(block);
-        } 
-    }
-    sendSetupUpdates();
-}
-
-void killPacingTasks(){
-    realTimePacing.is_running = false;
-    autoPacing.autoIsRunning = false;
-
-    // turn blocks off
-    vTaskDelay(pdMS_TO_TICKS(1000));
-    for(int i = 0; i < blocks.size(); i++){
-        blocks[i].colour = CRGB::Black;
-    }
-    updateLEDs();
-}
-
-void scanForBlocks() {
-    Serial.println("Scanning for ESP-NOW slaves...");
-
-    Message msg;
-    msg.type = 0;  // Type 0: Scan
-    memcpy(msg.mac, masterMacAddress, 6);  // Include Master's MAC address in the scan
-
-    // Send broadcast message to all devices
-    esp_err_t result = esp_now_send(broadcastMAC, (uint8_t *)&msg, sizeof(msg));
-    
-    if (result == ESP_OK) {
-        Serial.println("Broadcast scan message sent successfully");
-    } else {
-        Serial.println("Error sending scan message");
-    }
-}
-
-void updateBlockNumber(int idx, int num) {
-    Message msg;
-    msg.type = 2;
-    msg.number = num;
-    
-    uint8_t slaveMAC[6];
-    for(int j = 0; j < 6; j++) {
-        slaveMAC[j] = blocks[idx].mac[j];
-    }
-
-    esp_err_t result = esp_now_send(slaveMAC, (uint8_t *)&msg, sizeof(msg));
-
-    if (result == ESP_OK) {
-        Serial.println("Block number update message sent successfully");
-    } else {
-        blocks[idx].status = "Disconnected";
-        sendSetupUpdates();
-        Serial.println("Error sending block number update message");
-    }
-}
-
-
-// Main function for initializing peripherals and starting tasks
-extern "C" void app_main(void) {
-
-    //esp_log_level_set("*", ESP_LOG_ERROR);  // Set all log levels to error  WARNING setting all logs to just error BREAKS FASTLED (3.8 prerelease)
-
-    Serial.begin(115200); // Initialize Serial communication
-
-    //delay(5000); // 5 seconds to let you open the COM port if you need
-
-    esp_vfs_littlefs_conf_t conf = {
-        .base_path = "/partition",
-        .partition_label = "storage",
-        .format_if_mount_failed = true,
-        .dont_mount = false,
-    };
-
-    // Use settings defined above to initialize and mount LittleFS filesystem.
-    ESP_ERROR_CHECK(esp_vfs_littlefs_register(&conf));
-
-    // Setup Wi-Fi and LED control
-    printf("\nInitialising......\n");
-    setupWiFi();
-
+void initServerRoutes(){
     // Serve CSS
     server.on("/style.css", []() {
         serveFile("/styles/style.css", "text/css");
@@ -1151,7 +728,7 @@ extern "C" void app_main(void) {
 
     // Serve the main index page
     server.on("/", []() {
-        killPacingTasks();
+        killPacingTasks(realTimePacing, autoPacing);
         serveFile("/home.html", "text/html");
     });
 
@@ -1180,14 +757,21 @@ extern "C" void app_main(void) {
 
     server.begin();                      // Start the web server
     printf("Server started\n");
+}
 
-    ESP_ERROR_CHECK(esp_wifi_get_mac(WIFI_IF_STA, masterMacAddress));
-    masterMacAddressString = macToString(masterMacAddress);
-    Serial.println(masterMacAddressString);
-   
-    // read blocks data from nv memory
-    readBlocksFromFile();
+void initLittleFS(){
+    esp_vfs_littlefs_conf_t conf = {
+        .base_path = "/partition",
+        .partition_label = "storage",
+        .format_if_mount_failed = true,
+        .dont_mount = false,
+    };
 
+    // Use settings defined above to initialize and mount LittleFS filesystem.
+    ESP_ERROR_CHECK(esp_vfs_littlefs_register(&conf));
+}
+
+void addESPPeers(){
     // add to ESP peers list
     for(int i=0; i < blocks.size(); i++) {
         addPeer(blocks[i].mac);
@@ -1201,6 +785,33 @@ extern "C" void app_main(void) {
     // scan blocks for number (maybe two or three times), also orders them
     scanForBlocks();
     //addAllBlocks(); // Add the other 13 blocks
+}
+
+// Main function for initializing peripherals and starting tasks
+extern "C" void app_main(void) {
+
+    //esp_log_level_set("*", ESP_LOG_ERROR);  // Set all log levels to error  WARNING setting all logs to just error BREAKS FASTLED (3.8 prerelease)
+
+    Serial.begin(115200); // Initialize Serial communication
+
+    //delay(5000); // 5 seconds to let you open the COM port if you need
+
+    initLittleFS();
+
+    // Setup Wi-Fi and LED control
+    printf("\nInitialising......\n");
+    setupWiFi();
+
+    initServerRoutes();
+
+    ESP_ERROR_CHECK(esp_wifi_get_mac(WIFI_IF_STA, masterMacAddress));
+    masterMacAddressString = macToString(masterMacAddress);
+    Serial.println(masterMacAddressString.c_str());
+   
+    // read blocks data from nv memory
+    readBlocksFromFile();
+
+    addESPPeers();
 
     FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);  // Initialize FastLED
     updateLEDs(); // Make sure all the LEDs are off.

@@ -1,8 +1,9 @@
 #include "autoPacing.h"
-#include <WebSocketsServer.h>
 
 extern WebSocketsServer webSocket;  // Access the WebSocket server instance
 uint64_t prevToggleTime = 0;
+
+autoPacingClass autoPacing = autoPacingClass("Stopped", 90, 9.0, false, true);
 
 String CRGBtoHexString(const CRGB& colour) {
     if(colour == CRGB::Red){
@@ -22,15 +23,15 @@ String CRGBtoHexString(const CRGB& colour) {
 
 void sendAutoPacingUpdates() {
 
-    int mins = autoPacing.autoTime / 60;
-    float seconds = autoPacing.autoTime - mins * 60;
+    int mins = autoPacing.totalTime / 60;
+    float seconds = autoPacing.totalTime - mins * 60;
 
-    String laps = String(autoPacing.autoLaps, 1); // Default with 1 decimal place
-    if (int(2 * autoPacing.autoLaps) % 2 == 0) {
-        laps = String(autoPacing.autoLaps, 0); // Update the same laps variable
+    String laps = String(autoPacing.laps, 1); // Default with 1 decimal place
+    if (int(2 * autoPacing.laps) % 2 == 0) {
+        laps = String(autoPacing.laps, 0); // Update the same laps variable
     }
 
-    String countDown = autoPacing.autoCountdown ? "Yes" : "No";
+    String countDown = autoPacing.countdown ? "Yes" : "No";
 
     // Ensure seconds have leading zeros if less than 10
     String secondsStr = String(seconds, 2);
@@ -39,7 +40,7 @@ void sendAutoPacingUpdates() {
     }
 
     String json = "{";
-    json += "\"autoStatus\": \"" + autoPacing.autoStatus + "\",";
+    json += "\"autoStatus\": \"" + String(autoPacing.status.c_str()) + "\",";
     json += "\"autoLaps\": \"" + laps + "\",";
     json += "\"autoTime\": \"" + String(mins) + ":" + secondsStr + "\",";
     json += "\"autoCountdown\": \"" + countDown + "\",";
@@ -47,7 +48,7 @@ void sendAutoPacingUpdates() {
 
     for (size_t i = 0; i < blocks.size(); ++i) {
         json += "{";
-        json += "\"id\": \"" + blocks[i].blockId + "\",";
+        json += "\"id\": \"" + String(blocks[i].blockId.c_str()) + "\",";
         json += "\"color\": \"" + CRGBtoHexString(blocks[i].colour) + "\"";
         json += "}";
 
@@ -72,7 +73,7 @@ void initAutoPacingRoutes(WebServer &server) {
         if(ensureRedirect("/autoPacing")) {
             return;
         }else {
-            killPacingTasks();
+            killPacingTasks(realTimePacing, autoPacing);
             serveFile("/autoPacing.html", "text/html");
         }
     });
@@ -84,62 +85,66 @@ void initAutoPacingRoutes(WebServer &server) {
 
     // Routes for fetching auto Pacing values
     server.on("/getAutoLaps", [&]() {
-        if(int(2*autoPacing.autoLaps) % 2 == 0){
-            server.send(200, "text/plain", String(autoPacing.autoLaps, 0));
+        if(int(2*autoPacing.laps) % 2 == 0){
+            server.send(200, "text/plain", String(autoPacing.laps, 0));
         } else {
-            server.send(200, "text/plain", String(autoPacing.autoLaps, 1)); // Send lap value as plain text
+            server.send(200, "text/plain", String(autoPacing.laps, 1)); // Send lap value as plain text
         }
     });
 
     // Route to get total time
     server.on("/getAutoTime", [&]() {
-        int mins = autoPacing.autoTime / 60;
-        float seconds = autoPacing.autoTime - mins*60;
+        int mins = autoPacing.totalTime / 60;
+        float seconds = autoPacing.totalTime - mins*60;
         server.send(200, "text/plain", String(mins) + ":" + String(seconds, 2)); // Send time with 2 decimal places
     });
 
     // Route to get running status
     server.on("/getAutoStatus", [&]() {
-        server.send(200, "text/plain", autoPacing.autoStatus); // Send running status
+        server.send(200, "text/plain", autoPacing.status.c_str()); // Send running status
     });
 
     server.on("/getAutoCountdown", [&]() {
-        server.send(200, "text/plain", autoPacing.autoCountdown ? "Yes" : "No");
+        server.send(200, "text/plain", autoPacing.countdown ? "Yes" : "No");
     });
 
     server.on("/setAutoLaps", [&]() {
-        String lapsStr = server.arg("plain"); // Retrieve the incoming time string
-        
-        // Convert the string to a float and store it
-        if(lapsStr.toFloat() >= 0.25) {
-            autoPacing.autoLaps = round(2*lapsStr.toFloat())/2.0;
-        }
+        if(!autoPacing.isRunning) {
+            String lapsStr = server.arg("plain"); // Retrieve the incoming time string
+            
+            // Convert the string to a float and store it
+            if(lapsStr.toFloat() >= 0.25) {
+                autoPacing.laps = round(2*lapsStr.toFloat())/2.0;
+            }
 
-        if(int(2*autoPacing.autoLaps) % 2 == 0){
-            server.send(200, "text/plain", String(autoPacing.autoLaps, 0));
-        } else {
-            server.send(200, "text/plain", String(autoPacing.autoLaps, 1)); // Send lap value as plain text
+            if(int(2*autoPacing.laps) % 2 == 0){
+                server.send(200, "text/plain", String(autoPacing.laps, 0));
+            } else {
+                server.send(200, "text/plain", String(autoPacing.laps, 1)); // Send lap value as plain text
+            }
         }
     });
 
     server.on("/setAutoTime", [&]() {
-        String timeStr = server.arg("plain"); // Retrieve the incoming time string
-        // Convert the string to a float and store it
-        if(timeStr.toFloat() >= 5 && timeStr.toFloat() < 6000){
-            autoPacing.autoTime = timeStr.toFloat();
-        }
+        if(!autoPacing.isRunning) {
+            String timeStr = server.arg("plain"); // Retrieve the incoming time string
+            // Convert the string to a float and store it
+            if(timeStr.toFloat() >= 5 && timeStr.toFloat() < 6000){
+                autoPacing.totalTime = timeStr.toFloat();
+            }
 
-        // Respond to the client with a success message
-        int mins = autoPacing.autoTime / 60;
-        float seconds = autoPacing.autoTime - mins*60;
-        String secondsStr;
+            // Respond to the client with a success message
+            int mins = autoPacing.totalTime / 60;
+            float seconds = autoPacing.totalTime - mins*60;
+            String secondsStr;
 
-        if(seconds < 10){
-            secondsStr = "0" + String(seconds, 2);
-        } else {
-            secondsStr = String(seconds, 2);
+            if(seconds < 10){
+                secondsStr = "0" + String(seconds, 2);
+            } else {
+                secondsStr = String(seconds, 2);
+            }
+            server.send(200, "text/plain", String(mins) + ":" + secondsStr); // Send time with 2 decimal places
         }
-        server.send(200, "text/plain", String(mins) + ":" + secondsStr); // Send time with 2 decimal places
     });
 
 
@@ -148,28 +153,30 @@ void initAutoPacingRoutes(WebServer &server) {
 
         // limit how quickly we can toggle this
         if(esp_timer_get_time() - prevToggleTime > 500000){
-            autoPacing.autoIsRunning = !autoPacing.autoIsRunning;
+            autoPacing.isRunning = !autoPacing.isRunning;
 
-            if(autoPacing.autoIsRunning) {
+            if(autoPacing.isRunning) {
                 startAutoPacingTask();
-                autoPacing.autoStatus = "Running";
+                autoPacing.status = "Running";
             } else {
-                autoPacing.autoStatus = "Stopped";
+                autoPacing.status = "Stopped";
             }
 
             prevToggleTime = esp_timer_get_time();
         }
 
-        server.send(200, "text/plain", autoPacing.autoStatus);
+        server.send(200, "text/plain", autoPacing.status.c_str());
     });
 
     server.on("/toggleAutoCountdown", [&]() {
-        // Turn on or off the auto countdown
-        if(!autoPacing.autoIsRunning){
-            autoPacing.autoCountdown = !autoPacing.autoCountdown;
+        if(!autoPacing.isRunning) {
+            // Turn on or off the auto countdown
+            if(!autoPacing.isRunning){
+                autoPacing.countdown = !autoPacing.countdown;
+            }
+            
+            server.send(200, "text/plain", autoPacing.countdown ? "Yes" : "No");
         }
-        
-        server.send(200, "text/plain", autoPacing.autoCountdown ? "Yes" : "No");
     });
 
     // Handle requests for background.jpg

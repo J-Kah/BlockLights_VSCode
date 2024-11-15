@@ -1,31 +1,9 @@
-#ifndef AUTOPACING_H
-#define AUTOPACING_H
+#pragma once
 
 #include <WebServer.h>
+#include <WebSocketsServer.h>
+
 #include "sharedData.h"
-
-// Declare the struct and global variables as before
-typedef struct {
-    String autoStatus;
-    float autoLaps;
-    float autoTime;
-    bool autoCountdown;
-    bool autoIsRunning;
-} autoPacing_t;
-
-extern std::vector<block_t> blocks;
-
-extern autoPacing_t autoPacing;
-extern bool reDir;
-
-extern void killPacingTasks();
-
-
-// Declare serveFile function
-extern void serveFile(const char *filename, const char *contentType);
-
-// Declare redirect function
-extern int ensureRedirect(String path);
 
 // Declare the real-time pacing fucnction
 extern void startAutoPacingTask();
@@ -35,5 +13,3 @@ void initAutoPacingRoutes(WebServer &server);
 
 // Function to update realTimePacing values in real time
 void sendAutoPacingUpdates();
-
-#endif

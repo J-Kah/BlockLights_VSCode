@@ -1,8 +1,17 @@
 #include "blockLightsSettings.h"
 
-#include <WebSocketsServer.h>
-
 extern WebSocketsServer webSocket;  // Access the WebSocket server instance
+
+settings_t settings = {
+    true,       // number of tracks (true = 7, false = 5)
+    1,          // current track nunmber
+    false,      // starting on 500m side (true if starting on 500m side, flase if starting on 1000m side)
+    2,          // number of leading blocks  
+    1,          // number of pacing blocks
+    2,          // number of trailing blocks
+    false       // show all blocks
+};
+
 
 void sendSettingsUpdates() {
     // Create a JSON string with the real-time pacing data
@@ -48,7 +57,7 @@ void initSettingsRoutes(WebServer &server) {
         if(ensureRedirect("/blockLightsSettings")) {
             return;
         }else {
-            killPacingTasks();
+            killPacingTasks(realTimePacing, autoPacing);
             serveFile("/blockLightsSettings.html", "text/html");
         }
     });
