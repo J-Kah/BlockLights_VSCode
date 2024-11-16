@@ -1,33 +1,16 @@
 #include "realTimePacing.h"
 
-extern WebSocketsServer webSocket;  // Access the WebSocket server instance
-
 realTimePacingClass realTimePacing = realTimePacingClass("Stopped", 5, false, 10.0f);
 
-
 // Function to reset realTimePacing to initial values
-void resetRealTimePacing() {
+static void resetRealTimePacing() {
     realTimePacing.status = "Stopped";
     realTimePacing.laps = 5;
     realTimePacing.isRunning = false;
     realTimePacing.lapTime = 10.0f;
 }
 
-String CRGBtoHexString2(const CRGB& colour) {
-    if(colour == CRGB::Red){
-        return("#FF0000");
-    }
-    if(colour == CRGB::Green){
-        return("#00FF00");
-    }
-    if(colour == CRGB::Blue){
-        return("#0000FF");
-    }
-    if(colour == CRGB::Orange){
-        return("#FFA500");
-    }
-    return ("#000000");
-}
+
 
 void sendRealTimePacingUpdates() {
     // Serial.println(realTimePacing.status);
@@ -43,7 +26,7 @@ void sendRealTimePacingUpdates() {
     for (size_t i = 0; i < blocks.size(); ++i) {
         json += "{";
         json += "\"id\": \"" + String(blocks[i].blockId.c_str()) + "\",";  // blockId is a string
-        json += "\"color\": \"" + CRGBtoHexString2(blocks[i].colour) + "\"";  // color is a string
+        json += "\"color\": \"" + CRGBtoHexString(blocks[i].colour) + "\"";  // color is a string
         json += "}";
 
         if (i < blocks.size() - 1) {
@@ -82,7 +65,7 @@ void initRealTimePacingRoutes(WebServer &server) {
         // Turn on or off the running status
         realTimePacing.isRunning = !realTimePacing.isRunning;
         if(realTimePacing.isRunning) {
-            startRealTimePacingTask();
+            realTimePacing.startRealTimePacingTask(autoPacing);
             realTimePacing.status = "Running";
         } else {
             realTimePacing.status = "Stopped";
@@ -147,4 +130,91 @@ void initRealTimePacingRoutes(WebServer &server) {
 }
 
 
+void realTimePacingTask(void* pvParameters) {
 
+    float blueOffset, greenOffset, redOffset, offOffset, trackOffset;
+    getOffsets(blueOffset, greenOffset, redOffset, offOffset, trackOffset);
+    
+    float originalNumLaps = realTimePacing.laps;
+    float prevDist = 0.0f;
+    
+    int64_t pacingStartTime = esp_timer_get_time();
+    int64_t prevTime = pacingStartTime;
+    bool blocksChanged = false;
+    while(realTimePacing.isRunning && realTimePacing.laps > 0) {
+        int64_t currentTime = esp_timer_get_time();
+        int64_t timeDelta = currentTime - prevTime;
+        float currentSpeed = trackLength / realTimePacing.lapTime;
+        float currentDist = prevDist + (timeDelta/(1000000.0)) * currentSpeed;
+        
+
+        // update the lap value if we do a lap
+        if(currentDist > trackLength) {
+            realTimePacing.laps -= 1;
+            currentDist -= trackLength;
+
+            Serial.print("Lap count updated, laps to go: ");
+            Serial.println((int)realTimePacing.laps);
+            Serial.print("Lapt time: ");
+            Serial.println(realTimePacing.lapTime);
+            Serial.print("Time delta (us): ");
+            Serial.print(timeDelta);
+        }
+        
+        // change blocks based on distance
+        for (int i = 0; i < size(blocks); i++) {
+            
+            float blockPosition = blockDistances[blocks[i].number - 1] + trackOffset;
+
+            // edge case for crossing the start/finish lines and track lenght being reset
+            if(blockPosition - currentDist > trackLength/2) {
+                blockPosition -= trackLength;
+            } else if(currentDist - blockPosition > trackLength/2) {
+                blockPosition += trackLength;
+            }
+
+            if(blockPosition < (currentDist + offOffset)) {
+                updateBlock(i, CRGB::Black, &blocksChanged);
+
+            } else if(blockPosition < currentDist + redOffset) {
+                updateBlock(i, CRGB::Red, &blocksChanged);
+                
+            } else if(blockPosition < currentDist + greenOffset) {
+                updateBlock(i, CRGB::Green, &blocksChanged);
+                
+            } else if(blockPosition < currentDist + blueOffset) {
+                updateBlock(i, CRGB::Blue, &blocksChanged);
+            }
+        }
+
+        if(blocksChanged) {
+            sendRealTimePacingUpdates();
+        }
+
+        vTaskDelay(10 / portTICK_PERIOD_MS); // let other tasks run
+        blocksChanged = false;
+        prevDist = currentDist;
+        prevTime = currentTime;
+
+    }
+
+    Serial.println("Pacing finished (or stopped)");
+
+    // Turn all blocks off
+    for (int i = 0; i < size(blocks); i++) {
+        blocks[i].colour = CRGB::Black;
+    }
+
+    updateLEDs();
+
+    // reset the lap count for the next set
+    realTimePacing.laps = originalNumLaps;
+    // send updates to client?
+    realTimePacing.isRunning = false;
+    realTimePacing.status = "Stopped";
+    sendRealTimePacingUpdates();
+
+    
+    vTaskDelay(50 / portTICK_PERIOD_MS); // Wait a little bit before deleting the task
+    vTaskDelete(NULL);  // Delete this task
+}

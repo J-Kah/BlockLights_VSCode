@@ -1,7 +1,5 @@
 #include "blockLightsSetup.h"
 
-extern WebSocketsServer webSocket;  // Access the WebSocket server instance
-
 void sendSetupUpdates() {
 
     int numBlocks = blocks.size();
@@ -52,13 +50,13 @@ void sendSetupUpdates() {
 }
 
 // Utility function to convert uint8_t MAC to String
-std::string formatMACAddress(uint8_t mac[6]) {
+static std::string formatMACAddress(const uint8_t (&mac)[6]) {
     char buf[18];
     sprintf(buf, "%02X:%02X:%02X:%02X:%02X:%02X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
     return std::string(buf);
 }
 
-int extractNumber(String label, String body) {
+static int extractNumber(const String& label, const String& body) {
     int startIdx = body.indexOf(label + "\":\"") + label.length() + 3;
     int endIdx = body.indexOf("\"", startIdx);
     return body.substring(startIdx, endIdx).toInt();

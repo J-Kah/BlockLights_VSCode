@@ -1,7 +1,5 @@
 #include "blockLightsSettings.h"
 
-extern WebSocketsServer webSocket;  // Access the WebSocket server instance
-
 settings_t settings = {
     true,       // number of tracks (true = 7, false = 5)
     1,          // current track nunmber
@@ -12,8 +10,7 @@ settings_t settings = {
     false       // show all blocks
 };
 
-
-void sendSettingsUpdates() {
+static void sendSettingsUpdates() {
     // Create a JSON string with the real-time pacing data
     String jsonResponse = "{\"trackNumber\": \"" + String(settings.trackNumber) + "\"}";
     // Send it to all connected WebSocket clients

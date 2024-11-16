@@ -7,6 +7,7 @@
 #include "sharedData.h"
 
 extern bool blinking;
+extern WebSocketsServer webSocket;  // Access the WebSocket server instance
 
 // Declare the initialization function for routes
 void initSetupRoutes(WebServer &server);

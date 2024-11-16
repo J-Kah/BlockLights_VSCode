@@ -7,7 +7,30 @@ std::string blinkBlockMac;
 WebServer server(80);
 CRGB leds[NUM_LEDS];
 
+static const float interBlockDistance = 4.4506;
+// track length (Based off of metric distances, 8.5m radius with 28.85m straights)
+const float trackLength = 111.1071;
 
+// Array of floats that holds the distances of the blocks around the track (May need to be tweaked if timing motion is unrealistic around the corner).
+// Based off of ISU Short Track Special Regulations and Technical Rules.
+// Ttrack offsets for standing starts, .5 lap starts are 1m apart for 5 tracks or 0.7m for 7 tacks. The furtherest forward track on 500m start line is track 1.   
+const float blockDistances[14] = {
+    14.4250,  // First block (master block)
+    18.8756,
+    23.3262,
+    27.7768, // Apex block of first corner
+    32.2274,
+    36.6779,
+    41.1285, // last block of first corner
+
+    69.9785,// first block of second corner
+    74.4291,
+    78.8797,
+    83.3303, // apex block of second corner
+    87.7809,
+    92.2315,
+    96.6821 // last block of second corner
+};
 
 // Array of structs to hold all the blocks
 std::vector<block_t> blocks;
@@ -49,7 +72,7 @@ std::string macToString(const uint8_t* mac) {
     return std::string(buffer);
 }
 
-int ensureRedirect(std::string path) {
+int ensureRedirect(const std::string& path) {
     // Redirect to blocklights.local
     if(reDir) {
         reDir = 0;
@@ -122,7 +145,7 @@ void updateLEDs(){
     for(int i=1; i< blocks.size(); i++) {
         if(blocks[i].status != "Virtual") {
             Message msg;
-            msg.type = 1;  // Type 1: LED color change
+            msg.type = LED_COLOR_CHANGE;  // Type 1: LED color change
             msg.colour = blocks[i].colour;
 
             esp_err_t result = esp_now_send(blocks[i].mac, (uint8_t *)&msg, sizeof(msg));
@@ -140,7 +163,7 @@ void scanForBlocks() {
     Serial.println("Scanning for ESP-NOW slaves...");
 
     Message msg;
-    msg.type = 0;  // Type 0: Scan
+    msg.type = SCAN;  // Type 0: Scan
     memcpy(msg.mac, masterMacAddress, 6);  // Include Master's MAC address in the scan
 
     // Send broadcast message to all devices
@@ -169,7 +192,7 @@ void addAllBlocks(){
     sendSetupUpdates();
 }
 
-void removePeer(uint8_t* peerMAC) {
+void removePeer(const uint8_t* peerMAC) {
     if (esp_now_del_peer(peerMAC) == ESP_OK) {
         Serial.println("Peer removed successfully");
     } else {
@@ -177,7 +200,28 @@ void removePeer(uint8_t* peerMAC) {
     }
 }
 
-void blinkAllTask(void* Parameters){    
+static void updateLED(int i){
+    if(i == 0) {
+        fill_solid(leds, NUM_LEDS, blocks[0].colour);
+        FastLED.show();
+    } else if(blocks[i].status != "Virtual") {
+        blinkBlockIdx = i;
+
+        Message msg;
+        msg.type = LED_COLOR_CHANGE;  // Type 1: LED color change
+        msg.colour = blocks[i].colour;
+
+        esp_err_t result = esp_now_send(blocks[i].mac, (uint8_t *)&msg, sizeof(msg));
+
+        if (result == ESP_OK) {
+            Serial.println("LED color change message sent successfully");
+        } else {
+            Serial.println("Error sending LED color change message");
+        }
+    }
+}
+
+static void blinkAllTask(void* Parameters){    
     for(int i=0; i < blocks.size(); i++){
         if(blocks[i].status != "Virtual") {
             blocks[i].status = "Blinking...";
@@ -210,28 +254,7 @@ void blinkAll(){
     xTaskCreate(&blinkAllTask, "blinkAllTask", 4096, NULL, 5, NULL);
 }
 
-void updateLED(int i){
-    if(i == 0) {
-        fill_solid(leds, NUM_LEDS, blocks[0].colour);
-        FastLED.show();
-    } else if(blocks[i].status != "Virtual") {
-        blinkBlockIdx = i;
-
-        Message msg;
-        msg.type = 1;  // Type 1: LED color change
-        msg.colour = blocks[i].colour;
-
-        esp_err_t result = esp_now_send(blocks[i].mac, (uint8_t *)&msg, sizeof(msg));
-
-        if (result == ESP_OK) {
-            Serial.println("LED color change message sent successfully");
-        } else {
-            Serial.println("Error sending LED color change message");
-        }
-    }
-}
-
-void blinkBlockTask(void* Parameters){
+static void blinkBlockTask(void* Parameters){
     //update block status to blinking    
     blocks[blinkBlockIdx].status = "Blinking...";
     sendSetupUpdates();
@@ -258,13 +281,13 @@ void blinkBlockTask(void* Parameters){
 
 }
 
-void blinkBlock(std::string mac, int idx) {
+void blinkBlock(const std::string& mac, int idx) {
     blinkBlockMac = mac;
     blinkBlockIdx = idx;
     xTaskCreate(&blinkBlockTask, "blinkBlockTask", 4096, NULL, 5, NULL);
 }
 
-void addPeer(uint8_t* peerMAC) {
+void addPeer(const uint8_t* peerMAC) {
     esp_now_peer_info_t peerInfo;
     memset(&peerInfo, 0, sizeof(esp_now_peer_info_t));
     memcpy(peerInfo.peer_addr, peerMAC, 6);  // Use the specific MAC address
@@ -279,7 +302,7 @@ void addPeer(uint8_t* peerMAC) {
 
 void updateBlockNumber(int idx, int num) {
     Message msg;
-    msg.type = 2;
+    msg.type = SLAVE_BLOCK_UPDATE;
     msg.number = num;
     
     uint8_t slaveMAC[6];
@@ -300,6 +323,7 @@ void updateBlockNumber(int idx, int num) {
 
 // Function to read from file and populate the array of structs
 void readBlocksFromFile() {
+
     int maxBlocks = 14;
 
     // Open the file for reading using fopen in "r" (read) mode
@@ -361,3 +385,103 @@ void readBlocksFromFile() {
     Serial.println("Data read successfully.");
     return;
 }
+
+static void updateAllBlocks(const CRGB::HTMLColorCode& colour) {
+    for (int i = 0; i < size(blocks); i++) {
+        blocks[i].colour = colour;
+    }
+    updateLEDs();
+}
+
+void countdown() {
+    Serial.println("Starting countdown...");
+
+    uint64_t countDownStartTime = esp_timer_get_time();
+    uint64_t currentTime = countDownStartTime;
+    while(autoPacing.isRunning && currentTime - countDownStartTime < 3000000){
+        currentTime = esp_timer_get_time();
+        if (currentTime - countDownStartTime > 0 && currentTime - countDownStartTime < 500000 && blocks[0].colour != CRGB::Red) {
+            updateAllBlocks(CRGB::Red);
+        } else if (currentTime - countDownStartTime > 500000 && currentTime - countDownStartTime < 1000000 && blocks[0].colour != CRGB::Black) {
+            updateAllBlocks(CRGB::Black);
+        } else if (currentTime - countDownStartTime > 1000000 && currentTime - countDownStartTime < 1500000 && blocks[0].colour != CRGB::Red) {
+            updateAllBlocks(CRGB::Red);
+        } else if (currentTime - countDownStartTime > 1500000 && currentTime - countDownStartTime < 2000000 && blocks[0].colour != CRGB::Black) {
+            updateAllBlocks(CRGB::Black);
+        } else if (currentTime - countDownStartTime > 2000000 && currentTime - countDownStartTime < 2500000 && blocks[0].colour != CRGB::Orange) {
+            updateAllBlocks(CRGB::Orange);
+        } else if (currentTime - countDownStartTime > 2500000 && blocks[0].colour != CRGB::Black) {
+            updateAllBlocks(CRGB::Black);
+        }
+        vTaskDelay(10 / portTICK_PERIOD_MS); // let other tasks run
+    }
+    updateAllBlocks(CRGB::Green);
+    Serial.println("Finishing countdown");
+}
+
+void updateBlock(int idx, const CRGB::HTMLColorCode& colour, bool* blocksChanged){
+
+    if(blocks[idx].colour != colour) {
+        // change block to off
+        blocks[idx].colour = colour;
+        updateLED(idx);
+        *blocksChanged = true;
+
+        std::string colourString;
+        switch(colour) {
+            case CRGB::Black:
+                colourString = "off";
+                break;
+            case CRGB::Red:
+                colourString = "red";
+                break;
+            case CRGB::Green:
+                colourString = "green";
+                break;
+            case CRGB::Blue:
+                colourString = "blue";
+                break;
+            default:
+                break;
+        }
+        std::cout << "Changed block " << (idx + 1) << " to colour " << colourString << std::endl;
+    }
+}
+
+String CRGBtoHexString(const CRGB::HTMLColorCode& colour) {
+
+    switch (colour) {
+        case CRGB::Red:
+            return "#FF0000";
+        case CRGB::Green:
+            return "#00FF00";
+        case CRGB::Blue:
+            return "#0000FF";
+        case CRGB::Orange:
+            return "#FFA500";
+        default:
+            return "#000000";
+    }
+}
+
+void getOffsets(float &blueOffset, float &greenOffset, float &redOffset, float &offOffset, float &trackOffset){
+    // figure out distance offset from pacing distance to each light
+    // turn blue distance in front
+    blueOffset = ((settings.numPacingBlocks-1)/2.0  + settings.numLeadingBlocks) * interBlockDistance;
+    // turn green distance in front
+    greenOffset = ((settings.numPacingBlocks-1)/2.0) * interBlockDistance;
+    // turn red distance behind
+    redOffset = -(((settings.numPacingBlocks-1)/2.0 + 1) * interBlockDistance);
+    // turn off distance behind
+    offOffset = -(((settings.numPacingBlocks-1)/2.0 + 1 + settings.numTrailingBlocks) * interBlockDistance);
+
+    // Vary the offsets based on which track we are on:
+    if(settings.numberOfTracks) {
+        trackOffset = (settings.trackNumber - 4)*0.7*(1.0 + settings.startingOn500mSide);
+    } else {
+        trackOffset = (settings.trackNumber - 3)*(1.0 + settings.startingOn500mSide);
+    } 
+}
+
+
+
