@@ -30,7 +30,6 @@
 #include <esp_littlefs.h>
 
 // Custom libraries
-#include "sharedData.h"
 #include "realTimePacing.h"
 #include "blockLightsSettings.h"
 #include "autoPacing.h"
@@ -87,7 +86,7 @@ static void OnDataRecv(const esp_now_recv_info_t *esp_now_info, const uint8_t *d
     Serial.println();
 
     // Optionally process the received data
-    Message receivedMessage;
+    message_t receivedMessage;
     memcpy(&receivedMessage, data, sizeof(receivedMessage));
 
     // if block MAC is in blocks
@@ -104,7 +103,7 @@ static void OnDataRecv(const esp_now_recv_info_t *esp_now_info, const uint8_t *d
         // if block number from block != block number in blocks
         if(receivedMessage.number != blocks[idx].number) {
             // send ESP-NOW with blocks data for that block
-            Message updateMessage;
+            message_t updateMessage;
             updateMessage.type = SLAVE_BLOCK_UPDATE;
             updateMessage.number = blocks[idx].number;
 
@@ -158,7 +157,7 @@ static void OnDataRecv(const esp_now_recv_info_t *esp_now_info, const uint8_t *d
             // add to blocks
             blocks.push_back(newBlock);
             // send updated number to block
-            Message updateMessage;
+            message_t updateMessage;
             updateMessage.type = SLAVE_BLOCK_UPDATE;
             updateMessage.number = newBlock.number;
 
@@ -288,7 +287,7 @@ static void initServerRoutes() {
     // Serve the main index page
     server.on("/", []() {
         killPacingTasks(realTimePacing, autoPacing);
-        serveFile("/home.html", "text/html");
+        serveFile("/htmls/home.html", "text/html");
     });
 
     // Initialise routes for the Real-Time Pacing
@@ -345,6 +344,22 @@ static void addESPPeers() {
     scanForBlocks();
 }
 
+static void scanTask(void* pvParameters) {
+    while(true) {
+        if(!autoPacing.isRunning && !realTimePacing.isRunning) {
+            Serial.println("10 seconds has passed, scanning for blocks...");
+            for(size_t i = 1; i < blocks.size(); i++) {
+                if(blocks[i].status != "Virtual") {
+                    blocks[i].status = "Disconnected";
+                }
+            }
+            scanForBlocks(); // should put them all back into "Connected"
+        }
+        // wait 10 seconds before next scan
+        vTaskDelay(1000*10 / portTICK_PERIOD_MS);
+    }
+}
+
 // Main function for initializing peripherals and starting tasks
 extern "C" void app_main(void) {
 
@@ -377,7 +392,7 @@ extern "C" void app_main(void) {
     // Create the server task - runs continuously and checks for http requests from clients
     xTaskCreate(&serverTask, "serverTask", 4096, NULL, 5, NULL);
     xTaskCreate(&socketTask, "socketTask", 4096, NULL, 5, NULL);
-
+    xTaskCreate(&scanTask, "scanTask", 4096, NULL, 5, NULL);
 }
 
 

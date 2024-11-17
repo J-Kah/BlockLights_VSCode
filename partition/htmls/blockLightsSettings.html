@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/blockLightsSettings.js" defer></script>
+</head>
+<body>
+    <p><a href="/">Back to Home</a></p>
+
+    <h1>Settings</h1>
+
+    <div>
+        <p>Number of Tracks: <span id="numberOfTracks"></span></p>
+        <button onclick="toggleNumberOfTracks()">Toggle</button>
+    </div> 
+
+    <div>
+        <p>Track Number: <span id="trackNumber"></span></p>
+        <button onclick="incrementTrackNumber()">+</button>
+        <button onclick="decrementTrackNumber()">-</button>
+    </div>
+
+    <div>
+        <p>Starting on 500m Side: <span id="startingOn500mSide"></span></p>
+        <button onclick="toggleStartingOn500mSide()">Toggle</button>
+    </div>
+
+    <div>
+        <p>Number of leading (blue) blocks: <span id="numLeadingBlocks"></span></p>
+        <button onclick="incrementNumLeadingBlocks()">+</button>
+        <button onclick="decrementNumLeadingBlocks()">-</button>
+    </div>
+
+    <div>
+        <p>Number of pacing (green) blocks: <span id="numPacingBlocks"></span></p>
+        <button onclick="incrementNumPacingBlocks()">+</button>
+        <button onclick="decrementNumPacingBlocks()">-</button>
+    </div>
+
+    <div>
+        <p>Number of trailing (red) blocks: <span id="numTrailingBlocks"></span></p>
+        <button onclick="incrementNumTrailingBlocks()">+</button>
+        <button onclick="decrementNumTrailingBlocks()">-</button>
+    </div>
+    
+</body>
+</html>

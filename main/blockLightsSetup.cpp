@@ -62,6 +62,21 @@ static int extractNumber(const String& label, const String& body) {
     return body.substring(startIdx, endIdx).toInt();
 }
 
+static void addAllBlocks(){
+    for(int i=2; i<=14; i++){
+        bool inBlocks = false;
+        for(int j = 0; j < blocks.size(); j++) {
+            if(blocks[j].number == i) {
+                inBlocks = true;
+            }
+        }  
+        if(!inBlocks) {
+            block_t block = { {0x00, 0x00, 0x00, 0x00, 0x00, (uint8_t)i}, 0, "Virtual", i, "block" + std::to_string(i), CRGB::Black};
+            blocks.push_back(block);
+        } 
+    }
+}
+
 void initSetupRoutes(WebServer &server) {
 
     server.on("/updateBlockNumber", [&]() {
@@ -143,7 +158,7 @@ void initSetupRoutes(WebServer &server) {
         std::string macAddress = server.arg("plain").c_str();
 
         if(!blinking) {
-            blinking = 1;
+            blinking = 1; 
 
             // Loop through the array to find the block with matching MAC address
             for (size_t i = 0; i < blocks.size(); i++) {
@@ -210,7 +225,7 @@ void initSetupRoutes(WebServer &server) {
             return;
         }else {
             killPacingTasks(realTimePacing, autoPacing);
-            serveFile("/blockLightsSetup.html", "text/html");
+            serveFile("/htmls/blockLightsSetup.html", "text/html");
         }
     });
 
@@ -219,7 +234,26 @@ void initSetupRoutes(WebServer &server) {
         serveFile("/scripts/blockLightsSetup.js", "application/javascript");
     });
 
-
+    server.on("/toggleShowAllBlocks", [&]() {
+        // Turn on or off the running status
+        settings.showAllBlocks = !settings.showAllBlocks;
+        if(settings.showAllBlocks){
+            addAllBlocks();
+        } else {
+            // clear all the virtual blocks
+            if (blocks.size() > 1) {
+                for(int i=1; i < blocks.size(); i++) {
+                    if(blocks[i].status == "Virtual") {
+                        blocks.erase(blocks.begin() + i);
+                        i--; // check the same index again because we just erased the block in the current index
+                    }
+                }
+            }
+        }
+        sendSetupUpdates();
+        Serial.println("Toggled showAllBlocks");
+        server.send(200, "text/plain", settings.showAllBlocks ? "Yes" : "No" );
+    });
 
     server.on("/getBlockData", [&]() {    
         int numBlocks = blocks.size();

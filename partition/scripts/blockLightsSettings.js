@@ -129,16 +129,6 @@ function toggleStartingOn500mSide() {
     }
 }
 
-function toggleShowAllBlocks() {
-    if(reqAllowed()) {
-        fetch('/toggleShowAllBlocks')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById("showAllBlocks").innerText = data;
-            });
-    }
-}
-
 function incrementNumLeadingBlocks() {
     if(reqAllowed()) {
         fetch('/incrementNumLeadingBlocks')

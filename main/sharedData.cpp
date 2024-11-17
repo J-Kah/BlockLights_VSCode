@@ -126,10 +126,7 @@ void killPacingTasks(realTimePacingClass& realTimePacing, autoPacingClass& autoP
 
     // turn blocks off
     vTaskDelay(pdMS_TO_TICKS(1000));
-    for(int i = 0; i < blocks.size(); i++){
-        blocks[i].colour = CRGB::Black;
-    }
-    updateLEDs();
+    updateAllBlocks(CRGB::Black);
 }
 
 void updateLEDs(){
@@ -144,7 +141,7 @@ void updateLEDs(){
     // SEND ESP NOW COMMAND to all slaves
     for(int i=1; i< blocks.size(); i++) {
         if(blocks[i].status != "Virtual") {
-            Message msg;
+            message_t msg;
             msg.type = LED_COLOR_CHANGE;  // Type 1: LED color change
             msg.colour = blocks[i].colour;
 
@@ -162,7 +159,7 @@ void updateLEDs(){
 void scanForBlocks() {
     Serial.println("Scanning for ESP-NOW slaves...");
 
-    Message msg;
+    message_t msg;
     msg.type = SCAN;  // Type 0: Scan
     memcpy(msg.mac, masterMacAddress, 6);  // Include Master's MAC address in the scan
 
@@ -174,22 +171,6 @@ void scanForBlocks() {
     } else {
         Serial.println("Error sending scan message");
     }
-}
-
-void addAllBlocks(){
-    for(int i=2; i<=14; i++){
-        bool inBlocks = false;
-        for(int j = 0; j < blocks.size(); j++) {
-            if(blocks[j].number == i) {
-                inBlocks = true;
-            }
-        }  
-        if(!inBlocks) {
-            block_t block = { {0x00, 0x00, 0x00, 0x00, 0x00, (uint8_t)i}, 0, "Virtual", i, "block" + std::to_string(i), CRGB::Black};
-            blocks.push_back(block);
-        } 
-    }
-    sendSetupUpdates();
 }
 
 void removePeer(const uint8_t* peerMAC) {
@@ -207,7 +188,7 @@ static void updateLED(int i){
     } else if(blocks[i].status != "Virtual") {
         blinkBlockIdx = i;
 
-        Message msg;
+        message_t msg;
         msg.type = LED_COLOR_CHANGE;  // Type 1: LED color change
         msg.colour = blocks[i].colour;
 
@@ -301,26 +282,22 @@ void addPeer(const uint8_t* peerMAC) {
 }
 
 void updateBlockNumber(int idx, int num) {
-    Message msg;
+    message_t msg;
     msg.type = SLAVE_BLOCK_UPDATE;
     msg.number = num;
-    
-    uint8_t slaveMAC[6];
-    for(int j = 0; j < 6; j++) {
-        slaveMAC[j] = blocks[idx].mac[j];
-    }
 
-    esp_err_t result = esp_now_send(slaveMAC, (uint8_t *)&msg, sizeof(msg));
+    esp_err_t result = esp_now_send(blocks[idx].mac, (uint8_t *)&msg, sizeof(msg));
 
     if (result == ESP_OK) {
         Serial.println("Block number update message sent successfully");
-    } else {
-        blocks[idx].status = "Disconnected";
+    } else { 
+        blocks[idx].status = "Disconnected"; 
         sendSetupUpdates();
         Serial.println("Error sending block number update message");
     }
 }
 
+// I think this won't work becuase the send should always send, but can't check if it was received.
 // Function to read from file and populate the array of structs
 void readBlocksFromFile() {
 
@@ -386,7 +363,7 @@ void readBlocksFromFile() {
     return;
 }
 
-static void updateAllBlocks(const CRGB::HTMLColorCode& colour) {
+void updateAllBlocks(const CRGB::HTMLColorCode& colour) {
     for (int i = 0; i < size(blocks); i++) {
         blocks[i].colour = colour;
     }

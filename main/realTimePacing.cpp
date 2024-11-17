@@ -80,7 +80,7 @@ void initRealTimePacingRoutes(WebServer &server) {
             return;
         }else {
             killPacingTasks(realTimePacing, autoPacing);
-            serveFile("/realTimePacing.html", "text/html");
+            serveFile("/htmls/realTimePacing.html", "text/html");
         }
     });
 
@@ -201,11 +201,7 @@ void realTimePacingTask(void* pvParameters) {
     Serial.println("Pacing finished (or stopped)");
 
     // Turn all blocks off
-    for (int i = 0; i < size(blocks); i++) {
-        blocks[i].colour = CRGB::Black;
-    }
-
-    updateLEDs();
+    updateAllBlocks(CRGB::Black);
 
     // reset the lap count for the next set
     realTimePacing.laps = originalNumLaps;

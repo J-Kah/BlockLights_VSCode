@@ -1,0 +1,259 @@
+[1/16] Performing build step for 'bootloader'
+[1/1] cmd.exe /C "cd /D "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\bootloader\esp-idf\esptool_py" && C:\Users\joshk\.espressif\python_env\idf5.3_py3.11_env\Scripts\python.exe C:/Users/joshk/esp/v5.3.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin""
+Bootloader binary size 0x5460 bytes. 0x2ba0 bytes (34%) free.
+[2/14] cmd.exe /C "cd /D "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\esp-idf\main" && "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\littlefs_py_venv\Scripts\littlefs-python.exe" create "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/partition" "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/storage.bin" -v --fs-size=0x180000 --name-max=64 --block-size=4096"
+LittleFS Configuration:
+  Block Size:       4096  /  0x1000
+  Image Size:    1572864  /  0x180000
+  Block Count:       384
+  Name Max:           64
+  Image:       C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\storage.bin
+Adding File:      advancedPacing.html
+Adding File:      autoPacing.html
+Adding File:      blockLightsSettings.html
+Adding File:      blockLightsSetup.html
+Adding File:      blocks.txt
+Adding File:      favicon.ico
+Adding File:      home.html
+Adding File:      realTimePacing.html
+Adding Directory: scripts
+Adding Directory: styles
+Adding File:      track-background.jpg
+Adding File:      scripts\autoPacing.js
+Adding File:      scripts\blockLightsSettings.js
+Adding File:      scripts\blockLightsSetup.js
+Adding File:      scripts\realTimePacing.js
+Adding File:      styles\style.css
+[3/14] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/sharedData.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:43,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/sharedData.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/sharedData.cpp:1:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/scale8.h:5,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/math8.h:4,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion.h:380,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/pixeltypes.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/cpixel_ledcontroller.h:8,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/controller.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:63:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/crgb.h:334:56: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  334 |     constexpr explicit operator const uint32_t() const noexcept
+      |                                                        ^~~~~~~~
+[4/14] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSettings.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:43,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/sharedData.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/blockLightsSettings.h:6,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/blockLightsSettings.cpp:1:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/scale8.h:5,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/math8.h:4,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion.h:380,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/pixeltypes.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/cpixel_ledcontroller.h:8,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/controller.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:63:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/crgb.h:334:56: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  334 |     constexpr explicit operator const uint32_t() const noexcept
+      |                                                        ^~~~~~~~
+[5/14] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/blockLightsSetup.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:43,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/blockLightsSetup.h:5,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/blockLightsSetup.cpp:1:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/scale8.h:5,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/math8.h:4,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion.h:380,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/pixeltypes.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/cpixel_ledcontroller.h:8,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/controller.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:63:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/crgb.h:334:56: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  334 |     constexpr explicit operator const uint32_t() const noexcept
+      |                                                        ^~~~~~~~
+[6/14] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/realTimePacing.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:43,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/realTimePacing.h:5,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/realTimePacing.cpp:1:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/scale8.h:5,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/math8.h:4,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion.h:380,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/pixeltypes.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/cpixel_ledcontroller.h:8,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/controller.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:63:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/crgb.h:334:56: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  334 |     constexpr explicit operator const uint32_t() const noexcept
+      |                                                        ^~~~~~~~
+[7/14] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:43,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/realTimePacing.h:5,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:33:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/scale8.h:5,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/math8.h:4,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion.h:380,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/pixeltypes.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/cpixel_ledcontroller.h:8,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/controller.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:63:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/crgb.h:334:56: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  334 |     constexpr explicit operator const uint32_t() const noexcept
+      |                                                        ^~~~~~~~
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp: In function 'void setupWiFi()':
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::password' [-Wmissing-field-initializers]
+  219 |     };
+      |     ^
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::ssid_len' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::ssid_hidden' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::beacon_interval' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::csa_count' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::dtim_period' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::pairwise_cipher' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::ftm_responder' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::pmf_cfg' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::sae_pwe_h2e' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp: In function 'void initLittleFS()':
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:326:5: warning: missing initializer for member 'esp_vfs_littlefs_conf_t::partition' [-Wmissing-field-initializers]
+  326 |     };
+      |     ^
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:326:5: warning: missing initializer for member 'esp_vfs_littlefs_conf_t::read_only' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:326:5: warning: missing initializer for member 'esp_vfs_littlefs_conf_t::grow_on_mount' [-Wmissing-field-initializers]
+[8/14] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/autoPacing.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:43,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/sharedData.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/autoPacing.h:6,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/autoPacing.cpp:1:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/scale8.h:5,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/math8.h:4,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion.h:380,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/pixeltypes.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/cpixel_ledcontroller.h:8,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/controller.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:63:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/crgb.h:334:56: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  334 |     constexpr explicit operator const uint32_t() const noexcept
+      |                                                        ^~~~~~~~
+[9/14] Linking C static library esp-idf\main\libmain.a
+[10/14] Generating ld/sections.ld
+[11/14] Linking CXX executable BlockLights_VSCode.elf
+[12/14] Generating binary image from built executable
+esptool.py v4.8.1
+Creating esp32c6 image...
+Merged 1 ELF section
+Successfully created esp32c6 image.
+Generated C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/BlockLights_VSCode.bin
+[13/14] cmd.exe /C "cd /D "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\esp-idf\esptool_py" && C:\Users\joshk\.espressif\python_env\idf5.3_py3.11_env\Scripts\python.exe C:/Users/joshk/esp/v5.3.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/partition_table/partition-table.bin" "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/BlockLights_VSCode.bin""
+BlockLights_VSCode.bin binary size 0x1450a0 bytes. Smallest app partition is 0x200000 bytes. 0xbaf60 bytes (37%) free.
+[13/14] cmd.exe /C "cd /D C:\Users\joshk\esp\v5.3.1\esp-idf\components\esptool_py && C:\Users\joshk\.espressif\tools\cmake\3.24.0\bin\cmake.exe -D IDF_PATH=C:/Users/joshk/esp/v5.3.1/esp-idf -D SERIAL_TOOL=C:/Users/joshk/.espressif/python_env/idf5.3_py3.11_env/Scripts/python.exe;;C:/Users/joshk/esp/v5.3.1/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32c6 -D SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args -D "WORKING_DIRECTORY=C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build" -P C:/Users/joshk/esp/v5.3.1/esp-idf/components/espesptool.py --chip esp32c6 -p COM8 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 bootloader/bootloader.bin 0x10000 BlockLights_VSCode.bin 0x8000 partition_table/partition-table.bin 0x210000 storage.bin
+esptool.py v4.8.1
+Serial port COM8
+Connecting...
+Chip is ESP32-C6 (QFN40) (revision v0.1)
+Features: WiFi 6, BT 5, IEEE802.15.4
+Crystal is 40MHz
+MAC: f0:f5:bd:ff:fe:0e:5d:40
+BASE MAC: f0:f5:bd:0e:5d:40
+MAC_EXT: ff:fe
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00000000 to 0x00005fff...
+Flash will be erased from 0x00010000 to 0x00155fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+Flash will be erased from 0x00210000 to 0x0038ffff...
+SHA digest in image updated
+Compressed 21600 bytes to 12987...
+Writing at 0x00000000... (100 %)
+Wrote 21600 bytes (12987 compressed) at 0x00000000 in 0.3 seconds (effective 529.9 kbit/s)...
+Hash of data verified.
+Compressed 1331360 bytes to 750445...
+Writing at 0x00010000... (2 %)
+Writing at 0x0001cfe8... (4 %)
+Writing at 0x000297b7... (6 %)
+Writing at 0x0003097e... (8 %)
+Writing at 0x00035c7b... (10 %)
+Writing at 0x00040263... (13 %)
+Writing at 0x00047632... (15 %)
+Writing at 0x0004e0e4... (17 %)
+Writing at 0x00055349... (19 %)
+Writing at 0x0005ce45... (21 %)
+Writing at 0x0006510b... (23 %)
+Writing at 0x0006c2e0... (26 %)
+Writing at 0x00073045... (28 %)
+Writing at 0x00079e13... (30 %)
+Writing at 0x000809f1... (32 %)
+Writing at 0x000870dc... (34 %)
+Writing at 0x0008e930... (36 %)
+Writing at 0x0009596d... (39 %)
+Writing at 0x0009c4aa... (41 %)
+Writing at 0x000a3821... (43 %)
+Writing at 0x000aa87c... (45 %)
+Writing at 0x000b17c7... (47 %)
+Writing at 0x000b7d83... (50 %)
+Writing at 0x000bde0e... (52 %)
+Writing at 0x000c4580... (54 %)
+Writing at 0x000caeaa... (56 %)
+Writing at 0x000d18d3... (58 %)
+Writing at 0x000d7b88... (60 %)
+Writing at 0x000de5d0... (63 %)
+Writing at 0x000e43b6... (65 %)
+Writing at 0x000ea20a... (67 %)
+Writing at 0x000f03ec... (69 %)
+Writing at 0x000f645c... (71 %)
+Writing at 0x000fc62d... (73 %)
+Writing at 0x0010275c... (76 %)
+Writing at 0x001085b8... (78 %)
+Writing at 0x0010ea59... (80 %)
+Writing at 0x00115851... (82 %)
+Writing at 0x0011ee62... (84 %)
+Writing at 0x00126cf1... (86 %)
+Writing at 0x0012f8f0... (89 %)
+Writing at 0x001352f3... (91 %)
+Writing at 0x0013b829... (93 %)
+Writing at 0x001422c3... (95 %)
+Writing at 0x00148478... (97 %)
+Writing at 0x0014e0a2... (100 %)
+Wrote 1331360 bytes (750445 compressed) at 0x00010000 in 7.3 seconds (effective 1461.9 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 120...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (120 compressed) at 0x00008000 in 0.0 seconds (effective 511.5 kbit/s)...
+Hash of data verified.
+Compressed 1572864 bytes to 27208...
+Writing at 0x00210000... (50 %)
+Writing at 0x00305240... (100 %)
+Wrote 1572864 bytes (27208 compressed) at 0x00210000 in 2.9 seconds (effective 4342.4 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
+tool_py/run_serial_tool.cmake"

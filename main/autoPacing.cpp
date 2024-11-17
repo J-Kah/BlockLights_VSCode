@@ -70,7 +70,7 @@ void initAutoPacingRoutes(WebServer &server) {
             return;
         }else {
             killPacingTasks(realTimePacing, autoPacing);
-            serveFile("/autoPacing.html", "text/html");
+            serveFile("/htmls/autoPacing.html", "text/html");
         }
     });
 
@@ -223,10 +223,7 @@ void autoPacingTask(void* pvParameters) {
         Serial.println("Pacing finished (or stopped)");
 
         // Turn all blocks off
-        for (int i = 0; i < size(blocks); i++) {
-            blocks[i].colour = CRGB::Black;
-        }
-        updateLEDs();
+        updateAllBlocks(CRGB::Black);
         autoPacing.status = std::string("Stopped");
         sendAutoPacingUpdates();
         vTaskDelay(50 / portTICK_PERIOD_MS); // let other tasks run, needed to finish sending autopacing updates
@@ -253,10 +250,7 @@ void autoPacingTask(void* pvParameters) {
         }
 
         // Turn all blocks off
-        for (int i = 0; i < size(blocks); i++) {
-            blocks[i].colour = CRGB::Black;
-        }
-        updateLEDs();
+        updateAllBlocks(CRGB::Black);
     }
 
 
@@ -350,10 +344,7 @@ void autoPacingTask(void* pvParameters) {
     Serial.println("Pacing finished (or stopped)");
 
     // Turn all blocks off
-    for (int i = 0; i < size(blocks); i++) {
-        blocks[i].colour = CRGB::Black;
-    }
-    updateLEDs();
+    updateAllBlocks(CRGB::Black);
 
     // send updates to client
     autoPacing.laps = originalNumLaps + 0.5*settings.startingOn500mSide;

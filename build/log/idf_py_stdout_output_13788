@@ -1,0 +1,162 @@
+[1/11] Performing build step for 'bootloader'
+[1/1] cmd.exe /C "cd /D "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\bootloader\esp-idf\esptool_py" && C:\Users\joshk\.espressif\python_env\idf5.3_py3.11_env\Scripts\python.exe C:/Users/joshk/esp/v5.3.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/bootloader/bootloader.bin""
+Bootloader binary size 0x5460 bytes. 0x2ba0 bytes (34%) free.
+[2/9] cmd.exe /C "cd /D "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\esp-idf\main" && "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\littlefs_py_venv\Scripts\littlefs-python.exe" create "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/partition" "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/storage.bin" -v --fs-size=0x180000 --name-max=64 --block-size=4096"
+LittleFS Configuration:
+  Block Size:       4096  /  0x1000
+  Image Size:    1572864  /  0x180000
+  Block Count:       384
+  Name Max:           64
+  Image:       C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\storage.bin
+Adding File:      advancedPacing.html
+Adding File:      autoPacing.html
+Adding File:      blockLightsSettings.html
+Adding File:      blockLightsSetup.html
+Adding File:      blocks.txt
+Adding File:      favicon.ico
+Adding File:      home.html
+Adding File:      realTimePacing.html
+Adding Directory: scripts
+Adding Directory: styles
+Adding File:      track-background.jpg
+Adding File:      scripts\autoPacing.js
+Adding File:      scripts\blockLightsSettings.js
+Adding File:      scripts\blockLightsSetup.js
+Adding File:      scripts\realTimePacing.js
+Adding File:      styles\style.css
+[3/9] Building CXX object esp-idf/main/CMakeFiles/__idf_main.dir/main.cpp.obj
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastled_esp32.h:3,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms.h:43,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:68,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/realTimePacing.h:5,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:33:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/platforms/esp/32/fastpin_esp32.h:117:2: warning: #warning Unknown ESP32 chip variant. Only pins defined by ESP-IDF will be masked. [-Wcpp]
+  117 | #warning Unknown ESP32 chip variant.  Only pins defined by ESP-IDF will be masked.
+      |  ^~~~~~~
+In file included from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/scale8.h:5,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion/math8.h:4,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/lib8tion.h:380,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/pixeltypes.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/cpixel_ledcontroller.h:8,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/controller.h:7,
+                 from C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/FastLED.h:63:
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/components/FastLED/src/crgb.h:334:56: warning: type qualifiers ignored on function return type [-Wignored-qualifiers]
+  334 |     constexpr explicit operator const uint32_t() const noexcept
+      |                                                        ^~~~~~~~
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp: In function 'void setupWiFi()':
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::password' [-Wmissing-field-initializers]
+  219 |     };
+      |     ^
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::ssid_len' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::ssid_hidden' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::beacon_interval' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::csa_count' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::dtim_period' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::pairwise_cipher' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::ftm_responder' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::pmf_cfg' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:219:5: warning: missing initializer for member 'wifi_ap_config_t::sae_pwe_h2e' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp: In function 'void initLittleFS()':
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:326:5: warning: missing initializer for member 'esp_vfs_littlefs_conf_t::partition' [-Wmissing-field-initializers]
+  326 |     };
+      |     ^
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:326:5: warning: missing initializer for member 'esp_vfs_littlefs_conf_t::read_only' [-Wmissing-field-initializers]
+C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/main/main.cpp:326:5: warning: missing initializer for member 'esp_vfs_littlefs_conf_t::grow_on_mount' [-Wmissing-field-initializers]
+[4/9] Linking C static library esp-idf\main\libmain.a
+[5/9] Generating ld/sections.ld
+[6/9] Linking CXX executable BlockLights_VSCode.elf
+[7/9] Generating binary image from built executable
+esptool.py v4.8.1
+Creating esp32c6 image...
+Merged 1 ELF section
+Successfully created esp32c6 image.
+Generated C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/BlockLights_VSCode.bin
+[8/9] cmd.exe /C "cd /D "C:\Users\joshk\Documents\Arduino\Block Lights\BlockLights_VSCode\build\esp-idf\esptool_py" && C:\Users\joshk\.espressif\python_env\idf5.3_py3.11_env\Scripts\python.exe C:/Users/joshk/esp/v5.3.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/partition_table/partition-table.bin" "C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build/BlockLights_VSCode.bin""
+BlockLights_VSCode.bin binary size 0x145090 bytes. Smallest app partition is 0x200000 bytes. 0xbaf70 bytes (37%) free.
+[8/9] cmd.exe /C "cd /D C:\Users\joshk\esp\v5.3.1\esp-idf\components\esptool_py && C:\Users\joshk\.espressif\tools\cmake\3.24.0\bin\cmake.exe -D IDF_PATH=C:/Users/joshk/esp/v5.3.1/esp-idf -D SERIAL_TOOL=C:/Users/joshk/.espressif/python_env/idf5.3_py3.11_env/Scripts/python.exe;;C:/Users/joshk/esp/v5.3.1/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32c6 -D SERIAL_TOOL_ARGS=--before=default_reset;--after=hard_reset;write_flash;@flash_args -D "WORKING_DIRECTORY=C:/Users/joshk/Documents/Arduino/Block Lights/BlockLights_VSCode/build" -P C:/Users/jesptool.py --chip esp32c6 -p COM8 -b 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 bootloader/bootloader.bin 0x10000 BlockLights_VSCode.bin 0x8000 partition_table/partition-table.bin 0x210000 storage.bin
+esptool.py v4.8.1
+Serial port COM8
+Connecting...
+Chip is ESP32-C6 (QFN40) (revision v0.1)
+Features: WiFi 6, BT 5, IEEE802.15.4
+Crystal is 40MHz
+MAC: f0:f5:bd:ff:fe:0e:5d:40
+BASE MAC: f0:f5:bd:0e:5d:40
+MAC_EXT: ff:fe
+Uploading stub...
+Running stub...
+Stub running...
+Changing baud rate to 460800
+Changed.
+Configuring flash size...
+Flash will be erased from 0x00000000 to 0x00005fff...
+Flash will be erased from 0x00010000 to 0x00155fff...
+Flash will be erased from 0x00008000 to 0x00008fff...
+Flash will be erased from 0x00210000 to 0x0038ffff...
+SHA digest in image updated
+Compressed 21600 bytes to 12987...
+Writing at 0x00000000... (100 %)
+Wrote 21600 bytes (12987 compressed) at 0x00000000 in 0.3 seconds (effective 525.3 kbit/s)...
+Hash of data verified.
+Compressed 1331344 bytes to 750661...
+Writing at 0x00010000... (2 %)
+Writing at 0x0001cfe7... (4 %)
+Writing at 0x000297a1... (6 %)
+Writing at 0x0003097f... (8 %)
+Writing at 0x00035c7c... (10 %)
+Writing at 0x00040257... (13 %)
+Writing at 0x00047630... (15 %)
+Writing at 0x0004e0e0... (17 %)
+Writing at 0x00055340... (19 %)
+Writing at 0x0005ce30... (21 %)
+Writing at 0x00064f8f... (23 %)
+Writing at 0x0006c175... (26 %)
+Writing at 0x00072e95... (28 %)
+Writing at 0x00079c4f... (30 %)
+Writing at 0x0008086e... (32 %)
+Writing at 0x00086f80... (34 %)
+Writing at 0x0008e7bb... (36 %)
+Writing at 0x000957fc... (39 %)
+Writing at 0x0009c33c... (41 %)
+Writing at 0x000a36d1... (43 %)
+Writing at 0x000aa6e2... (45 %)
+Writing at 0x000b164e... (47 %)
+Writing at 0x000b7c38... (50 %)
+Writing at 0x000bdc98... (52 %)
+Writing at 0x000c441e... (54 %)
+Writing at 0x000cad4f... (56 %)
+Writing at 0x000d17c9... (58 %)
+Writing at 0x000d79e3... (60 %)
+Writing at 0x000de41d... (63 %)
+Writing at 0x000e4259... (65 %)
+Writing at 0x000ea0de... (67 %)
+Writing at 0x000f0268... (69 %)
+Writing at 0x000f62d4... (71 %)
+Writing at 0x000fc4fd... (73 %)
+Writing at 0x001025da... (76 %)
+Writing at 0x001083ec... (78 %)
+Writing at 0x0010e901... (80 %)
+Writing at 0x0011571b... (82 %)
+Writing at 0x0011ecf6... (84 %)
+Writing at 0x00126bea... (86 %)
+Writing at 0x0012f7ba... (89 %)
+Writing at 0x001351d1... (91 %)
+Writing at 0x0013b6d8... (93 %)
+Writing at 0x00142136... (95 %)
+Writing at 0x00148356... (97 %)
+Writing at 0x0014df3f... (100 %)
+Wrote 1331344 bytes (750661 compressed) at 0x00010000 in 7.2 seconds (effective 1478.2 kbit/s)...
+Hash of data verified.
+Compressed 3072 bytes to 120...
+Writing at 0x00008000... (100 %)
+Wrote 3072 bytes (120 compressed) at 0x00008000 in 0.0 seconds (effective 506.5 kbit/s)...
+Hash of data verified.
+Compressed 1572864 bytes to 27232...
+Writing at 0x00210000... (50 %)
+Writing at 0x00305238... (100 %)
+Wrote 1572864 bytes (27232 compressed) at 0x00210000 in 2.8 seconds (effective 4420.2 kbit/s)...
+Hash of data verified.
+
+Leaving...
+Hard resetting via RTS pin...
+oshk/esp/v5.3.1/esp-idf/components/esptool_py/run_serial_tool.cmake"

@@ -55,7 +55,7 @@ void initSettingsRoutes(WebServer &server) {
             return;
         }else {
             killPacingTasks(realTimePacing, autoPacing);
-            serveFile("/blockLightsSettings.html", "text/html");
+            serveFile("//htmls/blockLightsSettings.html", "text/html");
         }
     });
 
@@ -90,27 +90,6 @@ void initSettingsRoutes(WebServer &server) {
         sendSettingsUpdates();
         Serial.println("Toggled Tracks");
         server.send(200, "text/plain", settings.numberOfTracks ? "7" : "5" );
-    });
-
-    server.on("/toggleShowAllBlocks", [&]() {
-        // Turn on or off the running status
-        settings.showAllBlocks = !settings.showAllBlocks;
-        if(settings.showAllBlocks){
-            addAllBlocks();
-        } else {
-            // clear all the virtual blocks
-            if (blocks.size() > 1) {
-                for(int i=1; i < blocks.size(); i++) {
-                    if(blocks[i].status == "Virtual") {
-                        blocks.erase(blocks.begin() + i);
-                        i--; // check the same index again because we just erased the block in the current index
-                    }
-                }
-            }
-        }
-        sendSettingsUpdates();
-        Serial.println("Toggled showAllBlocks");
-        server.send(200, "text/plain", settings.showAllBlocks ? "Yes" : "No" );
     });
 
     server.on("/toggleStartingOn500mSide", [&]() {
