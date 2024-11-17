@@ -60,7 +60,7 @@ extern void sendSetupUpdates();
 extern void realTimePacingTask(void* pvParameters);
 extern void autoPacingTask(void* pvParameters);
 
-// variables that are used in sharedData.cpp but are defined in other files
+// variables/objects that are used in sharedData.cpp but are defined in other files
 extern uint8_t masterMacAddress[6];
 extern const uint8_t broadcastMAC[];
 extern settings_t settings;
@@ -102,7 +102,7 @@ class autoPacingClass : public pacingSuper {
     // constructor
     autoPacingClass(std::string status, float totalTime, float laps, bool isRunning, bool countdown) : pacingSuper(status, laps, isRunning), totalTime(totalTime), countdown(countdown) {}
 
-    void startAutoPacingTask(realTimePacingClass& realTimePacing) {
+    void startAutoPacingTask(pacingSuper& realTimePacing) {
         realTimePacing.isRunning = false;
         if(int(2*this->laps) % 2 == 0) {
             settings.startingOn500mSide = false;
@@ -111,7 +111,6 @@ class autoPacingClass : public pacingSuper {
         }
         xTaskCreate(&autoPacingTask, "autoPacingTask", 4096, NULL, 5, NULL);
     }
-
 };
 
 extern realTimePacingClass realTimePacing;

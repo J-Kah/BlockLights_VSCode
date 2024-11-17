@@ -71,7 +71,7 @@ static void addAllBlocks(){
             }
         }  
         if(!inBlocks) {
-            block_t block = { {0x00, 0x00, 0x00, 0x00, 0x00, (uint8_t)i}, 0, "Virtual", i, "block" + std::to_string(i), CRGB::Black};
+            block_t block = { {0x00, 0x00, 0x00, 0x00, 0x00, (uint8_t)i}, "Virtual", i, "block" + std::to_string(i), CRGB::Black};
             blocks.push_back(block);
         } 
     }

@@ -336,7 +336,7 @@ static void addESPPeers() {
     }
 
     block_t masterBlock = {{masterMacAddress[0], masterMacAddress[1], masterMacAddress[2], 
-        masterMacAddress[3], masterMacAddress[4], masterMacAddress[5]}, 0, "Master", 1, "block1", CRGB::Black};
+        masterMacAddress[3], masterMacAddress[4], masterMacAddress[5]}, "Master", 1, "block1", CRGB::Black};
 
     blocks.insert(blocks.begin(), masterBlock);
 
